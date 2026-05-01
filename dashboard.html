@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trevo AI | Enterprise Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <!-- دمج خطوطك الأصلية مع خط Cairo للعربي -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; color: #1E293B; }
+        
+        /* تفعيل خط Cairo عند تحويل الشاشة للعربي */
+        html[dir="rtl"] body { font-family: 'Cairo', sans-serif; }
+        html[dir="rtl"] .pl-6 { padding-left: 0; padding-right: 1.5rem; }
+        html[dir="rtl"] .text-left { text-align: right; }
+
+        .bg-trevo-blue { background-color: #1A3A6C; }
+        .text-trevo-blue { color: #1A3A6C; }
+        .border-trevo-blue { border-color: #1A3A6C; }
+        .bg-trevo-orange { background-color: #F5A623; }
+        .text-trevo-orange { color: #F5A623; }
+        .fade-in { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .bar-transition { transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const API_URL = "http://127.0.0.1:5000/api";
+
+        function App() {
+            // Data Persistence System (LocalStorage)
+            const [lang, setLang] = useState(() => localStorage.getItem('tv_lang') || "en");
+            const [engineStatus, setEngineStatus] = useState("checking");
+            const [activeMenu, setActiveMenu] = useState(() => localStorage.getItem('tv_menu') || "dashboard");
+            const [location, setLocation] = useState(() => localStorage.getItem('tv_loc') || "Aswan, Egypt");
+            const [audience, setAudience] = useState(() => localStorage.getItem('tv_aud') || "High Net Worth Individuals");
+            const [cost, setCost] = useState(() => localStorage.getItem('tv_cost') || 2000);
+            const [revenue, setRevenue] = useState(() => localStorage.getItem('tv_rev') || 15000);
+            const [aiContent, setAiContent] = useState(() => localStorage.getItem('tv_content') || "");
+            const [roiResult, setRoiResult] = useState(() => localStorage.getItem('tv_roi') || null);
+            const [isExporting, setIsExporting] = useState(false);
+
+            // تفعيل اتجاه اللغة تلقائياً
+            useEffect(() => {
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = lang;
+                localStorage.setItem('tv_lang', lang);
+            }, [lang]);
+
+            useEffect(() => {
+                localStorage.setItem('tv_menu', activeMenu);
+                localStorage.setItem('tv_loc', location);
+                localStorage.setItem('tv_aud', audience);
+                localStorage.setItem('tv_cost', cost);
+                localStorage.setItem('tv_rev', revenue);
+                localStorage.setItem('tv_content', aiContent);
+                if (roiResult) localStorage.setItem('tv_roi', roiResult);
+            }, [activeMenu, location, audience, cost, revenue, aiContent, roiResult]);
+
+            useEffect(() => {
+                fetch(`${API_URL}/status`).then(r => r.json()).then(() => setEngineStatus("online")).catch(() => setEngineStatus("offline"));
+                calculateROI(); 
+            }, []);
+
+            const generateContent = async (style) => {
+                const res = await fetch(`${API_URL}/generate-ai-content`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ location, style, audience })
+                });
+                const data = await res.json();
+                setAiContent(data.copy);
+            };
+
+            const calculateROI = () => {
+                const c = parseFloat(cost) || 1;
+                const r = parseFloat(revenue) || 0;
+                const localRoi = (((r - c) / c) * 100).toFixed(1);
+                setRoiResult(localRoi);
+            };
+
+            const exportToPDF = () => {
+                setIsExporting(true);
+                const element = document.getElementById('report-content');
+                html2pdf().set({ margin: 0.5, filename: 'Trevo_ROI_Report.pdf', html2canvas: { scale: 2 }, jsPDF: { orientation: 'landscape' } }).from(element).save().then(() => setIsExporting(false));
+            };
+
+            const menuItems = [
+                { id: "dashboard", icon: "ph-squares-four", labelEn: "Dashboard", labelAr: "الرئيسية" },
+                { id: "ai-lab", icon: "ph-magic-wand", labelEn: "AI Content Lab", labelAr: "مختبر المحتوى (AI)" },
+                { id: "geovr", icon: "ph-virtual-reality", labelEn: "GeoVR Engine", labelAr: "محرك الواقع الافتراضي" },
+                { id: "analytics", icon: "ph-chart-line-up", labelEn: "ROI Analytics", labelAr: "تحليل العوائد (ROI)" },
+                { id: "settings", icon: "ph-gear", labelEn: "System Settings", labelAr: "إعدادات النظام" }
+            ];
+
+            const renderContent = () => {
+                switch(activeMenu) {
+                    case "dashboard":
+                    case "ai-lab":
+                        return (
+                            <div className="bg-white rounded-3xl p-10 shadow-sm border border-slate-200 min-h-[60vh] fade-in">
+                                <h2 className="text-3xl font-black text-trevo-blue mb-4 flex items-center gap-3">
+                                    <i className="ph-fill ph-magic-wand text-trevo-orange"></i> 
+                                    {lang === 'ar' ? 'مختبر المحتوى (الذكاء الاصطناعي)' : 'Advanced AI Content Lab'}
+                                </h2>
+                                <p className="text-slate-500 font-medium mb-10">
+                                    {lang === 'ar' ? 'قم بتوليد نصوص تسويقية عالية التحويل مخصصة لوجهتك وفئتك المستهدفة.' : 'Generate high-converting marketing copy customized to your exact destination and demographic.'}
+                                </p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                                    <div>
+                                        <label className="block text-sm font-bold text-slate-700 mb-2">{lang === 'ar' ? 'الوجهة السياحية' : 'Primary Destination'}</label>
+                                        <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg outline-none focus:border-trevo-orange" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-slate-700 mb-2">{lang === 'ar' ? 'الجمهور المستهدف' : 'Target Audience'}</label>
+                                        <select value={audience} onChange={(e) => setAudience(e.target.value)} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-700 text-lg outline-none">
+                                            <option value="High Net Worth Individuals">{lang === 'ar' ? 'أصحاب الثروات (VIP)' : 'High Net Worth Individuals'}</option>
+                                            <option value="Adventure Backpackers">{lang === 'ar' ? 'عشاق المغامرة والسفاري' : 'Adventure Backpackers'}</option>
+                                            <option value="Family Vacationers">{lang === 'ar' ? 'العائلات والأطفال' : 'Family Vacationers'}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="flex flex-wrap gap-4 mb-10 border-b border-slate-200 pb-10">
+                                    <button onClick={() => generateContent('luxury')} className="px-8 py-4 bg-trevo-blue text-white rounded-xl font-bold hover:bg-blue-900 transition-colors">{lang === 'ar' ? 'توليد محتوى فاخر' : 'Generate Luxury'}</button>
+                                    <button onClick={() => generateContent('adventure')} className="px-8 py-4 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition-colors">{lang === 'ar' ? 'توليد محتوى مغامرات' : 'Generate Adventure'}</button>
+                                    <button onClick={() => generateContent('budget')} className="px-8 py-4 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition-colors">{lang === 'ar' ? 'توليد محتوى اقتصادي' : 'Generate Budget'}</button>
+                                </div>
+                                {aiContent ? (
+                                    <div className="p-8 border-2 border-dashed border-trevo-orange bg-orange-50 rounded-2xl relative"><p className="text-2xl font-medium text-slate-800 italic leading-relaxed">"{aiContent}"</p></div>
+                                ) : (
+                                    <div className="h-40 border-2 border-dashed border-slate-200 rounded-2xl flex items-center justify-center text-slate-400 font-bold">
+                                        {lang === 'ar' ? 'قم بالتشغيل لتوليد المحتوى...' : 'Run engine to generate content...'}
+                                    </div>
+                                )}
+                            </div>
+                        );
+
+                    case "geovr":
+                        return (
+                            <div className="bg-slate-900 rounded-3xl p-10 shadow-xl border border-slate-800 text-white min-h-[60vh] flex flex-col items-center justify-center text-center fade-in relative overflow-hidden">
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full animate-[spin_15s_linear_infinite]"></div>
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] border border-trevo-blue/30 rounded-full animate-[spin_10s_linear_infinite_reverse]"></div>
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border-2 border-dashed border-trevo-orange/40 rounded-full animate-[spin_20s_linear_infinite]"></div>
+                                
+                                <div className="relative z-10 flex flex-col items-center">
+                                    <div className="w-32 h-32 bg-gradient-to-br from-trevo-orange to-red-500 rounded-full mb-8 shadow-[0_0_60px_rgba(245,166,35,0.6)] flex items-center justify-center relative">
+                                        <div className="absolute inset-0 rounded-full border-4 border-white/20 animate-ping"></div>
+                                        <i className="ph-fill ph-globe-hemisphere-west text-6xl text-white"></i>
+                                    </div>
+                                    <h2 className="text-4xl font-black mb-4 tracking-tight">{lang === 'ar' ? 'بيئة GeoVR تعمل بنجاح' : 'GeoVR Environment Active'}</h2>
+                                    <p className="text-slate-400 font-medium max-w-lg mb-8">
+                                        {lang === 'ar' ? 'تم ضبط الإحداثيات والخرائط المكانية ثلاثية الأبعاد لـ' : '3D spatial mapping and virtual coordinates for '} <span className="text-white font-bold">{location}</span> {lang === 'ar' ? 'بنجاح.' : 'are successfully locked. Immersion matrix is rendering.'}
+                                    </p>
+                                    <div className="flex gap-4">
+                                        <button className="px-8 py-4 bg-trevo-orange text-white font-bold rounded-xl hover:bg-orange-500 transition-colors shadow-lg shadow-orange-500/20 flex items-center gap-2">
+                                            <i className="ph-bold ph-headset text-xl"></i> {lang === 'ar' ? 'دخول وضع VR' : 'Enter VR Mode'}
+                                        </button>
+                                        <button className="px-8 py-4 bg-white/5 border border-white/10 font-bold rounded-xl hover:bg-white/10 transition-colors">
+                                            {lang === 'ar' ? 'معايرة المستشعرات' : 'Calibrate Sensors'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+
+                    case "analytics":
+                        const numCost = parseFloat(cost) || 0;
+                        const numRev = parseFloat(revenue) || 0;
+                        const numProfit = numRev - numCost;
+                        const maxVal = Math.max(numCost, numRev, Math.abs(numProfit)) || 1;
+                        const heightCost = Math.max((numCost / maxVal) * 100, 5);
+                        const heightRev = Math.max((numRev / maxVal) * 100, 5);
+                        const heightProfit = Math.max((Math.abs(numProfit) / maxVal) * 100, 5);
+
+                        return (
+                            <div className="bg-white rounded-3xl p-10 shadow-sm border border-slate-200 min-h-[60vh] fade-in">
+                                <div className="flex justify-between items-center mb-8">
+                                    <h2 className="text-3xl font-black text-trevo-blue flex items-center gap-3"><i className="ph-fill ph-chart-line-up text-trevo-orange"></i> {lang === 'ar' ? 'الذكاء المالي وتحليل العوائد' : 'Financial Intelligence'}</h2>
+                                    <button onClick={exportToPDF} disabled={isExporting} className="flex items-center gap-2 px-6 py-3 bg-trevo-blue text-white rounded-xl font-bold hover:bg-blue-900 transition-all">
+                                        <i className={`ph-bold ${isExporting ? 'ph-spinner animate-spin' : 'ph-download-simple'}`}></i> {isExporting ? (lang === 'ar' ? 'جاري التحميل...' : 'Generating PDF...') : (lang === 'ar' ? 'تحميل التقرير' : 'Download Report')}
+                                    </button>
+                                </div>
+                                <div id="report-content" className="p-8 bg-slate-50 rounded-2xl border border-slate-100">
+                                    <div className="mb-8 border-b border-slate-200 pb-6 flex justify-between items-center">
+                                        <div>
+                                            <h3 className="text-2xl font-black text-trevo-blue">{lang === 'ar' ? 'تقرير أداء تريفو' : 'Trevo Performance Report'}</h3>
+                                            <p className="text-slate-500 font-medium">{lang === 'ar' ? 'توقعات مالية تفاعلية' : 'Interactive Financial Projections'}</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                                        <div className="lg:col-span-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                                            <h3 className="text-lg font-bold text-slate-800 mb-6">{lang === 'ar' ? 'متغيرات الإدخال' : 'Input Variables'}</h3>
+                                            <div className="space-y-4 mb-6">
+                                                <div>
+                                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase">{lang === 'ar' ? 'تكلفة الحملة ($)' : 'Campaign Cost ($)'}</label>
+                                                    <input type="number" value={cost} onChange={(e) => setCost(e.target.value)} onKeyUp={calculateROI} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg outline-none focus:border-trevo-orange" />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-xs font-bold text-slate-500 mb-2 uppercase">{lang === 'ar' ? 'الإيرادات المتوقعة ($)' : 'Expected Revenue ($)'}</label>
+                                                    <input type="number" value={revenue} onChange={(e) => setRevenue(e.target.value)} onKeyUp={calculateROI} className="w-full p-4 bg-white border border-slate-300 rounded-xl font-bold text-lg outline-none focus:border-trevo-orange" />
+                                                </div>
+                                            </div>
+                                            <button onClick={calculateROI} className="w-full py-4 bg-trevo-blue text-white rounded-xl font-bold text-lg hover:bg-blue-900 transition-colors">{lang === 'ar' ? 'تحديث التوقعات' : 'Update Projections'}</button>
+                                        </div>
+                                        <div className="lg:col-span-8 flex flex-col md:flex-row gap-8 bg-white p-6 border border-slate-200 rounded-2xl">
+                                            <div className="flex-1 flex items-end justify-around h-64 border-b-2 border-slate-100 pb-2">
+                                                <div className="w-16 flex flex-col items-center justify-end h-full group"><span className="text-xs font-bold text-slate-400 mb-2">${numCost}</span><div className="w-full bg-slate-300 rounded-t-lg bar-transition" style={{ height: `${heightCost}%` }}></div><span className="text-xs font-bold text-slate-500 mt-3">{lang === 'ar' ? 'الاستثمار' : 'Investment'}</span></div>
+                                                <div className="w-16 flex flex-col items-center justify-end h-full group"><span className="text-xs font-bold text-slate-400 mb-2">${numRev}</span><div className="w-full bg-trevo-blue rounded-t-lg bar-transition" style={{ height: `${heightRev}%` }}></div><span className="text-xs font-bold text-slate-500 mt-3">{lang === 'ar' ? 'الإيرادات' : 'Revenue'}</span></div>
+                                                <div className="w-16 flex flex-col items-center justify-end h-full group"><span className={`text-xs font-bold mb-2 ${numProfit >= 0 ? 'text-green-500' : 'text-red-500'}`}>${Math.abs(numProfit)}</span><div className={`w-full rounded-t-lg bar-transition ${numProfit >= 0 ? 'bg-green-400' : 'bg-red-400'}`} style={{ height: `${heightProfit}%` }}></div><span className="text-xs font-bold text-slate-500 mt-3">{numProfit >= 0 ? (lang === 'ar' ? 'صافي الربح' : 'Net Profit') : (lang === 'ar' ? 'صافي الخسارة' : 'Net Loss')}</span></div>
+                                            </div>
+                                            <div className="w-full md:w-48 flex flex-col justify-center items-center p-6 bg-slate-50 rounded-xl border border-slate-100">
+                                                <p className="text-slate-500 font-bold uppercase tracking-widest mb-2 text-[10px] text-center">{lang === 'ar' ? 'العائد (ROI)' : 'Calculated ROI'}</p>
+                                                <p className={`text-5xl font-black mb-2 ${numProfit >= 0 ? 'text-green-500' : 'text-red-500'}`}>{numProfit >= 0 ? '+' : ''}{roiResult}%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+
+                    case "settings":
+                        return (
+                            <div className="bg-white rounded-3xl p-10 shadow-sm border border-slate-200 min-h-[60vh] fade-in">
+                                <h2 className="text-3xl font-black text-trevo-blue mb-8 flex items-center gap-3"><i className="ph-fill ph-gear text-trevo-orange"></i> {lang === 'ar' ? 'إعدادات النظام' : 'System Settings'}</h2>
+                                <div className="space-y-6 max-w-2xl">
+                                    <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                                        <div>
+                                            <h4 className="font-bold text-slate-800 text-lg">{lang === 'ar' ? 'حالة السيرفر' : 'System Status'}</h4>
+                                            <p className="text-sm text-slate-500 mt-1">{lang === 'ar' ? 'تم فحص الاتصال بالخادم الداخلي بنجاح.' : 'Check Backend connection to Flask server.'}</p>
+                                        </div>
+                                        <div className="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-700 font-bold rounded-lg">
+                                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>{engineStatus.toUpperCase()}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    default: return null;
+                }
+            };
+
+            return (
+                <div className="flex min-h-screen">
+                    <aside className="w-72 bg-trevo-blue text-white flex flex-col shadow-2xl z-10 sticky top-0 h-screen">
+                        <div className="p-8 flex items-center gap-4 border-b border-white/10 cursor-pointer" onClick={() => window.location.href = 'index.html'}>
+                            <div className="w-12 h-12 bg-trevo-orange rounded-xl flex items-center justify-center shadow-lg"><span className="text-2xl font-black text-white">T</span></div>
+                            <div><h1 className="text-2xl font-black tracking-tight">Trevo AI</h1><p className="text-[10px] text-trevo-orange font-bold uppercase tracking-widest">Enterprise OS</p></div>
+                        </div>
+                        <nav className="flex-1 p-4 space-y-2 mt-4">
+                            {menuItems.map(item => (
+                                <button key={item.id} onClick={() => setActiveMenu(item.id)} className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${activeMenu === item.id ? 'bg-white/10 text-trevo-orange border border-white/5' : 'text-slate-300 hover:bg-white/5 hover:text-white'}`}>
+                                    <i className={`ph-fill ${item.icon} text-xl`}></i> {lang === 'ar' ? item.labelAr : item.labelEn}
+                                </button>
+                            ))}
+                        </nav>
+                    </aside>
+                    <main className="flex-1 flex flex-col bg-[#F8FAFC] min-h-screen">
+                        <header className="bg-white px-10 py-6 border-b border-slate-200 flex justify-between items-center sticky top-0 z-0 shadow-sm">
+                            <div><h2 className="text-3xl font-black text-trevo-blue capitalize">
+                                {lang === 'ar' ? menuItems.find(m => m.id === activeMenu)?.labelAr : activeMenu.replace('-', ' ')}
+                            </h2></div>
+                            <div className="flex items-center gap-3 pl-6">
+                                <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} className="px-4 py-2 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-colors text-sm border border-slate-200 mx-2">
+                                    {lang === 'en' ? 'العربية' : 'English'}
+                                </button>
+                                <div className="w-10 h-10 bg-trevo-blue text-white rounded-full flex items-center justify-center font-bold">SM</div>
+                                <div className="hidden md:block text-left">
+                                    <p className="text-sm font-bold text-slate-800">Sherif Almeidany</p>
+                                    <p className="text-xs text-slate-500 font-medium">{lang === 'ar' ? 'مدير النظام' : 'Admin'}</p>
+                                </div>
+                            </div>
+                        </header>
+                        <div className="p-10">{renderContent()}</div>
+                    </main>
+                </div>
+            );
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

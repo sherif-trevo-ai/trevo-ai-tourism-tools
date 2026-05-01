@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trevo | AI-Powered Tourism Superplatform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Official Trevo Typography: Montserrat & Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --trevo-navy: #1A3A6C;
+            --trevo-navy-deep: #122855;
+            --trevo-orange: #F5A623;
+            --trevo-orange-dark: #D4891A;
+            --trevo-cream: #FAF8F2;
+            --trevo-body: #2D2D2D;
+            --trevo-font: 'Montserrat', sans-serif;
+            --trevo-font-arabic: 'Cairo', sans-serif;
+        }
+        
+        body { 
+            font-family: var(--trevo-font); 
+            background-color: var(--trevo-cream); 
+            color: var(--trevo-body); 
+            font-size: 16px; 
+            line-height: 1.65; 
+            overflow-x: hidden; 
+            scroll-behavior: smooth; 
+        }
+
+        /* 🌍 Bilingual Logic */
+        html[dir="ltr"] .show-ar { display: none !important; }
+        html[dir="rtl"] .show-en { display: none !important; }
+        html[dir="rtl"] body { font-family: var(--trevo-font-arabic); }
+        html[dir="rtl"] .hero-title, html[dir="rtl"] .section-title, html[dir="rtl"] .font-serif { font-family: var(--trevo-font-arabic); font-weight: 800; }
+        
+        .font-arabic { font-family: var(--trevo-font-arabic); }
+        .hero-title { font-weight: 900; font-size: clamp(48px, 6vw, 72px); line-height: 1.05; letter-spacing: -0.02em; }
+        .section-title { font-weight: 800; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; }
+        .card-title { font-weight: 700; font-size: 20px; }
+        .eyebrow { font-weight: 500; font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; }
+        
+        .bg-trevo-navy { background-color: var(--trevo-navy); }
+        .text-trevo-navy { color: var(--trevo-navy); }
+        .bg-trevo-orange { background-color: var(--trevo-orange); }
+        .text-trevo-orange { color: var(--trevo-orange); }
+        
+        .glass-nav { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 0, 0, 0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(26, 58, 108, 0.95) 0%, rgba(26, 58, 108, 0.8) 50%, rgba(26, 58, 108, 0.4) 100%), url('background.jpg');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+
+        .mena-bg { background: linear-gradient(135deg, var(--trevo-navy-deep) 0%, var(--trevo-navy) 100%); position: relative; overflow: hidden; }
+        .calligraphy-bg {
+            position: absolute; font-family: var(--trevo-font-arabic); font-weight: 700; color: var(--trevo-orange); opacity: 0.05;
+            user-select: none; line-height: 1; text-align: center; direction: rtl; left: 50%; top: 50%; transform: translate(-50%, -50%);
+        }
+
+        .btn-trevo { background-color: var(--trevo-orange); color: #fff; font-weight: 700; font-size: 15px; border-radius: 8px; padding: 14px 32px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .btn-trevo:hover { background-color: var(--trevo-orange-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245, 166, 35, 0.25); }
+        
+        .btn-outline { background-color: transparent; border: 1px solid rgba(255,255,255,0.4); color: #fff; font-weight: 600; font-size: 15px; border-radius: 8px; padding: 14px 32px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .btn-outline:hover { background-color: rgba(255,255,255,0.1); border-color: #fff; }
+
+        .feature-card { background: #fff; padding: 40px; border-radius: 16px; border: 1px solid #E5E7EB; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(26, 58, 108, 0.08); border-color: var(--trevo-orange); }
+        .floating { animation: floating 6s ease-in-out infinite; }
+        @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Toast Notification System -->
+    <div id="toast" class="fixed bottom-10 right-10 transform translate-y-20 opacity-0 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-500 z-[100]">
+        <i class="ph-fill ph-check-circle text-3xl"></i>
+        <div>
+            <p class="font-bold text-lg show-en">Request Sent Successfully!</p>
+            <p class="font-bold text-lg show-ar">تم إرسال الطلب بنجاح!</p>
+            <p class="text-sm text-green-100 show-en">Our MENA tourism experts will contact you shortly.</p>
+            <p class="text-sm text-green-100 show-ar">سيتواصل معك خبراء السياحة لدينا قريباً.</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300">
+        <div class="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="cursor-pointer" onclick="window.scrollTo(0,0)">
+                <img src="trevo-logo.svg" alt="Trevo" class="h-10" onerror="this.outerHTML='<span class=\'text-3xl font-black text-trevo-navy\'>TREVO</span>'" />
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-semibold text-slate-600 text-[14px]">
+                <a href="#features" class="hover:text-trevo-orange transition-colors">
+                    <span class="show-en">Platform</span><span class="show-ar">المنصة</span>
+                </a>
+                <a href="#traveler" class="hover:text-trevo-orange transition-colors">
+                    <span class="show-en">Traveler App</span><span class="show-ar">تطبيق المسافر</span>
+                </a>
+                <a href="#mena" class="hover:text-trevo-orange transition-colors">
+                    <span class="show-en">MENA Focus</span><span class="show-ar">الشرق الأوسط</span>
+                </a>
+                <a href="#pricing" class="hover:text-trevo-orange transition-colors">
+                    <span class="show-en">Pricing</span><span class="show-ar">الأسعار</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-6">
+                <!-- زر تغيير اللغة -->
+                <span id="lang-toggle" onclick="toggleLanguage()" class="hidden lg:block font-arabic font-bold text-trevo-orange cursor-pointer hover:opacity-80 transition-opacity">بالعربية</span>
+                <a href="dashboard.html" class="btn-trevo px-6 py-2.5">
+                    <span class="show-en">Launch App</span><span class="show-ar">دخول النظام</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-40 pb-24 md:pt-56 md:pb-32 hero-bg text-white">
+        <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 eyebrow bg-white/5 mb-8 text-trevo-orange">
+                    <div class="w-1.5 h-1.5 rounded-full bg-trevo-orange animate-pulse"></div>
+                    <span class="show-en">AI-Powered Tourism Superplatform</span>
+                    <span class="show-ar tracking-normal">منصة السياحة الشاملة بالذكاء الاصطناعي</span>
+                </div>
+                
+                <h1 class="hero-title mb-6">
+                    <span class="show-en">Grow Your Travel Business with <span class="text-trevo-orange">Intelligent Automation.</span></span>
+                    <span class="show-ar">طوّر أعمالك السياحية باستخدام <span class="text-trevo-orange">الذكاء الاصطناعي.</span></span>
+                </h1>
+                
+                <p class="font-arabic text-[20px] text-orange-200 opacity-90 mb-6 font-bold" dir="rtl">
+                    <span class="show-en">منصة سياحية ذكية مصممة لسوق الشرق الأوسط وشمال أفريقيا</span>
+                    <span class="show-ar">مصممة خصيصاً لسوق الشرق الأوسط وشمال أفريقيا</span>
+                </p>
+                
+                <p class="text-[16px] text-white/80 mb-10 max-w-lg leading-[1.7]">
+                    <span class="show-en">Trevo empowers travel agencies, hotels, and tour operators across MENA with AI-driven marketing, smart operations, and a B2C traveler app.</span>
+                    <span class="show-ar">تريفو تمكن وكالات السفر والفنادق في الشرق الأوسط من أتمتة التسويق، وإدارة العمليات الذكية، مع توفير تطبيق متكامل للمسافرين.</span>
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                    <a href="dashboard.html" class="btn-trevo">
+                        <span class="show-en">Start 14-Day Free Trial</span><span class="show-ar">ابدأ تجربتك المجانية</span>
+                    </a>
+                    <a href="#features" class="btn-outline">
+                        <span class="show-en">Watch Demo</span><span class="show-ar">شاهد العرض</span>
+                    </a>
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="flex items-center gap-6 flex-wrap text-sm font-bold text-white/70 border-t border-white/20 pt-8">
+                    <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-trevo-orange text-xl"></i> <span class="show-en">No credit card required</span><span class="show-ar">لا يتطلب بطاقة ائتمان</span></div>
+                    <div class="w-1 h-1 bg-white/30 rounded-full"></div>
+                    <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-trevo-orange text-xl"></i> <span class="show-en">Arabic-first interface</span><span class="show-ar">واجهة عربية بالكامل</span></div>
+                    <div class="w-1 h-1 bg-white/30 rounded-full"></div>
+                    <div class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-trevo-orange text-xl"></i> <span class="show-en">Setup in 30 minutes</span><span class="show-ar">إعداد في ٣٠ دقيقة</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="bg-white border-b border-gray-200 py-12 relative z-20 -mt-10 mx-6 lg:mx-auto max-w-[1000px] rounded-[16px] shadow-xl" data-aos="fade-up">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-100">
+            <div><p class="text-[40px] font-black text-trevo-orange mb-1 leading-none">2,000+</p><p class="eyebrow text-slate-500 mt-2">MENA Businesses</p></div>
+            <div><p class="text-[40px] font-black text-trevo-navy mb-1 leading-none">14</p><p class="eyebrow text-slate-500 mt-2">Countries Served</p></div>
+            <div><p class="text-[40px] font-black text-trevo-navy mb-1 leading-none">38%</p><p class="eyebrow text-slate-500 mt-2">Booking Growth</p></div>
+            <div><p class="text-[40px] font-black text-trevo-navy mb-1 leading-none">4.9<span class="text-2xl text-trevo-orange">★</span></p><p class="eyebrow text-slate-500 mt-2">Satisfaction Score</p></div>
+        </div>
+    </div>
+
+    <!-- B2B FEATURES -->
+    <section id="features" class="py-24">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                <span class="eyebrow text-trevo-orange mb-4 block">For Travel Businesses</span>
+                <h2 class="section-title text-trevo-navy mb-6">Everything you need to <span class="text-trevo-orange">compete and grow</span></h2>
+                <p class="text-[16px] text-slate-600">From marketing automation to operations management — Trevo is the all-in-one platform built for MENA travel SMEs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 bg-orange-50 rounded-[12px] flex items-center justify-center mb-6 text-trevo-orange text-2xl"><i class="ph-fill ph-lightning"></i></div>
+                    <h3 class="card-title text-trevo-navy mb-3">AI Marketing Automation</h3>
+                    <p class="text-slate-600 text-[15px] mb-6">Generate Arabic and English campaigns, social posts, and email sequences with one click. Our AI is trained on MENA travel consumer behavior.</p>
+                    <span class="eyebrow text-trevo-orange bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100">AI-Powered</span>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 bg-blue-50 rounded-[12px] flex items-center justify-center mb-6 text-trevo-navy text-2xl"><i class="ph-fill ph-calendar-check"></i></div>
+                    <h3 class="card-title text-trevo-navy mb-3">Smart Booking Management</h3>
+                    <p class="text-slate-600 text-[15px] mb-6">Centralized reservation system with real-time availability, automated confirmations, and a unified inbox for WhatsApp, email, and web.</p>
+                    <span class="eyebrow text-trevo-navy bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100">Operational</span>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 bg-green-50 rounded-[12px] flex items-center justify-center mb-6 text-green-600 text-2xl"><i class="ph-fill ph-whatsapp-logo"></i></div>
+                    <h3 class="card-title text-trevo-navy mb-3">WhatsApp-First CRM</h3>
+                    <p class="text-slate-600 text-[15px] mb-6">A CRM built around how MENA travelers actually communicate, with automated follow-ups and lead scoring.</p>
+                    <span class="eyebrow text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">MENA-Native</span>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-14 h-14 bg-orange-50 rounded-[12px] flex items-center justify-center mb-6 text-trevo-orange text-2xl"><i class="ph-fill ph-chart-line-up"></i></div>
+                    <h3 class="card-title text-trevo-navy mb-3">Predictive ROI</h3>
+                    <p class="text-slate-600 text-[15px] mb-6">Interactive charts to forecast your revenue and net profit before launching. Download executive PDF reports.</p>
+                    <span class="eyebrow text-trevo-orange bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100">Analytics</span>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="w-14 h-14 bg-blue-50 rounded-[12px] flex items-center justify-center mb-6 text-trevo-navy text-2xl"><i class="ph-fill ph-virtual-reality"></i></div>
+                    <h3 class="card-title text-trevo-navy mb-3">GeoVR Engine (Beta)</h3>
+                    <p class="text-slate-600 text-[15px] mb-6">Offer immersive 3D mapping and virtual reality tours to high-end prospects before they book a flight.</p>
+                    <span class="eyebrow text-trevo-navy bg-blue-50 px-3 py-1.5 rounded-full border border-blue-100">Immersive</span>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-14 h-14 bg-green-50 rounded-[12px] flex items-center justify-center mb-6 text-green-600 text-2xl"><i class="ph-fill ph-storefront"></i></div>
+                    <h3 class="card-title text-trevo-navy mb-3">Channel Marketplace</h3>
+                    <p class="text-slate-600 text-[15px] mb-6">List your packages directly on the Trevo B2C traveler app and reach 500K+ active MENA travelers effortlessly.</p>
+                    <span class="eyebrow text-green-600 bg-green-50 px-3 py-1.5 rounded-full border border-green-100">Distribution</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- B2C TRAVELER APP -->
+    <section id="traveler" class="py-24 bg-white border-t border-slate-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="relative flex justify-center floating" data-aos="fade-right">
+                <div class="absolute w-[400px] h-[400px] bg-orange-100 rounded-full blur-[100px] -z-10 top-10"></div>
+                <div class="w-[300px] bg-white border-[8px] border-slate-800 rounded-[2.5rem] shadow-2xl overflow-hidden relative">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-xl z-20"></div>
+                    <div class="bg-slate-50 h-[600px] p-6 pt-10">
+                        <div class="text-center font-arabic font-bold text-slate-800 mb-6 mt-4" dir="rtl">اكتشف وجهتك القادمة</div>
+                        <div class="bg-white border border-slate-200 rounded-full p-3 text-xs text-slate-400 font-arabic text-right mb-6 shadow-sm flex items-center justify-end gap-2" dir="rtl">
+                            <span>ابحث عن رحلة، فندق، جولة...</span> <i class="ph-bold ph-magnifying-glass"></i>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+                                <div class="font-bold text-trevo-navy text-sm">$890</div>
+                                <div class="text-right">
+                                    <div class="font-arabic font-bold text-slate-800 text-sm">إسطنبول — Istanbul</div>
+                                    <div class="text-xs text-slate-400">5 nights · All inclusive</div>
+                                </div>
+                                <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-2xl">🕌</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+                                <div class="font-bold text-trevo-navy text-sm">$620</div>
+                                <div class="text-right">
+                                    <div class="font-arabic font-bold text-slate-800 text-sm">شرم الشيخ — Sharm</div>
+                                    <div class="text-xs text-slate-400">7 nights · Beach resort</div>
+                                </div>
+                                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl">🌊</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
+                                <div class="font-bold text-trevo-navy text-sm">$1,240</div>
+                                <div class="text-right">
+                                    <div class="font-arabic font-bold text-slate-800 text-sm">جبال الألب — Swiss Alps</div>
+                                    <div class="text-xs text-slate-400">4 nights · Adventure</div>
+                                </div>
+                                <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center text-2xl">🏔</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-aos="fade-left">
+                <span class="eyebrow text-trevo-orange mb-4 block">Trevo Traveler App</span>
+                <h2 class="section-title text-trevo-navy mb-6">A marketplace for <span class="text-trevo-orange">MENA travelers.</span></h2>
+                <p class="text-[16px] text-slate-600 mb-8">Put your packages in front of hundreds of thousands of Arabic-speaking travelers actively planning their next trip.</p>
+                
+                <ul class="space-y-6">
+                    <li class="flex gap-4">
+                        <div class="mt-1"><i class="ph-fill ph-check-circle text-2xl text-trevo-orange"></i></div>
+                        <div>
+                            <h4 class="card-title text-trevo-navy">Arabic-First Experience</h4>
+                            <p class="text-slate-600 text-sm mt-1">Fully Arabic UI with RTL design — the way MENA travelers expect to browse and book.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <div class="mt-1"><i class="ph-fill ph-check-circle text-2xl text-trevo-orange"></i></div>
+                        <div>
+                            <h4 class="card-title text-trevo-navy">AI Trip Planner</h4>
+                            <p class="text-slate-600 text-sm mt-1">Travelers describe their dream trip in Arabic and our AI builds a full itinerary, connecting to your listings.</p>
+                        </div>
+                    </li>
+                    <li class="flex gap-4">
+                        <div class="mt-1"><i class="ph-fill ph-check-circle text-2xl text-trevo-orange"></i></div>
+                        <div>
+                            <h4 class="card-title text-trevo-navy">Free Listing for Subscribers</h4>
+                            <p class="text-slate-600 text-sm mt-1">All Trevo B2B subscribers get their packages listed on the traveler app at no additional cost.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENA SECTION -->
+    <section id="mena" class="py-32 mena-bg text-white">
+        <div class="calligraphy-bg text-[150px] md:text-[250px] whitespace-nowrap">رحلة سياحة تريفو</div>
+        <div class="max-w-[1200px] mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div data-aos="fade-right">
+                <span class="eyebrow text-trevo-orange mb-4 block">Built for MENA</span>
+                <h2 class="section-title mb-6">The only platform that truly <span class="text-trevo-orange">understands the market</span></h2>
+                <p class="text-[16px] text-white/80 mb-10 leading-[1.7]">Arabic-first by design. Local payment gateways. Compliant with regional regulations. Optimized for how travel is bought and sold across MENA.</p>
+                <div class="flex flex-wrap gap-3 mb-10">
+                    <span class="px-4 py-2 bg-white/10 border border-white/20 rounded-full text-[13px] font-bold">🇸🇦 Saudi Arabia</span>
+                    <span class="px-4 py-2 bg-white/10 border border-white/20 rounded-full text-[13px] font-bold">🇦🇪 UAE</span>
+                    <span class="px-4 py-2 bg-white/10 border border-white/20 rounded-full text-[13px] font-bold">🇪🇬 Egypt</span>
+                    <span class="px-4 py-2 bg-white/10 border border-white/20 rounded-full text-[13px] font-bold">🇯🇴 Jordan</span>
+                    <span class="px-4 py-2 bg-trevo-orange text-white rounded-full text-[13px] font-bold">+ 10 More</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" data-aos="fade-left">
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-3xl mb-3">🌍</div>
+                    <h4 class="font-bold text-lg mb-1">Arabic RTL Interface</h4>
+                    <p class="text-sm text-blue-200">Full right-to-left support across all dashboard tools.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-3xl mb-3">💳</div>
+                    <h4 class="font-bold text-lg mb-1">Local Gateways</h4>
+                    <p class="text-sm text-blue-200">Mada, KNET, Fawry, Visa, and more integrated.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-3xl mb-3">📞</div>
+                    <h4 class="font-bold text-lg mb-1">Local Support</h4>
+                    <p class="text-sm text-blue-200">Arabic-speaking support, working MENA hours.</p>
+                </div>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-3xl mb-3">🏦</div>
+                    <h4 class="font-bold text-lg mb-1">Compliant</h4>
+                    <p class="text-sm text-blue-200">Travel authority compliant across 14 markets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="py-24">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                <span class="eyebrow text-trevo-orange mb-4 block">Pricing</span>
+                <h2 class="section-title text-trevo-navy mb-6">SME-friendly pricing. <span class="text-trevo-orange">Enterprise power.</span></h2>
+                <p class="text-[16px] text-slate-600">Flat monthly pricing, no hidden fees. All plans include Arabic interface and the Trevo traveler app listing.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center max-w-[1100px] mx-auto">
+                <!-- Starter -->
+                <div class="feature-card text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="eyebrow text-slate-500 mb-2">Starter</div>
+                    <div class="text-[48px] font-black text-trevo-navy mb-4">$49 <span class="text-[16px] font-medium text-slate-400">/mo</span></div>
+                    <p class="text-slate-600 text-[14px] mb-8">Perfect for independent agents & small agencies.</p>
+                    <ul class="space-y-4 mb-8 text-slate-600 text-sm font-medium text-left">
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> Up to 100 bookings/month</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> AI Marketing (5 campaigns)</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> WhatsApp CRM (1 user)</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> Traveler app listing</li>
+                    </ul>
+                    <a href="dashboard.html" class="btn-trevo w-full bg-slate-100 text-trevo-navy hover:bg-slate-200 shadow-none">Start Free Trial</a>
+                </div>
+
+                <!-- Growth -->
+                <div class="bg-trevo-navy text-white p-10 rounded-[16px] text-center relative shadow-2xl md:-translate-y-4 border border-trevo-navy-deep" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute top-0 inset-x-0 transform -translate-y-1/2 flex justify-center">
+                        <span class="bg-trevo-orange text-white eyebrow py-2 px-6 rounded-full shadow-lg">Most Popular</span>
+                    </div>
+                    <div class="eyebrow text-white/60 mb-2 mt-4">Growth</div>
+                    <div class="text-[48px] font-black text-white mb-4">$149 <span class="text-[16px] font-medium text-white/50">/mo</span></div>
+                    <p class="text-white/80 text-[14px] mb-8">For agencies ready to scale with automation.</p>
+                    <ul class="space-y-4 mb-8 text-blue-100 text-sm font-medium text-left">
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> Unlimited bookings</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> Unlimited AI campaigns</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> WhatsApp CRM (5 users)</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> AI Analytics & Interactive ROI</li>
+                    </ul>
+                    <a href="dashboard.html" class="btn-trevo w-full">Start 14-Day Free Trial</a>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="feature-card text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="eyebrow text-slate-500 mb-2">Enterprise</div>
+                    <div class="text-[40px] font-black text-trevo-navy mb-4 mt-3">Custom</div>
+                    <p class="text-slate-600 text-[14px] mb-8 mt-5">Custom solutions for governments & hotels.</p>
+                    <ul class="space-y-4 mb-8 text-slate-600 text-sm font-medium text-left mt-8">
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> Everything in Growth</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> Unlimited users & seats</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> Custom AI Model Training</li>
+                        <li class="flex items-center gap-3"><i class="ph-bold ph-check text-trevo-orange text-lg"></i> White-label Dashboard</li>
+                    </ul>
+                    <a href="#contact" class="btn-trevo w-full bg-slate-100 text-trevo-navy hover:bg-slate-200 shadow-none">Talk to Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="eyebrow text-trevo-orange mb-4 block">What Our Customers Say</span>
+                <h2 class="section-title text-trevo-navy">Trusted by travel leaders across MENA</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testi 1 -->
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-trevo-orange mb-4 text-xl tracking-widest">★★★★★</div>
+                    <p class="text-slate-600 italic mb-8 text-sm leading-relaxed">"Trevo transformed how we run our agency. The AI generates Arabic content better than what we wrote manually, and bookings are up 40%."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center font-arabic font-bold text-trevo-orange">أ.م</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">Ahmed Al-Mansouri</h4>
+                            <p class="text-xs text-slate-500">CEO, Nakheel Travel — Dubai</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testi 2 -->
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-trevo-orange mb-4 text-xl tracking-widest">★★★★★</div>
+                    <p class="text-slate-600 italic mb-8 text-sm leading-relaxed">"As a hotel manager, I was skeptical. But the WhatsApp CRM saved us 3 hours daily. Our team handles twice the inquiries with half the effort."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center font-arabic font-bold text-trevo-navy">س.ع</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">Sara Al-Aqeel</h4>
+                            <p class="text-xs text-slate-500">GM, Sarab Hotel — Riyadh</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testi 3 -->
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-trevo-orange mb-4 text-xl tracking-widest">★★★★★</div>
+                    <p class="text-slate-600 italic mb-8 text-sm leading-relaxed">"The traveler app listing brought us clients we never could have reached outside Egypt. The pricing for SMEs is incredibly fair."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center font-arabic font-bold text-green-600">م.ح</div>
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">Mohamed Hassan</h4>
+                            <p class="text-xs text-slate-500">Founder, Luxor Tours — Cairo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Lead Gen Form -->
+    <section id="contact" class="py-24 bg-trevo-navy text-white relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-trevo-orange/10 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h2 class="section-title mb-4">Ready to grow your travel business <span class="text-trevo-orange">faster?</span></h2>
+                <p class="text-blue-200 font-medium">Join 2,000+ travel businesses across MENA. Request a demo or start your 14-day free trial.</p>
+                <p class="font-arabic text-orange-200 mt-2" dir="rtl">ابدأ تجربتك المجانية اليوم — فريق الدعم العربي جاهز</p>
+            </div>
+            
+            <form id="lead-form" class="space-y-4 max-w-2xl mx-auto" data-aos="zoom-in" data-aos-delay="100">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" required class="flex-1 p-4 bg-white/10 border border-white/20 rounded-xl outline-none focus:border-trevo-orange placeholder-blue-200 text-white transition-all" placeholder="Full Name">
+                    <input type="email" required class="flex-1 p-4 bg-white/10 border border-white/20 rounded-xl outline-none focus:border-trevo-orange placeholder-blue-200 text-white transition-all" placeholder="Work Email">
+                </div>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" required class="flex-1 p-4 bg-white/10 border border-white/20 rounded-xl outline-none focus:border-trevo-orange placeholder-blue-200 text-white transition-all" placeholder="Agency / Hotel Name">
+                    <button type="button" id="submit-btn" onclick="submitLeadForm()" class="btn-trevo md:w-1/3 py-4">Get Started</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#0F172A] text-slate-400 py-16 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+                <div class="lg:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="trevo-logo.svg" alt="Trevo" class="h-8" onerror="this.outerHTML='<span class=\'text-2xl font-black text-white\'>TREVO</span>'" />
+                    </div>
+                    <p class="text-sm font-medium leading-relaxed max-w-xs mb-6">AI-powered tourism superplatform built for travel agencies, hotels, and tour operators across the MENA region.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors"><i class="ph-fill ph-linkedin-logo text-xl"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors"><i class="ph-fill ph-twitter-logo text-xl"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors"><i class="ph-fill ph-instagram-logo text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h5 class="text-white font-bold mb-4 uppercase tracking-wider text-sm">Platform</h5>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">AI Marketing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Booking Management</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">WhatsApp CRM</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Predictive Analytics</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Traveler App</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="text-white font-bold mb-4 uppercase tracking-wider text-sm">Company</h5>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">About Trevo</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Press Kit</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="text-white font-bold mb-4 uppercase tracking-wider text-sm">Support</h5>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Arabic Support</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Onboarding</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm">© 2026 Trevo Technologies. All rights reserved. منصة تريفو للسياحة الذكية.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ once: true, offset: 50, duration: 800, easing: 'ease-out-cubic' });
+
+        // 🌍 Language Toggle Engine
+        function toggleLanguage() {
+            const htmlTag = document.documentElement;
+            const langBtn = document.getElementById('lang-toggle');
+            
+            if (htmlTag.getAttribute('dir') === 'ltr') {
+                htmlTag.setAttribute('dir', 'rtl');
+                htmlTag.setAttribute('lang', 'ar');
+                langBtn.innerText = 'English';
+                langBtn.style.fontFamily = "var(--trevo-font)";
+            } else {
+                htmlTag.setAttribute('dir', 'ltr');
+                htmlTag.setAttribute('lang', 'en');
+                langBtn.innerText = 'بالعربية';
+                langBtn.style.fontFamily = "var(--trevo-font-arabic)";
+            }
+        }
+
+        // Contact Form Functionality
+        function submitLeadForm() {
+            const btn = document.getElementById('submit-btn');
+            const form = document.getElementById('lead-form');
+            const toast = document.getElementById('toast');
+            
+            if(!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin text-xl"></i> Processing...';
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Get Started';
+                btn.classList.remove('opacity-80', 'cursor-not-allowed');
+                form.reset();
+                
+                toast.classList.remove('translate-y-20', 'opacity-0');
+                setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); }, 4000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

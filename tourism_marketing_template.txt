@@ -1,0 +1,10 @@
+Tour Name:
+Destination:
+Duration:
+Price:
+Target Audience:
+Main Activities:
+Key Features:
+Promotion Message:
+Call to Action:
+Contact Information:
