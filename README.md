@@ -50,3 +50,4 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 👤 Maintainer
 **Sherif Almeidany** - Startup Founder and Business Development Professional with 19+ years of leadership in strategic marketing and sales. Currently leveraging nearly two decades of business expertise to pioneer AI-driven digital transformation in the tourism sector through Trevo.
+ 
