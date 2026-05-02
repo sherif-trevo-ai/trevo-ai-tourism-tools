@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trevo AI | Enterprise Dashboard</title>
     
+    <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -15,20 +16,20 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F1F5F9; color: #0F172A; overflow: hidden; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; color: #0F172A; overflow: hidden; }
         html[dir="rtl"] body { font-family: 'Cairo', sans-serif; }
         
-        .trevo-gradient { background: linear-gradient(135deg, #1A3A6C 0%, #0F172A 100%); }
-        .trevo-orange { background-color: #F5A623; }
-        .text-trevo-orange { color: #F5A623; }
+        .trevo-primary { background-color: #1A3A6C; }
+        .trevo-text-primary { color: #1A3A6C; }
+        .trevo-accent { background-color: #F5A623; }
+        .trevo-text-accent { color: #F5A623; }
         
-        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
-        .sidebar-item-active { background: rgba(245, 166, 35, 0.1); color: #F5A623; border-right: 4px solid #F5A623; }
+        .sidebar-item-active { background: rgba(255, 255, 255, 0.1); color: #F5A623; border-right: 3px solid #F5A623; }
         
-        .fade-in { animation: fadeIn 0.3s ease-out; }
+        .fade-in { animation: fadeIn 0.25s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 10px; }
     </style>
 </head>
@@ -38,29 +39,25 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        // Configuration
         const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
         const API_BASE_URL = isLocal ? "http://127.0.0.1:5000" : "https://trevo-ai-tourism-tools.onrender.com";
 
         function App() {
-            // App State
             const [activeMenu, setActiveMenu] = useState(() => localStorage.getItem('tv_menu') || "dashboard");
             const [lang, setLang] = useState(() => localStorage.getItem('tv_lang') || "en");
             const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
             const [engineStatus, setEngineStatus] = useState("checking");
 
-            // Data State (حفظ البيانات لعدم ضياعها عند التنقل)
             const [location, setLocation] = useState(() => localStorage.getItem('tv_loc') || "Aswan, Egypt");
             const [audience, setAudience] = useState(() => localStorage.getItem('tv_aud') || "High Net Worth Individuals");
             const [aiContent, setAiContent] = useState(() => localStorage.getItem('tv_content') || "");
             const [cost, setCost] = useState(() => localStorage.getItem('tv_cost') || "2000");
-            const [revenue, setRevenue] = useState(() => localStorage.getItem('tv_rev') || "15000");
+            const [revenue, setRevenue] = useState(() => localStorage.getItem('tv_rev') || "150");
             const [roiResult, setRoiResult] = useState(() => localStorage.getItem('tv_roi') || "0");
             
             const [isGenerating, setIsGenerating] = useState(false);
             const [vrActive, setVrActive] = useState(false);
 
-            // Sync with LocalStorage
             useEffect(() => {
                 localStorage.setItem('tv_menu', activeMenu);
                 localStorage.setItem('tv_lang', lang);
@@ -73,16 +70,14 @@
                 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
             }, [activeMenu, lang, location, audience, aiContent, cost, revenue, roiResult]);
 
-            // Heartbeat check
             useEffect(() => {
                 fetch(`${API_BASE_URL}/api/status`).then(r => r.json())
                 .then(() => setEngineStatus("online")).catch(() => setEngineStatus("offline"));
             }, []);
 
-            // Functions
             const handleGenerate = async (style) => {
                 setIsGenerating(true);
-                setAiContent(lang === 'ar' ? "...جاري المعالجة" : "Generating...");
+                setAiContent(lang === 'ar' ? "جاري التوليد عبر الذكاء الاصطناعي..." : "Generating AI content...");
                 try {
                     const res = await fetch(`${API_BASE_URL}/api/generate-ai-content`, {
                         method: 'POST',
@@ -91,238 +86,288 @@
                     });
                     const data = await res.json();
                     setAiContent(data.copy || data.content);
-                } catch (e) { setAiContent("Error connecting to server."); }
+                } catch (e) { setAiContent("Error connecting to server. Please try again."); }
                 finally { setIsGenerating(false); }
             };
 
             const calculateROI = () => {
                 const c = parseFloat(cost) || 1;
                 const r = parseFloat(revenue) || 0;
-                const roi = (((r - c) / c) * 100).toFixed(1);
+                const roi = (((r - c) / c) * 100).toFixed(2);
                 setRoiResult(roi);
             };
 
-            // Components
-            const Logo = ({ size = "md" }) => (
-                <div 
-                    onClick={() => window.location.href = 'index.html'} 
-                    className="flex items-center gap-3 cursor-pointer group"
-                >
-                    <div className={`${size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'} bg-[#F5A623] rounded-xl flex items-center justify-center shadow-lg group-hover:rotate-6 transition-transform`}>
-                        <span className="text-white font-black text-xl">T</span>
-                    </div>
-                    <div className="leading-tight">
-                        <h1 className="text-white font-black text-lg tracking-tight">Trevo <span className="text-[#F5A623]">AI</span></h1>
-                        <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Enterprise OS</p>
-                    </div>
-                </div>
-            );
-
-            const Sidebar = () => (
-                <aside className={`fixed inset-y-0 z-50 w-72 trevo-gradient text-white transform transition-transform duration-300 md:relative md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : (lang === 'ar' ? 'translate-x-full' : '-translate-x-full')}`}>
-                    <div className="p-8 border-b border-white/10">
-                        <Logo />
-                    </div>
-                    <nav className="mt-6 px-4 space-y-2">
-                        {[
-                            { id: 'dashboard', icon: 'ph-squares-four', label: lang === 'ar' ? 'لوحة التحكم' : 'Dashboard' },
-                            { id: 'ai-lab', icon: 'ph-magic-wand', label: lang === 'ar' ? 'مختبر الذكاء' : 'AI Content Lab' },
-                            { id: 'geovr', icon: 'ph-virtual-reality', label: lang === 'ar' ? 'الواقع الافتراضي' : 'GeoVR Engine' },
-                            { id: 'analytics', icon: 'ph-chart-line-up', label: lang === 'ar' ? 'تحليل العوائد' : 'ROI Analytics' },
-                            { id: 'settings', icon: 'ph-gear', label: lang === 'ar' ? 'الإعدادات' : 'System Settings' }
-                        ].map(item => (
-                            <button 
-                                key={item.id}
-                                onClick={() => { setActiveMenu(item.id); setIsMobileMenuOpen(false); }}
-                                className={`w-full flex items-center gap-4 p-4 rounded-xl font-bold transition-all ${activeMenu === item.id ? 'sidebar-item-active' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}
-                            >
-                                <i className={`ph-fill ${item.icon} text-xl`}></i>
-                                {item.label}
-                            </button>
-                        ))}
-                    </nav>
-                    <div className="absolute bottom-8 left-8 right-8 p-4 bg-white/5 rounded-2xl border border-white/10">
-                        <div className="flex items-center gap-2 mb-2">
-                            <div className={`w-2 h-2 rounded-full ${engineStatus === 'online' ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
-                            <span className="text-[10px] font-bold uppercase opacity-60">Server {engineStatus}</span>
-                        </div>
-                        <p className="text-[10px] text-slate-400">v1.2.0 Build Stable</p>
-                    </div>
-                </aside>
-            );
+            const menuItems = [
+                { id: 'dashboard', icon: 'ph-squares-four', label: lang === 'ar' ? 'لوحة التحكم' : 'Dashboard' },
+                { id: 'ai-lab', icon: 'ph-magic-wand', label: lang === 'ar' ? 'مختبر الذكاء' : 'AI Content Lab' },
+                { id: 'geovr', icon: 'ph-virtual-reality', label: lang === 'ar' ? 'الواقع الافتراضي' : 'GeoVR Engine' },
+                { id: 'analytics', icon: 'ph-chart-line-up', label: lang === 'ar' ? 'تحليل العوائد' : 'ROI Analytics' },
+                { id: 'settings', icon: 'ph-gear', label: lang === 'ar' ? 'الإعدادات' : 'System Settings' }
+            ];
 
             return (
-                <div className="flex h-screen overflow-hidden">
-                    <Sidebar />
+                <div className="flex h-screen overflow-hidden text-slate-800">
                     
-                    <main className="flex-1 flex flex-col min-w-0 bg-[#F8FAFC] overflow-y-auto">
-                        {/* Header */}
-                        <header className="h-20 bg-white border-b border-slate-200 px-6 md:px-10 flex items-center justify-between sticky top-0 z-40">
-                            <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-2 text-slate-600">
-                                <i className="ph-bold ph-list text-2xl"></i>
+                    {/* Sidebar */}
+                    <aside className={`fixed inset-y-0 z-50 w-64 trevo-primary text-white transform transition-transform duration-300 md:relative md:translate-x-0 flex flex-col ${isMobileMenuOpen ? 'translate-x-0' : (lang === 'ar' ? 'translate-x-full' : '-translate-x-full')}`}>
+                        <div className="p-6 border-b border-white/10 flex items-center gap-3 cursor-pointer" onClick={() => window.location.href = 'index.html'}>
+                            <div className="w-9 h-9 trevo-accent rounded-lg flex items-center justify-center shadow-md">
+                                <span className="text-white font-black text-lg">T</span>
+                            </div>
+                            <div className="leading-tight">
+                                <h1 className="text-white font-black text-base tracking-tight">Trevo <span className="trevo-text-accent">AI</span></h1>
+                                <p className="text-[8px] text-slate-300 font-bold uppercase tracking-widest">Enterprise OS</p>
+                            </div>
+                            <button className="md:hidden ml-auto text-white" onClick={() => setIsMobileMenuOpen(false)}>
+                                <i className="ph-bold ph-x text-xl"></i>
                             </button>
-                            
-                            <h2 className="text-xl font-black text-[#1A3A6C] hidden md:block">
-                                {activeMenu.replace('-', ' ').toUpperCase()}
-                            </h2>
+                        </div>
+                        
+                        <nav className="mt-4 px-3 space-y-1 flex-1 overflow-y-auto">
+                            {menuItems.map(item => (
+                                <button 
+                                    key={item.id}
+                                    onClick={() => { setActiveMenu(item.id); setIsMobileMenuOpen(false); }}
+                                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-sm transition-all ${activeMenu === item.id ? 'sidebar-item-active' : 'text-slate-300 hover:text-white hover:bg-white/5'}`}
+                                >
+                                    <i className={`ph-fill ${item.icon} text-lg`}></i>
+                                    {item.label}
+                                </button>
+                            ))}
+                        </nav>
+                        
+                        <div className="p-4 border-t border-white/10">
+                            <div className="flex items-center gap-2 p-3 bg-white/5 rounded-lg border border-white/10">
+                                <div className={`w-2 h-2 rounded-full ${engineStatus === 'online' ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase text-slate-300 tracking-wider">Server {engineStatus}</p>
+                                    <p className="text-[9px] text-slate-500">v1.2.0 Stable</p>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                    
+                    {/* Main Content */}
+                    <main className="flex-1 flex flex-col min-w-0 bg-[#F8FAFC] overflow-y-auto">
+                        
+                        {/* Header */}
+                        <header className="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-40">
+                            <div className="flex items-center gap-3">
+                                <button onClick={() => setIsMobileMenuOpen(true)} className="md:hidden p-1 text-slate-500 hover:text-slate-800">
+                                    <i className="ph-bold ph-list text-2xl"></i>
+                                </button>
+                                <h2 className="text-lg font-black trevo-text-primary uppercase tracking-wide hidden md:block">
+                                    {activeMenu.replace('-', ' ')}
+                                </h2>
+                            </div>
 
                             <div className="flex items-center gap-4">
-                                <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} className="px-4 py-2 bg-slate-100 rounded-lg text-sm font-bold border border-slate-200">
+                                <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} className="px-3 py-1.5 bg-slate-50 hover:bg-slate-100 rounded-md text-xs font-bold text-slate-600 border border-slate-200 transition-colors">
                                     {lang === 'ar' ? 'English' : 'العربية'}
                                 </button>
                                 <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
                                     <div className="text-right hidden sm:block">
-                                        <p className="text-sm font-bold">Sherif Almeidany</p>
-                                        <p className="text-[10px] font-bold text-[#F5A623]">ADMIN PRO</p>
+                                        <p className="text-sm font-bold text-slate-800 leading-tight">Sherif Almeidany</p>
+                                        <p className="text-[9px] font-bold trevo-text-accent uppercase tracking-widest">Admin Pro</p>
                                     </div>
-                                    <div className="w-10 h-10 bg-[#1A3A6C] rounded-full flex items-center justify-center text-white font-bold">SM</div>
+                                    <div className="w-8 h-8 trevo-primary rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">SM</div>
                                 </div>
                             </div>
                         </header>
 
-                        {/* Page Content */}
-                        <div className="p-4 md:p-10">
+                        {/* Views */}
+                        <div className="p-6 md:p-8 max-w-7xl mx-auto w-full">
+                            
+                            {/* Dashboard View */}
                             {activeMenu === 'dashboard' && (
-                                <div className="fade-in space-y-8">
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                        <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm">
-                                            <i className="ph-fill ph-rocket-launch text-3xl text-[#F5A623] mb-4"></i>
-                                            <h3 className="text-slate-500 font-bold text-xs uppercase mb-1">Active Campaigns</h3>
-                                            <p className="text-3xl font-black text-[#1A3A6C]">12</p>
+                                <div className="fade-in space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                        <div className="p-5 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <i className="ph-fill ph-rocket-launch text-xl trevo-text-accent"></i>
+                                                <h3 className="text-slate-500 font-bold text-[10px] uppercase tracking-wider">Active Campaigns</h3>
+                                            </div>
+                                            <p className="text-2xl font-black trevo-text-primary">12</p>
                                         </div>
-                                        <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm">
-                                            <i className="ph-fill ph-chart-pie text-3xl text-green-500 mb-4"></i>
-                                            <h3 className="text-slate-500 font-bold text-xs uppercase mb-1">Total ROI (Avg)</h3>
-                                            <p className="text-3xl font-black text-[#1A3A6C]">{roiResult}%</p>
+                                        <div className="p-5 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <i className="ph-fill ph-chart-pie text-xl text-green-500"></i>
+                                                <h3 className="text-slate-500 font-bold text-[10px] uppercase tracking-wider">Total ROI (Avg)</h3>
+                                            </div>
+                                            <p className="text-2xl font-black trevo-text-primary">{roiResult}%</p>
                                         </div>
-                                        <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm">
-                                            <i className="ph-fill ph-users-three text-3xl text-blue-500 mb-4"></i>
-                                            <h3 className="text-slate-500 font-bold text-xs uppercase mb-1">Total Audience</h3>
-                                            <p className="text-3xl font-black text-[#1A3A6C]">84.2k</p>
+                                        <div className="p-5 bg-white rounded-xl border border-slate-200 shadow-sm flex flex-col justify-center">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <i className="ph-fill ph-users-three text-xl text-blue-500"></i>
+                                                <h3 className="text-slate-500 font-bold text-[10px] uppercase tracking-wider">Total Audience</h3>
+                                            </div>
+                                            <p className="text-2xl font-black trevo-text-primary">84.2k</p>
                                         </div>
                                     </div>
-                                    <div className="bg-[#1A3A6C] rounded-[40px] p-10 text-white flex flex-col md:flex-row items-center justify-between gap-10">
-                                        <div className="max-w-md">
-                                            <h2 className="text-4xl font-black mb-4">{lang === 'ar' ? 'مرحباً شريف!' : 'Welcome, Sherif!'}</h2>
-                                            <p className="opacity-70 font-medium">{lang === 'ar' ? 'محرك تريفو للذكاء الاصطناعي جاهز للعمل. ابدأ بتوليد حملتك القادمة.' : 'Trevo Engine is primed and ready. Start generating your next high-converting campaign.'}</p>
-                                            <button onClick={() => setActiveMenu('ai-lab')} className="mt-8 px-8 py-4 bg-[#F5A623] rounded-2xl font-black text-white hover:scale-105 transition-transform">
+                                    
+                                    <div className="trevo-primary rounded-2xl p-8 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-md relative overflow-hidden">
+                                        <div className="relative z-10 max-w-lg">
+                                            <h2 className="text-2xl font-black mb-2">{lang === 'ar' ? 'مرحباً شريف!' : 'Welcome, Sherif!'}</h2>
+                                            <p className="text-sm text-slate-300 font-medium leading-relaxed mb-6">
+                                                {lang === 'ar' ? 'محرك تريفو جاهز للعمل. ابدأ بتوليد حملتك القادمة وحقق أعلى العوائد.' : 'Trevo Engine is primed and ready. Start generating your next high-converting campaign.'}
+                                            </p>
+                                            <button onClick={() => setActiveMenu('ai-lab')} className="px-6 py-2.5 trevo-accent rounded-lg font-bold text-white text-sm shadow-md hover:bg-orange-500 transition-colors">
                                                 {lang === 'ar' ? 'ابدأ الآن' : 'Get Started'}
                                             </button>
                                         </div>
-                                        <div className="w-full max-w-sm h-64 bg-white/5 rounded-3xl border border-white/10 flex items-center justify-center">
-                                            <i className="ph ph-cpu text-9xl opacity-20"></i>
-                                        </div>
+                                        <i className="ph ph-cpu text-[140px] opacity-10 absolute right-10 top-1/2 transform -translate-y-1/2 pointer-events-none"></i>
                                     </div>
                                 </div>
                             )}
 
+                            {/* AI Lab View */}
                             {activeMenu === 'ai-lab' && (
-                                <div className="fade-in glass-card rounded-[32px] p-8 md:p-12 shadow-xl border border-white">
-                                    <h2 className="text-3xl font-black text-[#1A3A6C] mb-8 flex items-center gap-3">
-                                        <i className="ph-fill ph-magic-wand text-[#F5A623]"></i> AI Content Lab
-                                    </h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black uppercase text-slate-400">Destination</label>
-                                            <input type="text" value={location} onChange={e => setLocation(e.target.value)} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold focus:border-[#F5A623] outline-none" />
+                                <div className="fade-in bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200">
+                                    <div className="flex items-center gap-2 mb-6">
+                                        <i className="ph-fill ph-magic-wand trevo-text-accent text-xl"></i>
+                                        <h2 className="text-lg font-black trevo-text-primary">AI Content Lab</h2>
+                                    </div>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                                        <div className="space-y-1.5">
+                                            <label className="text-[10px] font-bold uppercase text-slate-500 tracking-wider">Destination</label>
+                                            <input type="text" value={location} onChange={e => setLocation(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold focus:border-[#F5A623] focus:ring-1 focus:ring-[#F5A623] outline-none transition-all" />
                                         </div>
-                                        <div className="space-y-2">
-                                            <label className="text-xs font-black uppercase text-slate-400">Target Audience</label>
-                                            <select value={audience} onChange={e => setAudience(e.target.value)} className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl font-bold outline-none">
+                                        <div className="space-y-1.5">
+                                            <label className="text-[10px] font-bold uppercase text-slate-500 tracking-wider">Target Audience</label>
+                                            <select value={audience} onChange={e => setAudience(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold focus:border-[#F5A623] outline-none cursor-pointer">
                                                 <option>High Net Worth Individuals</option>
                                                 <option>Adventure Backpackers</option>
                                                 <option>Families</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div className="flex flex-wrap gap-4 mb-10 border-b border-slate-100 pb-10">
-                                        <button onClick={() => handleGenerate('luxury')} disabled={isGenerating} className="px-8 py-4 bg-[#1A3A6C] text-white rounded-2xl font-bold hover:bg-[#F5A623] transition-all disabled:opacity-50">Luxury Style</button>
-                                        <button onClick={() => handleGenerate('adventure')} disabled={isGenerating} className="px-8 py-4 bg-slate-200 rounded-2xl font-bold hover:bg-slate-300 transition-all disabled:opacity-50">Adventure</button>
-                                        <button onClick={() => handleGenerate('budget')} disabled={isGenerating} className="px-8 py-4 bg-slate-200 rounded-2xl font-bold hover:bg-slate-300 transition-all disabled:opacity-50">Budget</button>
+                                    
+                                    <div className="flex flex-wrap gap-3 mb-8 border-b border-slate-100 pb-8">
+                                        <button onClick={() => handleGenerate('luxury')} disabled={isGenerating} className="px-5 py-2.5 trevo-primary text-white rounded-lg text-sm font-bold hover:bg-blue-900 transition-colors disabled:opacity-70 flex items-center gap-2">
+                                            {isGenerating && <i className="ph-bold ph-spinner animate-spin"></i>} Luxury Style
+                                        </button>
+                                        <button onClick={() => handleGenerate('adventure')} disabled={isGenerating} className="px-5 py-2.5 bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-sm font-bold hover:bg-slate-200 transition-colors disabled:opacity-70">
+                                            Adventure
+                                        </button>
+                                        <button onClick={() => handleGenerate('budget')} disabled={isGenerating} className="px-5 py-2.5 bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-sm font-bold hover:bg-slate-200 transition-colors disabled:opacity-70">
+                                            Budget
+                                        </button>
                                     </div>
+                                    
                                     {aiContent && (
-                                        <div className="p-8 bg-orange-50 border-2 border-dashed border-[#F5A623] rounded-3xl">
-                                            <p className="text-xl font-medium text-slate-800 italic leading-relaxed">"{aiContent}"</p>
+                                        <div className="p-5 bg-orange-50/50 border border-orange-200 rounded-xl">
+                                            <p className="text-sm font-medium text-slate-700 leading-relaxed"><span className="trevo-text-accent mr-1">✨</span> {aiContent}</p>
                                         </div>
                                     )}
                                 </div>
                             )}
 
+                            {/* GeoVR View */}
                             {activeMenu === 'geovr' && (
-                                <div className="fade-in space-y-6">
-                                    <div className="bg-slate-900 rounded-[32px] p-10 h-[500px] flex flex-col items-center justify-center text-center overflow-hidden relative">
-                                        {!vrActive ? (
-                                            <div className="z-10">
-                                                <div className="w-24 h-24 bg-[#F5A623] rounded-full mx-auto mb-6 flex items-center justify-center animate-bounce shadow-lg shadow-orange-500/20">
-                                                    <i className="ph-fill ph-virtual-reality text-5xl text-white"></i>
-                                                </div>
-                                                <h2 className="text-3xl font-black text-white mb-2">GeoVR Rendering Ready</h2>
-                                                <p className="text-slate-400 mb-8">Coordinates Locked for {location}</p>
-                                                <button onClick={() => setVrActive(true)} className="px-10 py-5 bg-white text-[#1A3A6C] font-black rounded-2xl hover:scale-105 transition-all">Launch 360 Experience</button>
+                                <div className="fade-in bg-white p-2 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden h-[450px]">
+                                    {!vrActive ? (
+                                        <div className="w-full h-full bg-slate-900 rounded-xl flex flex-col items-center justify-center text-center p-6">
+                                            <div className="w-16 h-16 trevo-accent rounded-full mx-auto mb-4 flex items-center justify-center shadow-lg shadow-orange-500/20">
+                                                <i className="ph-fill ph-virtual-reality text-3xl text-white"></i>
                                             </div>
-                                        ) : (
-                                            <div className="absolute inset-0 w-full h-full">
-                                                <a-scene embedded style={{height: '100%', width: '100%'}}>
-                                                    <a-sky src="https://aframe.io/aframe/examples/boilerplate/panorama/puydesancy.jpg" rotation="0 -130 0"></a-sky>
-                                                </a-scene>
-                                                <button onClick={() => setVrActive(false)} className="absolute top-6 right-6 z-[999] bg-red-500 text-white px-4 py-2 rounded-xl font-bold">Exit Engine</button>
-                                            </div>
-                                        )}
-                                    </div>
+                                            <h2 className="text-xl font-black text-white mb-2">GeoVR Engine Ready</h2>
+                                            <p className="text-xs text-slate-400 mb-6 font-medium">Coordinates locked for {location}</p>
+                                            <button onClick={() => setVrActive(true)} className="px-6 py-2.5 bg-white trevo-text-primary text-sm font-bold rounded-lg hover:bg-slate-100 transition-colors">
+                                                Launch 360 Experience
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="w-full h-full rounded-xl overflow-hidden relative">
+                                            <a-scene embedded style={{height: '100%', width: '100%'}}>
+                                                <a-sky src="https://aframe.io/aframe/examples/boilerplate/panorama/puydesancy.jpg" rotation="0 -130 0"></a-sky>
+                                            </a-scene>
+                                            <button onClick={() => setVrActive(false)} className="absolute top-4 right-4 z-[999] bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-xs font-bold shadow-md transition-colors">
+                                                Exit Engine
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             )}
 
+                            {/* Analytics View */}
                             {activeMenu === 'analytics' && (
-                                <div className="fade-in grid grid-cols-1 md:grid-cols-2 gap-10">
-                                    <div className="glass-card p-10 rounded-[32px] shadow-sm">
-                                        <h2 className="text-2xl font-black mb-8">ROI Calculator</h2>
-                                        <div className="space-y-6">
-                                            <div className="space-y-2">
-                                                <label className="text-xs font-black uppercase opacity-40">Ad Spend (Investment)</label>
-                                                <input type="number" value={cost} onChange={e => setCost(e.target.value)} className="w-full p-5 bg-slate-50 border rounded-2xl font-bold outline-none" />
+                                <div className="fade-in grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="bg-white p-6 md:p-8 rounded-2xl border border-slate-200 shadow-sm">
+                                        <h2 className="text-lg font-black trevo-text-primary mb-6">ROI Calculator</h2>
+                                        <div className="space-y-5">
+                                            <div className="space-y-1.5">
+                                                <label className="text-[10px] font-bold uppercase text-slate-500 tracking-wider">Ad Spend (Investment)</label>
+                                                <input type="number" value={cost} onChange={e => setCost(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold focus:border-[#F5A623] outline-none" />
                                             </div>
-                                            <div className="space-y-2">
-                                                <label className="text-xs font-black uppercase opacity-40">Generated Revenue</label>
-                                                <input type="number" value={revenue} onChange={e => setRevenue(e.target.value)} className="w-full p-5 bg-slate-50 border rounded-2xl font-bold outline-none" />
+                                            <div className="space-y-1.5">
+                                                <label className="text-[10px] font-bold uppercase text-slate-500 tracking-wider">Generated Revenue</label>
+                                                <input type="number" value={revenue} onChange={e => setRevenue(e.target.value)} className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold focus:border-[#F5A623] outline-none" />
                                             </div>
-                                            <button onClick={calculateROI} className="w-full py-5 bg-[#1A3A6C] text-white font-black rounded-2xl hover:bg-[#F5A623] transition-colors">Sync Analytics</button>
+                                            <button onClick={calculateROI} className="w-full py-3 trevo-primary text-white text-sm font-bold rounded-lg hover:bg-blue-900 transition-colors mt-2">
+                                                Sync Analytics
+                                            </button>
                                         </div>
                                     </div>
-                                    <div className="bg-[#1A3A6C] p-12 rounded-[32px] text-white text-center flex flex-col justify-center">
-                                        <p className="text-slate-400 font-bold uppercase tracking-widest text-sm mb-4">Projected Profitability</p>
-                                        <h2 className="text-8xl font-black text-[#F5A623]">{roiResult}%</h2>
-                                        <div className="mt-10 h-2 bg-white/10 rounded-full overflow-hidden">
-                                            <div className="h-full bg-[#F5A623]" style={{ width: `${Math.min(roiResult, 100)}%` }}></div>
+                                    
+                                    <div className="trevo-primary p-6 md:p-8 rounded-2xl text-white flex flex-col justify-center items-center relative overflow-hidden shadow-sm">
+                                        <div className="z-10 text-center w-full">
+                                            <p className="text-slate-300 font-bold uppercase tracking-widest text-[10px] mb-3">Projected Profitability</p>
+                                            {/* هنا إصلاح حجم الخط ليتناسب مع الأرقام الكبيرة مثل -92.59 */}
+                                            <h2 className={`font-black trevo-text-accent break-all ${roiResult.length > 6 ? 'text-4xl' : 'text-5xl md:text-6xl'}`}>
+                                                {roiResult}%
+                                            </h2>
+                                            <div className="mt-6 w-full max-w-[200px] mx-auto h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                                <div className="h-full trevo-accent transition-all duration-500" style={{ width: `${Math.max(0, Math.min(parseFloat(roiResult) || 0, 100))}%` }}></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             )}
 
+                            {/* Settings View */}
                             {activeMenu === 'settings' && (
-                                <div className="fade-in glass-card rounded-[32px] p-10 shadow-sm max-w-2xl">
-                                    <h2 className="text-2xl font-black mb-10">System Preferences</h2>
-                                    <div className="space-y-4">
-                                        <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border">
+                                <div className="fade-in bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 max-w-3xl">
+                                    <h2 className="text-lg font-black trevo-text-primary mb-6">System Preferences</h2>
+                                    
+                                    <div className="space-y-3">
+                                        <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600"><i className="ph-fill ph-globe text-2xl"></i></div>
-                                                <div><p className="font-bold">API Region</p><p className="text-xs text-slate-500">Global (Auto-Detect)</p></div>
+                                                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600"><i className="ph-fill ph-globe text-xl"></i></div>
+                                                <div>
+                                                    <p className="font-bold text-sm text-slate-800">API Region</p>
+                                                    <p className="text-[11px] font-medium text-slate-500">Global (Auto-Detect)</p>
+                                                </div>
                                             </div>
-                                            <span className="text-xs font-black text-slate-300">SERVER-LIVE</span>
+                                            <span className="text-[10px] font-black text-slate-400 bg-slate-200/50 px-2 py-1 rounded">SERVER-LIVE</span>
                                         </div>
-                                        <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border">
+                                        
+                                        <div className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600"><i className="ph-fill ph-translate text-2xl"></i></div>
-                                                <div><p className="font-bold">Interface Language</p><p className="text-xs text-slate-500">English / Arabic</p></div>
+                                                <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center text-orange-500"><i className="ph-fill ph-translate text-xl"></i></div>
+                                                <div>
+                                                    <p className="font-bold text-sm text-slate-800">Interface Language</p>
+                                                    <p className="text-[11px] font-medium text-slate-500">English / Arabic</p>
+                                                </div>
                                             </div>
-                                            <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} className="px-4 py-2 bg-white border rounded-lg font-bold text-xs uppercase">Switch</button>
+                                            <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} className="px-3 py-1.5 bg-white border border-slate-200 rounded-md font-bold text-[10px] uppercase text-slate-600 hover:bg-slate-50 transition-colors shadow-sm">
+                                                Switch
+                                            </button>
                                         </div>
-                                        <div className="p-6 bg-red-50 rounded-2xl border border-red-100 mt-10">
-                                            <p className="text-red-600 font-black mb-2 uppercase text-xs">Danger Zone</p>
-                                            <button onClick={() => { localStorage.clear(); window.location.reload(); }} className="px-6 py-3 bg-red-600 text-white rounded-xl font-bold text-xs">Reset All Engine Data</button>
+                                        
+                                        <div className="p-5 bg-red-50/50 rounded-xl border border-red-100 mt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                                            <div>
+                                                <p className="text-red-600 font-bold uppercase text-[10px] tracking-wider mb-1">Danger Zone</p>
+                                                <p className="text-xs text-slate-600 font-medium">Clear all cached campaigns and analytics data.</p>
+                                            </div>
+                                            <button onClick={() => { localStorage.clear(); window.location.reload(); }} className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold text-xs transition-colors whitespace-nowrap">
+                                                Reset Engine Data
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             )}
+                            
                         </div>
                     </main>
                 </div>
