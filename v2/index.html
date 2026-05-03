@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Trevo — The AI-powered Tourism Superplatform for MENA and beyond. Smart marketing, booking automation, and immersive travel experiences for tourism businesses.">
+<meta property="og:title" content="Trevo — Smart Tourism Platform">
+<meta property="og:description" content="AI-powered marketing and operational solutions for travel agencies, hotels, and tourism companies across Egypt, KSA, and MENA.">
+<meta property="og:type" content="website">
+<title>Trevo — Smart Tourism Superplatform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── BRAND TOKENS ─── */
+:root {
+  --navy:        #1A3A6C;
+  --navy-deep:   #122B55;
+  --navy-mid:    #1E4080;
+  --navy-light:  #244C8F;
+  --orange:      #F5A623;
+  --orange-dark: #D4891A;
+  --orange-pale: #FFF0D0;
+  --white:       #FFFFFF;
+  --cream:       #FAF8F2;
+  --gray-light:  #F0EDE8;
+  --gray-mid:    #9E9B96;
+  --near-black:  #1E1E1E;
+  --body-dark:   #2D2D2D;
+  --font:        'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-ar:     'Cairo', sans-serif;
+  --r-sm: 8px; --r-md: 16px; --r-lg: 24px; --r-xl: 40px; --r-full: 999px;
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-md: 0 8px 32px rgba(26,58,108,0.12);
+  --shadow-lg: 0 16px 64px rgba(26,58,108,0.18);
+  --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ─── RESET & BASE ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--white);color:var(--body-dark);line-height:1.6;overflow-x:hidden}
+body[dir="rtl"]{font-family:var(--font-ar)}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+
+/* ─── TYPOGRAPHY ─── */
+h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;line-height:1.05;letter-spacing:-0.02em}
+h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;letter-spacing:-0.01em}
+h3{font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:700;line-height:1.2}
+h4{font-size:1rem;font-weight:700}
+p{line-height:1.7}
+.eyebrow{font-size:0.72rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);margin-bottom:0.75rem;display:block}
+
+/* ─── LAYOUT ─── */
+.container{max-width:1200px;margin:0 auto;padding:0 6%}
+.section{padding:6rem 0}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-header h2{color:var(--navy)}
+.section-header h2 span{color:var(--orange)}
+.section-header p{max-width:600px;margin:1rem auto 0;color:var(--gray-mid);font-size:1.05rem}
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0.8rem 2rem;border-radius:var(--r-full);font-weight:700;font-size:0.9rem;letter-spacing:0.02em;transition:var(--transition)}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,166,35,0.35)}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-mid);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn-outline{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+.btn-outline:hover{background:var(--navy);color:var(--white);transform:translateY(-2px)}
+.btn-outline-white{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.5)}
+.btn-outline-white:hover{background:rgba(255,255,255,0.15);border-color:var(--white)}
+.btn-arrow::after{content:'→';transition:transform 0.2s}
+.btn-arrow:hover::after{transform:translateX(4px)}
+
+/* ─── BADGE ─── */
+.badge{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:var(--orange);color:var(--white);font-weight:800;font-size:0.85rem;box-shadow:0 0 0 4px rgba(245,166,35,0.2),0 0 0 8px rgba(245,166,35,0.08);flex-shrink:0}
+.pill{display:inline-block;padding:0.3rem 1rem;border-radius:var(--r-full);font-size:0.78rem;font-weight:600;letter-spacing:0.06em}
+.pill-orange{background:rgba(245,166,35,0.15);color:var(--orange-dark);border:1px solid rgba(245,166,35,0.3)}
+.pill-navy{background:rgba(26,58,108,0.1);color:var(--navy);border:1px solid rgba(26,58,108,0.2)}
+.pill-green{background:rgba(34,197,94,0.1);color:#15803d;border:1px solid rgba(34,197,94,0.3)}
+
+/* ─── DOTS DECORATION ─── */
+.dots{display:grid;grid-template-columns:repeat(5,6px);gap:6px;position:absolute;opacity:0.25}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--orange)}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 0;transition:var(--transition)}
+#navbar.scrolled{background:rgba(18,43,85,0.96);backdrop-filter:blur(12px);padding:0.6rem 0;box-shadow:var(--shadow-md)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:1.5rem;font-weight:800;color:var(--white)}
+.nav-logo .logo-icon{width:38px;height:38px;border-radius:10px;background:var(--orange);display:flex;align-items:center;justify-content:center}
+.nav-logo .logo-icon svg{width:22px;height:22px}
+.nav-links{display:flex;align-items:center;gap:0.25rem}
+.nav-links a{color:rgba(255,255,255,0.8);font-size:0.85rem;font-weight:500;padding:0.4rem 0.9rem;border-radius:var(--r-full);transition:var(--transition)}
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,0.1)}
+.nav-actions{display:flex;align-items:center;gap:0.75rem}
+.lang-toggle{background:rgba(255,255,255,0.15);color:var(--white);padding:0.3rem 0.9rem;border-radius:var(--r-full);font-size:0.8rem;font-weight:600;transition:var(--transition);border:1px solid rgba(255,255,255,0.2)}
+.lang-toggle:hover{background:rgba(255,255,255,0.25)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:6px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:var(--transition)}
+.mobile-nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--navy-deep);z-index:999;padding:5rem 2rem 2rem;flex-direction:column;gap:1rem}
+.mobile-nav.open{display:flex}
+.mobile-nav a{color:var(--white);font-size:1.1rem;font-weight:600;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.1)}
+.mobile-close{position:absolute;top:1.2rem;right:1.5rem;color:var(--white);font-size:1.5rem;background:none;border:none;cursor:pointer}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero{background:var(--navy-deep);min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:5rem}
+.hero-bg-circle{position:absolute;border-radius:50%;opacity:0.06}
+.hero-bg-circle.c1{width:600px;height:600px;background:var(--orange);top:-200px;right:-150px}
+.hero-bg-circle.c2{width:400px;height:400px;background:var(--orange);bottom:-100px;left:-100px}
+.hero-diagonal{position:absolute;bottom:0;left:0;right:0;height:120px;background:var(--white);clip-path:polygon(0 60%,100% 0,100% 100%,0 100%)}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1;padding:4rem 0 8rem}
+.hero-text .eyebrow{animation:fadeInUp 0.6s ease both}
+.hero-text h1{color:var(--white);margin-bottom:1.5rem;animation:fadeInUp 0.6s ease 0.15s both}
+.hero-text h1 .highlight{color:var(--orange);position:relative}
+.hero-text h1 .highlight::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:3px;background:var(--orange);border-radius:2px;opacity:0.5}
+.hero-text p{color:rgba(255,255,255,0.75);font-size:1.1rem;max-width:500px;margin-bottom:2rem;animation:fadeInUp 0.6s ease 0.3s both}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeInUp 0.6s ease 0.45s both}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;animation:fadeInUp 0.6s ease 0.6s both}
+.hero-stat{text-align:center;padding:1.2rem;background:rgba(255,255,255,0.07);border-radius:var(--r-md);border:1px solid rgba(255,255,255,0.1)}
+.hero-stat .stat-n{font-size:1.8rem;font-weight:800;color:var(--orange);display:block;line-height:1}
+.hero-stat .stat-l{font-size:0.75rem;color:rgba(255,255,255,0.6);margin-top:0.3rem;font-weight:500}
+.hero-visual{position:relative;animation:fadeInRight 0.8s ease 0.3s both}
+.hero-card{background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:var(--r-lg);padding:1.5rem;margin-bottom:1rem}
+.hero-card-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem}
+.hero-card-icon{width:36px;height:36px;border-radius:8px;background:var(--orange);display:flex;align-items:center;justify-content:center}
+.hero-card-icon svg{width:18px;height:18px;color:white}
+.hero-card-title{font-size:0.85rem;font-weight:600;color:var(--white)}
+.hero-card-sub{font-size:0.72rem;color:rgba(255,255,255,0.5)}
+.hero-metric{display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.hero-metric:last-child{border-bottom:none}
+.hero-metric span:first-child{font-size:0.8rem;color:rgba(255,255,255,0.6)}
+.hero-metric span:last-child{font-size:0.85rem;font-weight:600;color:var(--orange)}
+.floating-badge{position:absolute;background:var(--orange);color:var(--white);border-radius:var(--r-full);padding:0.5rem 1rem;font-size:0.78rem;font-weight:700;box-shadow:0 8px 24px rgba(245,166,35,0.35);animation:float 3s ease-in-out infinite}
+.floating-badge.f1{top:-10px;left:-20px;animation-delay:0s}
+.floating-badge.f2{bottom:30px;right:-15px;animation-delay:1.5s}
+
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInRight{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeInLeft{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,0.4)}50%{box-shadow:0 0 0 12px rgba(245,166,35,0)}}
+
+/* ═══════════════════════════════════════════
+   MARQUEE / TRUST STRIP
+═══════════════════════════════════════════ */
+.trust-strip{background:var(--gray-light);padding:1.5rem 0;overflow:hidden;border-top:1px solid rgba(0,0,0,0.04);border-bottom:1px solid rgba(0,0,0,0.04)}
+.marquee-track{display:flex;gap:3rem;animation:marquee 25s linear infinite;width:max-content}
+.marquee-item{display:flex;align-items:center;gap:0.5rem;white-space:nowrap;font-size:0.85rem;font-weight:600;color:var(--gray-mid);opacity:0.7}
+.marquee-item .dot-sep{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══════════════════════════════════════════
+   PROBLEM / SOLUTION
+═══════════════════════════════════════════ */
+#problem{background:var(--white)}
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.problem-list{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.problem-item{display:flex;gap:1rem;align-items:flex-start;padding:1rem 1.25rem;background:var(--cream);border-radius:var(--r-md);border-left:3px solid var(--orange)}
+.problem-item-icon{width:32px;height:32px;border-radius:8px;background:rgba(245,166,35,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.problem-item-icon svg{width:16px;height:16px;color:var(--orange-dark)}
+.problem-item h4{font-size:0.9rem;color:var(--navy);margin-bottom:0.2rem}
+.problem-item p{font-size:0.82rem;color:var(--gray-mid);line-height:1.5}
+.solution-card{background:var(--navy);border-radius:var(--r-lg);padding:2.5rem;color:var(--white);position:relative;overflow:hidden}
+.solution-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(245,166,35,0.1)}
+.solution-pillars{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.solution-pillar{display:flex;align-items:center;gap:1rem;padding:1rem;background:rgba(255,255,255,0.07);border-radius:var(--r-md);border:1px solid rgba(255,255,255,0.1)}
+.pillar-num{width:32px;height:32px;border-radius:50%;background:var(--orange);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.82rem;flex-shrink:0}
+.pillar-text h4{font-size:0.88rem;font-weight:600;color:var(--white)}
+.pillar-text p{font-size:0.78rem;color:rgba(255,255,255,0.6);line-height:1.4}
+
+/* ═══════════════════════════════════════════
+   FEATURES
+═══════════════════════════════════════════ */
+#features{background:var(--cream)}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feature-card{background:var(--white);border-radius:var(--r-lg);padding:1.75rem;box-shadow:var(--shadow-sm);transition:var(--transition);position:relative;overflow:hidden;border:1px solid transparent}
+.feature-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:var(--orange)}
+.feature-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--orange);transform:scaleX(0);transition:var(--transition)}
+.feature-card:hover::after{transform:scaleX(1)}
+.feature-icon{width:52px;height:52px;border-radius:14px;background:rgba(26,58,108,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem}
+.feature-icon svg{width:26px;height:26px;color:var(--navy)}
+.feature-card h3{font-size:1.1rem;color:var(--navy);margin-bottom:0.6rem}
+.feature-card p{font-size:0.85rem;color:var(--gray-mid);line-height:1.6}
+.feature-tag{margin-top:1rem}
+.feature-card.featured{background:var(--navy);color:var(--white)}
+.feature-card.featured .feature-icon{background:rgba(245,166,35,0.2)}
+.feature-card.featured .feature-icon svg{color:var(--orange)}
+.feature-card.featured h3{color:var(--white)}
+.feature-card.featured p{color:rgba(255,255,255,0.65)}
+
+/* ═══════════════════════════════════════════
+   HOW IT WORKS
+═══════════════════════════════════════════ */
+#how-it-works{background:var(--white)}
+.steps-container{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.steps-connector{position:absolute;top:40px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--orange),var(--orange-dark));z-index:0;display:flex;align-items:center}
+.step{text-align:center;padding:0 1rem;position:relative;z-index:1}
+.step-badge{width:80px;height:80px;border-radius:50%;background:var(--white);border:3px solid var(--orange);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;box-shadow:0 0 0 8px rgba(245,166,35,0.1)}
+.step-badge svg{width:36px;height:36px;color:var(--orange)}
+.step h4{font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
+.step p{font-size:0.8rem;color:var(--gray-mid);line-height:1.5}
+.step-num{position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;background:var(--orange);color:var(--white);font-size:0.65rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+/* ═══════════════════════════════════════════
+   MARKET SIZE
+═══════════════════════════════════════════ */
+#market{background:var(--navy-deep);color:var(--white);position:relative;overflow:hidden}
+#market::before{content:'';position:absolute;top:0;left:0;right:0;height:120px;background:var(--white);clip-path:polygon(0 0,100% 0,100% 40%,0 100%)}
+#market::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:var(--cream);clip-path:polygon(0 60%,100% 0,100% 100%,0 100%)}
+.market-inner{padding:8rem 0;position:relative;z-index:1}
+.market-funnel{display:flex;flex-direction:column;align-items:center;gap:0;margin-bottom:3rem}
+.funnel-tier{border-radius:var(--r-md);display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2rem;margin:2px 0;transition:var(--transition)}
+.funnel-tier:hover{transform:scaleX(1.02)}
+.funnel-tier.t-tam{width:100%;background:rgba(245,166,35,0.2);border:1px solid rgba(245,166,35,0.4)}
+.funnel-tier.t-sam{width:72%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2)}
+.funnel-tier.t-som{width:45%;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.35)}
+.funnel-label h4{font-size:0.9rem;font-weight:600;color:var(--white)}
+.funnel-label p{font-size:0.75rem;color:rgba(255,255,255,0.6)}
+.funnel-value{text-align:right}
+.funnel-value .fv{font-size:1.5rem;font-weight:800;color:var(--orange)}
+.funnel-value .fp{font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:2px}
+.market-sectors{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:3rem}
+.sector-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-md);padding:1.25rem;transition:var(--transition)}
+.sector-card:hover{background:rgba(255,255,255,0.12);border-color:var(--orange)}
+.sector-card .sv{font-size:1.3rem;font-weight:800;color:var(--orange);margin-bottom:0.3rem}
+.sector-card h4{font-size:0.82rem;font-weight:600;color:var(--white);margin-bottom:0.3rem}
+.sector-card p{font-size:0.72rem;color:rgba(255,255,255,0.5);line-height:1.4}
+
+/* ═══════════════════════════════════════════
+   PRICING
+═══════════════════════════════════════════ */
+#pricing{background:var(--cream)}
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;align-items:start}
+.pricing-card{background:var(--white);border-radius:var(--r-lg);padding:2rem;border:1.5px solid var(--gray-light);transition:var(--transition);position:relative}
+.pricing-card.popular{border-color:var(--orange);transform:scale(1.03)}
+.pricing-card.popular::before{content:'Most Popular';position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--orange);color:var(--white);font-size:0.72rem;font-weight:700;padding:0.3rem 1rem;border-radius:var(--r-full);white-space:nowrap}
+.pricing-card:hover:not(.popular){transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.pricing-tier{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.75rem}
+.pricing-price{margin-bottom:0.5rem}
+.pricing-price .currency{font-size:1rem;font-weight:700;color:var(--navy);vertical-align:top;line-height:2}
+.pricing-price .amount{font-size:2.5rem;font-weight:900;color:var(--navy);line-height:1}
+.pricing-price .period{font-size:0.85rem;color:var(--gray-mid)}
+.pricing-desc{font-size:0.82rem;color:var(--gray-mid);margin-bottom:1.5rem;line-height:1.5}
+.pricing-features{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.75rem}
+.pricing-feature{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.82rem;color:var(--body-dark)}
+.pricing-feature .check{color:#22c55e;flex-shrink:0;margin-top:2px}
+.pricing-card.popular .pricing-tier{color:var(--orange-dark)}
+.roi-calculator{background:var(--navy);border-radius:var(--r-lg);padding:2.5rem;color:var(--white);margin-top:2.5rem}
+.roi-calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center}
+.roi-inputs{display:flex;flex-direction:column;gap:1rem}
+.roi-label{display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.4rem}
+.roi-label span:first-child{color:rgba(255,255,255,0.7)}
+.roi-label .roi-val{color:var(--orange);font-weight:600}
+.roi-slider{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:rgba(255,255,255,0.2);outline:none}
+.roi-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--orange);cursor:pointer;box-shadow:0 0 0 3px rgba(245,166,35,0.3)}
+.roi-result{text-align:center}
+.roi-result .roi-big{font-size:3rem;font-weight:900;color:var(--orange);display:block;line-height:1}
+.roi-result p{font-size:0.82rem;color:rgba(255,255,255,0.6);margin-top:0.5rem}
+
+/* ═══════════════════════════════════════════
+   COMPETITIVE
+═══════════════════════════════════════════ */
+#competitive{background:var(--white)}
+.matrix-wrap{overflow-x:auto;border-radius:var(--r-lg);box-shadow:var(--shadow-sm);border:1px solid var(--gray-light)}
+.matrix-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.matrix-table th{background:var(--navy);color:var(--white);padding:0.9rem 1rem;text-align:left;font-weight:600;font-size:0.82rem;white-space:nowrap}
+.matrix-table th:first-child{border-radius:var(--r-lg) 0 0 0}
+.matrix-table th:last-child{border-radius:0 var(--r-lg) 0 0}
+.matrix-table td{padding:0.8rem 1rem;border-bottom:1px solid var(--gray-light);color:var(--body-dark)}
+.matrix-table tr.trevo-row td{background:rgba(245,166,35,0.06);font-weight:600;color:var(--navy)}
+.matrix-table tr:last-child td{border-bottom:none}
+.matrix-table tr:hover td{background:var(--cream)}
+.matrix-table tr.trevo-row:hover td{background:rgba(245,166,35,0.1)}
+.check-yes{color:#22c55e;font-weight:700}
+.check-no{color:#ef4444;font-weight:700}
+.check-partial{color:#f59e0b;font-weight:700}
+.moat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem}
+.moat-card{padding:1.5rem;border-radius:var(--r-md);background:var(--cream);border:1px solid rgba(26,58,108,0.1)}
+.moat-card h4{font-size:0.9rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem}
+.moat-card h4::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--orange);flex-shrink:0}
+.moat-card p{font-size:0.8rem;color:var(--gray-mid);line-height:1.5}
+
+/* ═══════════════════════════════════════════
+   ROADMAP
+═══════════════════════════════════════════ */
+#roadmap{background:var(--cream)}
+.roadmap-track{position:relative;padding:2rem 0}
+.roadmap-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--orange),var(--navy));transform:translateX(-50%)}
+.roadmap-items{display:flex;flex-direction:column;gap:2.5rem}
+.roadmap-item{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;align-items:center}
+.roadmap-item:nth-child(even) .roadmap-content{grid-column:3;grid-row:1}
+.roadmap-item:nth-child(even) .roadmap-node{grid-column:2;grid-row:1}
+.roadmap-item:nth-child(even) .roadmap-spacer{grid-column:1;grid-row:1}
+.roadmap-item:nth-child(odd) .roadmap-content{grid-column:1;grid-row:1;text-align:right}
+.roadmap-item:nth-child(odd) .roadmap-node{grid-column:2;grid-row:1}
+.roadmap-item:nth-child(odd) .roadmap-spacer{grid-column:3;grid-row:1}
+.roadmap-node{width:60px;height:60px;border-radius:50%;background:var(--white);border:3px solid var(--orange);display:flex;align-items:center;justify-content:center;z-index:1;position:relative;margin:0 auto;font-weight:800;font-size:0.8rem;color:var(--navy)}
+.roadmap-content{background:var(--white);border-radius:var(--r-md);padding:1.25rem 1.5rem;box-shadow:var(--shadow-sm);border:1px solid rgba(0,0,0,0.04)}
+.roadmap-content .rc-year{font-size:0.72rem;font-weight:700;color:var(--orange);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.3rem}
+.roadmap-content h4{font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem}
+.roadmap-content p{font-size:0.8rem;color:var(--gray-mid);line-height:1.5}
+.roadmap-content .rc-target{margin-top:0.6rem;font-weight:700;color:var(--orange);font-size:0.85rem}
+
+/* ═══════════════════════════════════════════
+   TEAM
+═══════════════════════════════════════════ */
+#team{background:var(--white)}
+.team-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2rem;max-width:800px;margin:0 auto}
+.team-card{background:var(--cream);border-radius:var(--r-lg);padding:2rem;display:flex;gap:1.5rem;align-items:flex-start;transition:var(--transition)}
+.team-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px)}
+.team-avatar{width:80px;height:80px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;color:var(--white);flex-shrink:0;position:relative}
+.team-avatar::after{content:'';position:absolute;bottom:2px;right:2px;width:14px;height:14px;border-radius:50%;background:#22c55e;border:2px solid var(--cream)}
+.team-info h3{font-size:1.1rem;color:var(--navy);margin-bottom:0.2rem}
+.team-title{font-size:0.82rem;font-weight:600;color:var(--orange);margin-bottom:0.6rem;display:block}
+.team-info p{font-size:0.82rem;color:var(--gray-mid);line-height:1.5}
+.team-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.75rem}
+.team-tag{font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:var(--r-full);background:rgba(26,58,108,0.08);color:var(--navy);font-weight:600}
+
+/* ═══════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════ */
+#testimonials{background:var(--navy-deep);color:var(--white);padding:6rem 0}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testimonial-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-lg);padding:1.75rem;transition:var(--transition)}
+.testimonial-card:hover{background:rgba(255,255,255,0.12);border-color:var(--orange)}
+.t-stars{color:var(--orange);font-size:1rem;letter-spacing:2px;margin-bottom:1rem}
+.t-quote{font-size:0.88rem;line-height:1.7;color:rgba(255,255,255,0.8);margin-bottom:1.25rem;font-style:italic}
+.t-author{display:flex;align-items:center;gap:0.75rem}
+.t-avatar{width:40px;height:40px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--white);flex-shrink:0}
+.t-name{font-size:0.85rem;font-weight:600;color:var(--white)}
+.t-role{font-size:0.75rem;color:rgba(255,255,255,0.5)}
+
+/* ═══════════════════════════════════════════
+   AI DEMO WIDGET
+═══════════════════════════════════════════ */
+#ai-demo{background:var(--cream)}
+.demo-widget{background:var(--white);border-radius:var(--r-lg);box-shadow:var(--shadow-md);overflow:hidden;max-width:800px;margin:0 auto}
+.demo-topbar{background:var(--navy);padding:0.9rem 1.5rem;display:flex;align-items:center;gap:0.5rem}
+.demo-dot{width:12px;height:12px;border-radius:50%}
+.demo-dot.r{background:#ef4444}.demo-dot.y{background:#eab308}.demo-dot.g{background:#22c55e}
+.demo-title{margin-left:0.75rem;font-size:0.82rem;color:rgba(255,255,255,0.6);font-weight:500}
+.demo-body{padding:1.5rem}
+.demo-prompt{display:flex;gap:0.75rem;margin-bottom:1.5rem}
+.demo-input{flex:1;border:1.5px solid var(--gray-light);border-radius:var(--r-full);padding:0.7rem 1.25rem;font-size:0.9rem;font-family:var(--font);outline:none;transition:var(--transition)}
+.demo-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(245,166,35,0.15)}
+.demo-btn{background:var(--orange);color:var(--white);border-radius:var(--r-full);padding:0.7rem 1.5rem;font-weight:700;font-size:0.85rem;transition:var(--transition)}
+.demo-btn:hover{background:var(--orange-dark)}
+.demo-output{background:var(--cream);border-radius:var(--r-md);padding:1.25rem;min-height:120px;font-size:0.88rem;line-height:1.7;color:var(--body-dark)}
+.demo-typing::after{content:'|';animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.demo-chips{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.demo-chip{font-size:0.78rem;padding:0.3rem 0.8rem;border-radius:var(--r-full);background:rgba(26,58,108,0.08);color:var(--navy);cursor:pointer;transition:var(--transition);border:1px solid transparent;font-weight:500}
+.demo-chip:hover{border-color:var(--orange);color:var(--orange-dark)}
+
+/* ═══════════════════════════════════════════
+   CTA SECTION
+═══════════════════════════════════════════ */
+#cta-section{background:var(--orange);padding:6rem 0;position:relative;overflow:hidden}
+#cta-section::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.1)}
+#cta-section::after{content:'';position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;border-radius:50%;background:rgba(0,0,0,0.05)}
+.cta-inner{text-align:center;position:relative;z-index:1}
+.cta-inner h2{color:var(--white);font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
+.cta-inner p{color:rgba(255,255,255,0.85);font-size:1.1rem;max-width:550px;margin:0 auto 2rem}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+#contact{background:var(--cream)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-info h3{color:var(--navy);margin-bottom:1rem}
+.contact-info p{color:var(--gray-mid);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem}
+.contact-channels{display:flex;flex-direction:column;gap:0.75rem}
+.contact-channel{display:flex;align-items:center;gap:0.75rem;padding:0.9rem 1.1rem;background:var(--white);border-radius:var(--r-md);font-size:0.85rem;font-weight:500;color:var(--navy);transition:var(--transition);border:1px solid transparent}
+.contact-channel:hover{border-color:var(--orange);box-shadow:var(--shadow-sm)}
+.contact-channel .ch-icon{width:36px;height:36px;border-radius:8px;background:rgba(26,58,108,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-channel .ch-icon svg{width:18px;height:18px;color:var(--navy)}
+.contact-form{background:var(--white);border-radius:var(--r-lg);padding:2rem;box-shadow:var(--shadow-sm)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{margin-bottom:1.25rem}
+.form-label{display:block;font-size:0.82rem;font-weight:600;color:var(--navy);margin-bottom:0.4rem}
+.form-input,.form-select,.form-textarea{width:100%;border:1.5px solid var(--gray-light);border-radius:var(--r-md);padding:0.7rem 1rem;font-size:0.9rem;font-family:var(--font);outline:none;transition:var(--transition);background:var(--white);color:var(--body-dark)}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(245,166,35,0.15)}
+.form-textarea{resize:vertical;min-height:120px}
+.form-submit{width:100%;padding:0.9rem;background:var(--navy);color:var(--white);border-radius:var(--r-full);font-weight:700;font-size:0.95rem;transition:var(--transition);border:none;cursor:pointer;font-family:var(--font)}
+.form-submit:hover{background:var(--navy-mid);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+#footer{background:var(--navy-deep);color:rgba(255,255,255,0.65);padding:4rem 0 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:3rem}
+.footer-brand p{font-size:0.85rem;line-height:1.7;margin:1rem 0 1.25rem;max-width:280px}
+.footer-socials{display:flex;gap:0.6rem}
+.social-btn{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;transition:var(--transition);border:1px solid rgba(255,255,255,0.1)}
+.social-btn:hover{background:var(--orange);border-color:var(--orange)}
+.social-btn svg{width:16px;height:16px;color:rgba(255,255,255,0.7)}
+.social-btn:hover svg{color:white}
+.footer-col h5{font-size:0.82rem;font-weight:700;color:var(--white);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem}
+.footer-col ul{display:flex;flex-direction:column;gap:0.5rem}
+.footer-col ul li a{font-size:0.85rem;color:rgba(255,255,255,0.55);transition:var(--transition)}
+.footer-col ul li a:hover{color:var(--orange)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.75rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:gap 1rem}
+.footer-bottom p{font-size:0.8rem}
+.footer-bottom .footer-legal{display:flex;gap:1.5rem}
+.footer-bottom .footer-legal a{font-size:0.8rem;color:rgba(255,255,255,0.4);transition:var(--transition)}
+.footer-bottom .footer-legal a:hover{color:rgba(255,255,255,0.8)}
+
+/* ═══════════════════════════════════════════
+   COOKIE BANNER
+═══════════════════════════════════════════ */
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;background:var(--navy-deep);color:var(--white);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;z-index:9999;box-shadow:0 -4px 24px rgba(0,0,0,0.3);transform:translateY(100%);transition:transform 0.5s ease}
+#cookie-banner.visible{transform:translateY(0)}
+#cookie-banner p{font-size:0.82rem;color:rgba(255,255,255,0.75);flex:1}
+#cookie-banner .cb-actions{display:flex;gap:0.5rem;flex-shrink:0}
+#cookie-banner .cb-accept{background:var(--orange);color:var(--white);padding:0.5rem 1.25rem;border-radius:var(--r-full);font-size:0.82rem;font-weight:600;cursor:pointer;border:none}
+#cookie-banner .cb-decline{background:transparent;color:rgba(255,255,255,0.6);padding:0.5rem 1rem;border-radius:var(--r-full);font-size:0.82rem;cursor:pointer;border:1px solid rgba(255,255,255,0.2)}
+
+/* ═══════════════════════════════════════════
+   SCROLL TO TOP
+═══════════════════════════════════════════ */
+#scroll-top{position:fixed;bottom:2rem;right:2rem;width:44px;height:44px;border-radius:50%;background:var(--orange);color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(245,166,35,0.35);opacity:0;transform:translateY(16px);transition:var(--transition);z-index:900;border:none}
+#scroll-top.visible{opacity:1;transform:translateY(0)}
+#scroll-top:hover{background:var(--orange-dark);transform:translateY(-3px)}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:1024px){
+  .features-grid{grid-template-columns:repeat(2,1fr)}
+  .pricing-grid{grid-template-columns:repeat(2,1fr)}
+  .market-sectors{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .section{padding:4rem 0}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .hero-stats{grid-template-columns:repeat(3,1fr)}
+  .problem-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+  .steps-container{grid-template-columns:repeat(2,1fr)}
+  .steps-connector{display:none}
+  .market-sectors{grid-template-columns:1fr 1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .pricing-card.popular{transform:none}
+  .roi-calc-grid{grid-template-columns:1fr}
+  .moat-grid{grid-template-columns:1fr}
+  .roadmap-items{padding-left:1rem}
+  .roadmap-item{grid-template-columns:1fr}
+  .roadmap-line{left:20px}
+  .roadmap-item:nth-child(odd) .roadmap-content,.roadmap-item:nth-child(even) .roadmap-content{grid-column:1;text-align:left;padding-left:2.5rem}
+  .roadmap-node{position:absolute;left:0;margin:0;width:42px;height:42px;font-size:0.7rem}
+  .roadmap-item{position:relative;padding-left:3rem}
+  .roadmap-spacer{display:none}
+  .team-grid{grid-template-columns:1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .funnel-tier.t-sam{width:100%}.funnel-tier.t-som{width:100%}
+  .nav-links,.nav-actions .btn{display:none}
+  .hamburger{display:flex}
+}
+
+/* ─── RTL ─── */
+[dir="rtl"] .hero-text h1 .highlight::after{right:0;left:auto}
+[dir="rtl"] .problem-item{border-left:none;border-right:3px solid var(--orange)}
+[dir="rtl"] .steps-connector{transform:translateX(50%)}
+[dir="rtl"] .nav-links{direction:rtl}
+</style>
+</head>
+<body>
+
+<!-- ─── COOKIE BANNER ─── -->
+<div id="cookie-banner">
+  <p data-t="cookie_p">We use cookies to enhance your experience. By continuing to use Trevo, you agree to our use of cookies. <a href="#" style="color:var(--orange)" data-t="cookie_more">Learn more</a></p>
+  <div class="cb-actions">
+    <button class="cb-decline" onclick="dismissCookie()" data-t="cookie_decline">Decline</button>
+    <button class="cb-accept" onclick="acceptCookie()" data-t="cookie_accept">Accept</button>
+  </div>
+</div>
+
+<!-- ─── SCROLL TO TOP ─── -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- ─── MOBILE NAV ─── -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#hero" onclick="closeMobile()" data-t="nav_features" style="color:var(--white)">Home</a>
+  <a href="#features" onclick="closeMobile()">Features</a>
+  <a href="#market" onclick="closeMobile()">Market</a>
+  <a href="#pricing" onclick="closeMobile()">Pricing</a>
+  <a href="#roadmap" onclick="closeMobile()">Roadmap</a>
+  <a href="#team" onclick="closeMobile()">About</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <button onclick="toggleLang()" style="background:var(--orange);color:white;padding:0.8rem 1.5rem;border-radius:var(--r-full);font-weight:700;margin-top:1rem">عربي / English</button>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+            <path d="M5 4v16M5 4h11M5 12h8M16 8h4M17 12h3"/>
+          </svg>
+        </div>
+        Trevo
+      </a>
+      <div class="nav-links">
+        <a href="#features" data-t="nav_features">Features</a>
+        <a href="#market" data-t="nav_market">Market</a>
+        <a href="#pricing" data-t="nav_pricing">Pricing</a>
+        <a href="#roadmap" data-t="nav_roadmap">Roadmap</a>
+        <a href="#team" data-t="nav_about">About</a>
+        <a href="#contact" data-t="nav_contact">Contact</a>
+        <a href="trevo-blog.html" data-t="nav_blog">Blog</a>
+        <a href="trevo-investor.html" data-t="nav_investors">Investors</a>
+        <a href="trevo-arabic.html" style="color:var(--orange);font-weight:700">عربي</a>
+      </div>
+      <div class="nav-actions">
+        <button class="lang-toggle" onclick="toggleLang()" id="langBtn">عربي</button>
+        <a href="#contact" class="btn btn-primary btn-arrow" style="padding:0.5rem 1.25rem;font-size:0.85rem" data-t="nav_demo">Book Demo</a>
+        <button class="hamburger" onclick="openMobile()" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="eyebrow" data-en="AI-Powered Tourism Technology" data-ar="تقنية السياحة المدعومة بالذكاء الاصطناعي">AI-Powered Tourism Technology</span>
+        <h1 data-en="The Smart <span class='highlight'>Tourism</span> Superplatform" data-ar="المنصة الذكية الشاملة <span class='highlight'>للسياحة</span>">The Smart <span class="highlight">Tourism</span> Superplatform</h1>
+        <p data-en="AI-driven marketing automation, smart booking tools, and immersive travel experiences — built for tourism businesses across Egypt, KSA, and MENA." data-ar="أتمتة التسويق بالذكاء الاصطناعي وأدوات الحجز الذكية وتجارب السفر الغامرة — مصممة للشركات السياحية في مصر والمملكة العربية السعودية ومنطقة الشرق الأوسط وشمال أفريقيا.">AI-driven marketing automation, smart booking tools, and immersive travel experiences — built for tourism businesses across Egypt, KSA, and MENA.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary btn-arrow" data-en="Book a Free Demo" data-ar="احجز عرضاً مجانياً">Book a Free Demo</a>
+          <a href="#features" class="btn btn-outline-white" data-en="Explore Features" data-ar="استكشف المميزات">Explore Features</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-n">$950B</span>
+            <span class="stat-l" data-en="Global TAM" data-ar="السوق الإجمالي">Global TAM</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-n">6,350+</span>
+            <span class="stat-l" data-en="Target Agencies" data-ar="وكالات مستهدفة">Target Agencies</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-n">$50/mo</span>
+            <span class="stat-l" data-en="Starting Price" data-ar="يبدأ من">Starting Price</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-badge f1">🚀 AI-Powered</div>
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div>
+              <div class="hero-card-title">AI Marketing Dashboard</div>
+              <div class="hero-card-sub">Cairo Travel Agency — Live</div>
+            </div>
+          </div>
+          <div class="hero-metric"><span>Social Engagement</span><span>+34% this month</span></div>
+          <div class="hero-metric"><span>New Leads</span><span>47 this week</span></div>
+          <div class="hero-metric"><span>Bookings</span><span>+22% vs last month</span></div>
+          <div class="hero-metric"><span>Content Published</span><span>28 posts (AI-gen)</span></div>
+          <div class="hero-metric"><span>Time Saved</span><span>18 hrs / week</span></div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div>
+              <div class="hero-card-title">Content Generated</div>
+              <div class="hero-card-sub">30 seconds · Pyramids Package</div>
+            </div>
+          </div>
+          <div style="background:rgba(245,166,35,0.1);border-radius:8px;padding:0.75rem;font-size:0.75rem;color:rgba(255,255,255,0.7);line-height:1.5">✨ "Discover the magic of ancient Egypt with our exclusive 7-day Pyramids & Nile cruise package..."</div>
+        </div>
+        <div class="floating-badge f2">🌍 MENA Ready</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-diagonal"></div>
+</section>
+
+<!-- ─── TRUST STRIP ─── -->
+<div class="trust-strip">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="dot-sep"></span>Egypt Tourism Federation</div>
+    <div class="marquee-item"><span class="dot-sep"></span>Saudi Tourism Authority</div>
+    <div class="marquee-item"><span class="dot-sep"></span>UNWTO Partner</div>
+    <div class="marquee-item"><span class="dot-sep"></span>StartupGate Egypt</div>
+    <div class="marquee-item"><span class="dot-sep"></span>QBIC Accelerator</div>
+    <div class="marquee-item"><span class="dot-sep"></span>1,400+ MENA Agencies</div>
+    <div class="marquee-item"><span class="dot-sep"></span>AI Content Generation</div>
+    <div class="marquee-item"><span class="dot-sep"></span>Arabic-First Platform</div>
+    <div class="marquee-item"><span class="dot-sep"></span>Egypt Tourism Federation</div>
+    <div class="marquee-item"><span class="dot-sep"></span>Saudi Tourism Authority</div>
+    <div class="marquee-item"><span class="dot-sep"></span>UNWTO Partner</div>
+    <div class="marquee-item"><span class="dot-sep"></span>StartupGate Egypt</div>
+    <div class="marquee-item"><span class="dot-sep"></span>QBIC Accelerator</div>
+    <div class="marquee-item"><span class="dot-sep"></span>1,400+ MENA Agencies</div>
+    <div class="marquee-item"><span class="dot-sep"></span>AI Content Generation</div>
+    <div class="marquee-item"><span class="dot-sep"></span>Arabic-First Platform</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PROBLEM / SOLUTION
+═══════════════════════════════════════════ -->
+<section id="problem" class="section">
+  <div class="container">
+    <div class="problem-grid">
+      <div class="reveal-left">
+        <span class="eyebrow">The Problem</span>
+        <h2 style="color:var(--navy)">Tourism Businesses Are <span style="color:var(--orange)">Left Behind</span></h2>
+        <p style="color:var(--gray-mid);margin:1rem 0 1.5rem">MENA's 6,350+ travel agencies, hotels, and tour operators are stuck with manual processes, fragmented tools, and no AI advantage — while global competitors digitize fast.</p>
+        <div class="problem-list">
+          <div class="problem-item">
+            <div class="problem-item-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg></div>
+            <div><h4>No digital marketing strategy</h4><p>68% of MENA agencies manage social media manually — no content calendar, no AI, no consistency.</p></div>
+          </div>
+          <div class="problem-item">
+            <div class="problem-item-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><h4>Tools not built for tourism</h4><p>Global SaaS (HubSpot, Salesforce) costs $800–5,000/month — too expensive, no Arabic UX, no tourism focus.</p></div>
+          </div>
+          <div class="problem-item">
+            <div class="problem-item-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8z"/></svg></div>
+            <div><h4>Freelancers are inconsistent</h4><p>Local agencies charge $500–2,000/month for manual, non-scalable work with no data or analytics.</p></div>
+          </div>
+          <div class="problem-item">
+            <div class="problem-item-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div><h4>No booking technology</h4><p>Most agencies use WhatsApp and spreadsheets to manage bookings — zero automation, zero insight.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="solution-card">
+          <span class="eyebrow">The Solution</span>
+          <h3 style="color:var(--white);margin-bottom:0.5rem">Trevo: One Platform. Everything You Need.</h3>
+          <p style="color:rgba(255,255,255,0.65);font-size:0.9rem;margin-bottom:1.5rem">AI-powered, Arabic-first, and priced for MENA SMEs — from $50/month.</p>
+          <div class="solution-pillars">
+            <div class="solution-pillar">
+              <div class="pillar-num">1</div>
+              <div class="pillar-text"><h4>AI Marketing Automation</h4><p>Content calendars, social campaigns, SEO — generated in seconds, in Arabic and English.</p></div>
+            </div>
+            <div class="solution-pillar">
+              <div class="pillar-num">2</div>
+              <div class="pillar-text"><h4>Smart Booking & CRM</h4><p>Centralized booking management, client tracking, performance analytics — all in one dashboard.</p></div>
+            </div>
+            <div class="solution-pillar">
+              <div class="pillar-num">3</div>
+              <div class="pillar-text"><h4>B2C Travel Platform</h4><p>Smart itineraries, AR/VR destination previews, real-time maps, and marketplace for travelers.</p></div>
+            </div>
+            <div class="solution-pillar">
+              <div class="pillar-num">4</div>
+              <div class="pillar-text"><h4>Data & Analytics</h4><p>Real-time performance dashboards, AI-powered insights, and booking conversion tracking.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FEATURES
+═══════════════════════════════════════════ -->
+<section id="features" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Platform Features</span>
+      <h2>Everything Tourism Businesses <span>Need to Scale</span></h2>
+      <p>One platform combining B2B SaaS, B2C travel tools, marketplace, and immersive tech — built for MENA's fastest-growing tourism market.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal" style="transition-delay:0.05s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>AI Content Generator</h3>
+        <p>Generate a full month of tourism content — social posts, campaigns, email sequences — in minutes. Arabic + English, tourism-specific tone.</p>
+        <div class="feature-tag"><span class="pill pill-orange">B2B Core Feature</span></div>
+      </div>
+      <div class="feature-card featured reveal" style="transition-delay:0.1s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3>Marketing Analytics Dashboard</h3>
+        <p>Track campaign performance, booking conversions, social engagement, and ROI — all in real time with AI-powered recommendations.</p>
+        <div class="feature-tag"><span class="pill pill-orange">Most Popular</span></div>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.15s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>Smart Booking & CRM</h3>
+        <p>Manage all client bookings, inquiries, and follow-ups from one place. Auto-assign packages, send confirmations, and track revenue.</p>
+        <div class="feature-tag"><span class="pill pill-navy">B2B SaaS</span></div>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.2s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
+        <h3>AR/VR Destination Previews</h3>
+        <p>Let travelers explore destinations virtually before booking — immersive 3D previews of museums, archaeological sites, and hotels.</p>
+        <div class="feature-tag"><span class="pill pill-orange">Phase 2</span></div>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.25s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>Tourism Marketplace</h3>
+        <p>Connect travelers to local experiences, guides, hotels, and tours. Commission-based platform for tour operators and DMCs.</p>
+        <div class="feature-tag"><span class="pill pill-green">Phase 3</span></div>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.3s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+        <h3>Travel FinTech & Wallet</h3>
+        <p>Multi-currency wallet, cross-border payments, BNPL for travel packages, and travel insurance integration for B2C users.</p>
+        <div class="feature-tag"><span class="pill pill-green">Phase 4</span></div>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.35s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>Live Trip Tracker</h3>
+        <p>Real-time map tracking for every journey, shareable itineraries, and offline travel guides for the B2C smart travel app.</p>
+        <div class="feature-tag"><span class="pill pill-navy">B2C App</span></div>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.4s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>Creator & Influencer Hub</h3>
+        <p>Platform for travel content creators — publish, monetize tourism content with sponsorships, affiliate links, and branded partnerships.</p>
+        <div class="feature-tag"><span class="pill pill-orange">Phase 3</span></div>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.45s">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>AI Data & Analytics API</h3>
+        <p>License Trevo's tourism intelligence to governments, airports, and hotel chains — predictive visitor flows, demand signals, and tourism analytics.</p>
+        <div class="feature-tag"><span class="pill pill-green">Phase 5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     HOW IT WORKS
+═══════════════════════════════════════════ -->
+<section id="how-it-works" class="section" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">How It Works</span>
+      <h2>Get Started in <span>4 Simple Steps</span></h2>
+      <p>From sign-up to your first AI-generated campaign in under 30 minutes.</p>
+    </div>
+    <div class="steps-container">
+      <div class="steps-connector"></div>
+      <div class="step reveal" style="transition-delay:0.05s">
+        <div class="step-badge">
+          <div class="step-num">1</div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 3a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        </div>
+        <h4>Set Up Your Profile</h4>
+        <p>Add your agency details, destinations, packages, and target markets. Takes 10 minutes.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.1s">
+        <div class="step-badge">
+          <div class="step-num">2</div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h4>Generate AI Content</h4>
+        <p>Trevo's AI creates a full month of social media content, campaigns, and SEO articles — in Arabic and English.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.15s">
+        <div class="step-badge">
+          <div class="step-num">3</div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h4>Launch & Track</h4>
+        <p>Publish content, manage bookings, and watch your analytics dashboard fill with real-time data on leads and conversions.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.2s">
+        <div class="step-badge">
+          <div class="step-num">4</div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 6l-9.5 9.5-5-5L1 18M16 6h7v7"/></svg>
+        </div>
+        <h4>Scale & Grow</h4>
+        <p>As Trevo learns your audience, recommendations improve. Unlock marketplace, AR/VR, and FinTech as you grow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     AI DEMO WIDGET
+═══════════════════════════════════════════ -->
+<section id="ai-demo" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Live AI Demo</span>
+      <h2>See Trevo's AI <span>Generate Content</span></h2>
+      <p>Type a destination or package name and watch Trevo create tourism content in seconds.</p>
+    </div>
+    <div class="demo-widget reveal">
+      <div class="demo-topbar">
+        <div class="demo-dot r"></div>
+        <div class="demo-dot y"></div>
+        <div class="demo-dot g"></div>
+        <span class="demo-title">Trevo AI Content Generator — Live Preview</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-chips">
+          <span class="demo-chip" onclick="runDemo(this.textContent)">Pyramids of Giza Package</span>
+          <span class="demo-chip" onclick="runDemo(this.textContent)">Nile Cruise 7 Days</span>
+          <span class="demo-chip" onclick="runDemo(this.textContent)">Hurghada Beach Resort</span>
+          <span class="demo-chip" onclick="runDemo(this.textContent)">Umrah Package Ramadan</span>
+          <span class="demo-chip" onclick="runDemo(this.textContent)">Desert Safari AlUla</span>
+        </div>
+        <div class="demo-prompt">
+          <input class="demo-input" type="text" id="demoInput" placeholder="e.g. 'Luxor Heritage Tour — 5 days'" maxlength="100">
+          <button class="demo-btn" onclick="runDemo(document.getElementById('demoInput').value)">Generate ✨</button>
+        </div>
+        <div class="demo-output" id="demoOutput">
+          <span style="color:var(--gray-mid);font-style:italic">Try one of the examples above or type your own package to see AI-generated tourism content...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     MARKET SIZE
+═══════════════════════════════════════════ -->
+<section id="market" class="section">
+  <div class="container">
+    <div class="market-inner">
+      <div class="section-header reveal" style="color:var(--white)">
+        <span class="eyebrow">Market Opportunity</span>
+        <h2 style="color:var(--white)">A <span>$950 Billion</span> Global Opportunity</h2>
+        <p style="color:rgba(255,255,255,0.65)">Trevo targets seven converging industries that power the global experience economy — starting in MENA, scaling worldwide.</p>
+      </div>
+      <div class="market-funnel reveal">
+        <div class="funnel-tier t-tam">
+          <div class="funnel-label">
+            <h4>TAM — Total Addressable Market</h4>
+            <p>Global tourism + tech convergence across 7 sectors</p>
+          </div>
+          <div class="funnel-value"><div class="fv">$950B</div><div class="fp">Global ceiling</div></div>
+        </div>
+        <div class="funnel-tier t-sam" style="margin-top:4px">
+          <div class="funnel-label">
+            <h4>SAM — Serviceable Available Market</h4>
+            <p>20–30 countries, digitally-ready tourism operators, 5–7 years</p>
+          </div>
+          <div class="funnel-value"><div class="fv">$95–120B</div><div class="fp">10–12% of TAM</div></div>
+        </div>
+        <div class="funnel-tier t-som" style="margin-top:4px">
+          <div class="funnel-label">
+            <h4>SOM — Obtainable Market (3–5 Years)</h4>
+            <p>Egypt + KSA beachhead → MENA expansion</p>
+          </div>
+          <div class="funnel-value"><div class="fv">$2–3.5B</div><div class="fp">2–3% of SAM</div></div>
+        </div>
+      </div>
+      <div class="market-sectors reveal">
+        <div class="sector-card"><div class="sv">$500B</div><h4>Global Travel & Tourism</h4><p>WTTC: $955B total revenues 2025. 1.52B tourists worldwide.</p></div>
+        <div class="sector-card"><div class="sv">$125B</div><h4>Travel eCommerce</h4><p>Marketplace for experiences, guides, hotels, and local sellers.</p></div>
+        <div class="sector-card"><div class="sv">$125B</div><h4>Travel FinTech</h4><p>eWallet, BNPL, FX, cross-border payments, insurance integration.</p></div>
+        <div class="sector-card"><div class="sv">$75B</div><h4>Creator Economy</h4><p>Tourism content hub, influencer monetization, SEO platform.</p></div>
+        <div class="sector-card"><div class="sv">$60B</div><h4>AR/VR Immersive</h4><p>AR in travel: $20B → $211B by 2031 (37.5% CAGR). UNESCO partnerships.</p></div>
+        <div class="sector-card"><div class="sv">$35B</div><h4>Health & Wellness Travel</h4><p>Medical tourism, wellness packages, outbreak alerts, mental wellness.</p></div>
+        <div class="sector-card"><div class="sv">$30B</div><h4>AI Data & APIs</h4><p>Tourism intelligence licensing to governments, airports, and hotel chains.</p></div>
+        <div class="sector-card" style="background:rgba(245,166,35,0.15);border-color:var(--orange)"><div class="sv" style="font-size:1.8rem">$950B</div><h4>Total Global TAM</h4><p>Trevo's long-term vision: the global Tourism Operating System.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PRICING
+═══════════════════════════════════════════ -->
+<section id="pricing" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Simple Pricing</span>
+      <h2>Start for <span>$50/month.</span> Scale as You Grow.</h2>
+      <p>No setup fees for the first 10 pilot clients. Cancel anytime. Annual plans save 2 months.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price"><span class="currency">$</span><span class="amount">50</span><span class="period">/month</span></div>
+        <div class="pricing-desc">Perfect for small agencies and solo operators getting started with digital marketing.</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><span class="check">✓</span> AI content calendar (monthly)</div>
+          <div class="pricing-feature"><span class="check">✓</span> 2 campaign drafts/month</div>
+          <div class="pricing-feature"><span class="check">✓</span> Performance report</div>
+          <div class="pricing-feature"><span class="check">✓</span> Arabic + English content</div>
+          <div class="pricing-feature"><span class="check">✓</span> Email support</div>
+        </div>
+        <a href="#contact" class="btn btn-outline" style="width:100%;justify-content:center">Get Started</a>
+      </div>
+      <div class="pricing-card popular">
+        <div class="pricing-tier">Growth</div>
+        <div class="pricing-price"><span class="currency">$</span><span class="amount">100</span><span class="period">/month</span></div>
+        <div class="pricing-desc">For mid-size agencies and hotels looking to scale their digital presence and bookings.</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><span class="check">✓</span> All Starter features</div>
+          <div class="pricing-feature"><span class="check">✓</span> Social media management</div>
+          <div class="pricing-feature"><span class="check">✓</span> 1 video script/month</div>
+          <div class="pricing-feature"><span class="check">✓</span> SEO audit & recommendations</div>
+          <div class="pricing-feature"><span class="check">✓</span> Booking CRM access</div>
+          <div class="pricing-feature"><span class="check">✓</span> Priority support</div>
+        </div>
+        <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center">Get Started</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Pro</div>
+        <div class="pricing-price"><span class="currency">$</span><span class="amount">200</span><span class="period">/month</span></div>
+        <div class="pricing-desc">For large agencies, DMCs, and hotels needing full automation and strategic support.</div>
+        <div class="pricing-features">
+          <div class="pricing-feature"><span class="check">✓</span> All Growth features</div>
+          <div class="pricing-feature"><span class="check">✓</span> Booking integration support</div>
+          <div class="pricing-feature"><span class="check">✓</span> Monthly strategy call</div>
+          <div class="pricing-feature"><span class="check">✓</span> Full analytics dashboard</div>
+          <div class="pricing-feature"><span class="check">✓</span> B2C marketplace listing</div>
+          <div class="pricing-feature"><span class="check">✓</span> Dedicated account manager</div>
+        </div>
+        <a href="#contact" class="btn btn-navy" style="width:100%;justify-content:center">Get Started</a>
+      </div>
+      <div class="pricing-card" style="background:var(--navy-deep)">
+        <div class="pricing-tier" style="color:var(--orange)">Enterprise</div>
+        <div class="pricing-price"><span class="amount" style="color:var(--white);font-size:1.8rem">Custom</span></div>
+        <div class="pricing-desc" style="color:rgba(255,255,255,0.6)">For hotel chains, tourism boards, airlines, and government entities.</div>
+        <div class="pricing-features">
+          <div class="pricing-feature" style="color:rgba(255,255,255,0.8)"><span class="check">✓</span> Full white-label option</div>
+          <div class="pricing-feature" style="color:rgba(255,255,255,0.8)"><span class="check">✓</span> Custom AI training</div>
+          <div class="pricing-feature" style="color:rgba(255,255,255,0.8)"><span class="check">✓</span> API access & integrations</div>
+          <div class="pricing-feature" style="color:rgba(255,255,255,0.8)"><span class="check">✓</span> On-site implementation</div>
+          <div class="pricing-feature" style="color:rgba(255,255,255,0.8)"><span class="check">✓</span> SLA & compliance</div>
+        </div>
+        <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center">Contact Sales</a>
+      </div>
+    </div>
+
+    <!-- ROI Calculator -->
+    <div class="roi-calculator reveal" style="margin-top:3rem">
+      <div class="roi-calc-grid">
+        <div>
+          <h3 style="color:var(--white);margin-bottom:0.5rem">Calculate Your ROI</h3>
+          <p style="color:rgba(255,255,255,0.6);font-size:0.85rem;margin-bottom:1.5rem">See how much time and money Trevo saves your agency every month.</p>
+          <div class="roi-inputs">
+            <div>
+              <div class="roi-label"><span>Staff hours on marketing/week</span><span class="roi-val" id="hoursVal">10 hrs</span></div>
+              <input type="range" class="roi-slider" min="2" max="40" value="10" id="hoursSlider" oninput="calcROI()">
+            </div>
+            <div>
+              <div class="roi-label"><span>Monthly marketing spend</span><span class="roi-val" id="spendVal">$800</span></div>
+              <input type="range" class="roi-slider" min="100" max="3000" step="50" value="800" id="spendSlider" oninput="calcROI()">
+            </div>
+            <div>
+              <div class="roi-label"><span>Monthly bookings target</span><span class="roi-val" id="bookingsVal">50</span></div>
+              <input type="range" class="roi-slider" min="10" max="500" step="10" value="50" id="bookingsSlider" oninput="calcROI()">
+            </div>
+          </div>
+        </div>
+        <div class="roi-result">
+          <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:0.5rem">Estimated Monthly Savings</span>
+          <span class="roi-big" id="roiSavings">$740</span>
+          <p>vs. hiring a freelancer agency</p>
+          <div style="margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;text-align:left">
+            <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:0.75rem">
+              <div style="font-size:1.1rem;font-weight:700;color:var(--orange)" id="roiHours">75%</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.5)">Time saved</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.07);border-radius:10px;padding:0.75rem">
+              <div style="font-size:1.1rem;font-weight:700;color:var(--orange)" id="roiBookings">+18%</div>
+              <div style="font-size:0.72rem;color:rgba(255,255,255,0.5)">Booking uplift</div>
+            </div>
+          </div>
+          <a href="#contact" class="btn btn-primary" style="margin-top:1.5rem;width:100%;justify-content:center">Start Saving Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     COMPETITIVE
+═══════════════════════════════════════════ -->
+<section id="competitive" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Competitive Advantage</span>
+      <h2>Trevo Wins in the <span>Uncontested Quadrant</span></h2>
+      <p>No existing solution combines tourism-specific AI, Arabic-first UX, and SME pricing in one platform for MENA.</p>
+    </div>
+    <div class="matrix-wrap reveal">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Solution</th>
+            <th>Tourism AI</th>
+            <th>Arabic UX</th>
+            <th>CRM + Booking</th>
+            <th>AR/VR</th>
+            <th>B2C Platform</th>
+            <th>MENA Pricing</th>
+            <th>Segment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="trevo-row">
+            <td>⭐ Trevo</td>
+            <td class="check-yes">✓ Yes</td>
+            <td class="check-yes">✓ Yes</td>
+            <td class="check-yes">✓ Yes</td>
+            <td class="check-yes">✓ Road.</td>
+            <td class="check-yes">✓ Yes</td>
+            <td class="check-yes">✓ $50–200</td>
+            <td><span class="pill pill-orange">B2B+B2C</span></td>
+          </tr>
+          <tr>
+            <td>HubSpot / Mailchimp</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-partial">~ Limited</td>
+            <td class="check-partial">~ Partial</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-no">✗ $800+/mo</td>
+            <td><span class="pill pill-navy">Generic B2B</span></td>
+          </tr>
+          <tr>
+            <td>TrekkSoft / Peek Pro</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-yes">✓ Yes</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-partial">~ Limited</td>
+            <td class="check-partial">~ $200+/mo</td>
+            <td><span class="pill pill-navy">EU/US Focus</span></td>
+          </tr>
+          <tr>
+            <td>Amadeus / Sabre</td>
+            <td class="check-partial">~ Partial</td>
+            <td class="check-partial">~ Limited</td>
+            <td class="check-yes">✓ Yes</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-no">✗ $50K+/yr</td>
+            <td><span class="pill pill-navy">Enterprise</span></td>
+          </tr>
+          <tr>
+            <td>Local Digital Agencies</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-yes">✓ Yes</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-no">✗ No</td>
+            <td class="check-partial">~ $500–2K/mo</td>
+            <td><span class="pill pill-navy">Manual Service</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="moat-grid">
+      <div class="moat-card reveal" style="transition-delay:0.05s">
+        <h4>Tourism-Specific AI Engine</h4>
+        <p>Trained on MENA tourism patterns, seasonality, and origin-country buyer psychology. Generic AI tools can't replicate this without years of domain data.</p>
+      </div>
+      <div class="moat-card reveal" style="transition-delay:0.1s">
+        <h4>Arabic-First Product Design</h4>
+        <p>RTL interface, Arabic language models, and cultural context built in. Zero global competitors offer this for tourism specifically.</p>
+      </div>
+      <div class="moat-card reveal" style="transition-delay:0.15s">
+        <h4>Founder Domain Network</h4>
+        <p>32+ combined years in tourism. Sherif's 17-year network and Ahmed's Hajj/Umrah expertise unlock a $15B+ segment from day one.</p>
+      </div>
+      <div class="moat-card reveal" style="transition-delay:0.2s">
+        <h4>Marketplace Network Effects</h4>
+        <p>Every new B2B client enriches the B2C platform for travelers — a classic two-sided marketplace flywheel that compounds with scale.</p>
+      </div>
+      <div class="moat-card reveal" style="transition-delay:0.25s">
+        <h4>Data Lock-In</h4>
+        <p>After 12 months, an agency's campaign history, CRM, and analytics all live in Trevo — making switching cost extremely high.</p>
+      </div>
+      <div class="moat-card reveal" style="transition-delay:0.3s">
+        <h4>18–24 Month First-Mover Window</h4>
+        <p>No direct competitor exists in the Egypt/KSA market with AI-powered tourism SaaS. The window is open — now is the time to move.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ROADMAP
+═══════════════════════════════════════════ -->
+<section id="roadmap" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Strategic Roadmap</span>
+      <h2>From Beachhead to <span>Global Platform</span></h2>
+      <p>Five phases from Egypt MVP to a $100M+ ARR global tourism superplatform by 2030.</p>
+    </div>
+    <div class="roadmap-track">
+      <div class="roadmap-line"></div>
+      <div class="roadmap-items">
+        <div class="roadmap-item reveal">
+          <div class="roadmap-content">
+            <div class="rc-year">Phase 1 · Q4 2026</div>
+            <h4>Foundation & Launch</h4>
+            <p>Validate PMF with first 10 paying pilot clients in Egypt & KSA. Launch MVP with AI content generation, CRM, and analytics dashboard.</p>
+            <div class="rc-target">Target: $42K ARR · 3 LOIs · 10 pilots</div>
+          </div>
+          <div class="roadmap-node">P1</div>
+          <div class="roadmap-spacer"></div>
+        </div>
+        <div class="roadmap-item reveal" style="transition-delay:0.1s">
+          <div class="roadmap-spacer"></div>
+          <div class="roadmap-node">P2</div>
+          <div class="roadmap-content">
+            <div class="rc-year">Phase 2 · FY 2027</div>
+            <h4>Seed Growth & Regional Expansion</h4>
+            <p>Close Seed Round ($500K–$1M). Expand to UAE, Jordan, Morocco. Launch B2C smart app, content SEO hub, and multilingual platform.</p>
+            <div class="rc-target">Target: $1M ARR · 300 clients · 100K users</div>
+          </div>
+        </div>
+        <div class="roadmap-item reveal" style="transition-delay:0.2s">
+          <div class="roadmap-content">
+            <div class="rc-year">Phase 3 · FY 2028</div>
+            <h4>Marketplace & Series A</h4>
+            <p>Launch tourism marketplace with 8% commission model. Series A ($3–5M). Expand to 15+ countries including Turkey, Indonesia, Southern Europe.</p>
+            <div class="rc-target">Target: $5.9M ARR · 1,000 B2B · 1M users</div>
+          </div>
+          <div class="roadmap-node">P3</div>
+          <div class="roadmap-spacer"></div>
+        </div>
+        <div class="roadmap-item reveal" style="transition-delay:0.3s">
+          <div class="roadmap-spacer"></div>
+          <div class="roadmap-node">P4</div>
+          <div class="roadmap-content">
+            <div class="rc-year">Phase 4 · FY 2029</div>
+            <h4>FinTech, AR/VR & AI Data</h4>
+            <p>Launch Trevo Wallet, BNPL travel payments, and FX integration. Full AR/VR museum partnerships (UNESCO). License AI analytics to governments.</p>
+            <div class="rc-target">Target: $32.9M ARR · 5M users · NRR 115%</div>
+          </div>
+        </div>
+        <div class="roadmap-item reveal" style="transition-delay:0.4s">
+          <div class="roadmap-content">
+            <div class="rc-year">Phase 5 · FY 2030</div>
+            <h4>Global Tourism Superplatform</h4>
+            <p>100+ countries. Global marketplace GMV $5B+. Creator economy, wellness travel, smart visa tools. Trevo becomes the operating system of global tourism.</p>
+            <div class="rc-target">Target: $281M+ ARR · 20K B2B · 10M users</div>
+          </div>
+          <div class="roadmap-node">P5</div>
+          <div class="roadmap-spacer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TEAM
+═══════════════════════════════════════════ -->
+<section id="team" class="section" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">The Founding Team</span>
+      <h2>32+ Years of <span>Tourism Expertise</span></h2>
+      <p>Operators who built their careers in the industry — now building the technology to transform it.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">S</div>
+        <div class="team-info">
+          <h3>Sherif</h3>
+          <span class="team-title">Co-Founder & CEO</span>
+          <p>17+ years in tourism business development across Egypt and the GCC. Deep network of agency owners, tourism board officials, and hotel GMs — the distribution channel for Trevo's first 100 clients.</p>
+          <div class="team-tags">
+            <span class="team-tag">17 Yrs Tourism</span>
+            <span class="team-tag">Business Dev</span>
+            <span class="team-tag">Egypt & GCC</span>
+            <span class="team-tag">Startup Strategy</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-card reveal" style="transition-delay:0.1s">
+        <div class="team-avatar" style="background:var(--orange-dark)">A</div>
+        <div class="team-info">
+          <h3>Ahmed</h3>
+          <span class="team-title">Co-Founder & COO</span>
+          <p>15+ years in tourism operations including Hajj/Umrah management — unlocking a $15B+ annual segment. Deep operational credibility for pilot clients and government partnership conversations.</p>
+          <div class="team-tags">
+            <span class="team-tag">15 Yrs Operations</span>
+            <span class="team-tag">Hajj & Umrah</span>
+            <span class="team-tag">KSA Focus</span>
+            <span class="team-tag">Government Relations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TESTIMONIALS
+═══════════════════════════════════════════ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow" style="color:var(--orange)">What People Are Saying</span>
+      <h2 style="color:var(--white)">Early Feedback from <span>Tourism Leaders</span></h2>
+      <p style="color:rgba(255,255,255,0.65)">Reactions from tourism operators who've seen the Trevo platform in action.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal" style="transition-delay:0.05s">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"Finally a tool that understands Arabic tourism marketing. HubSpot was too expensive and not built for us. Trevo is exactly what we needed — AI content in Arabic in seconds."</p>
+        <div class="t-author">
+          <div class="t-avatar">MK</div>
+          <div><div class="t-name">Mohamed K.</div><div class="t-role">Travel Agency Owner, Cairo</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:0.1s">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"The demo blew me away. We spend 20+ hours a week on social media content. If Trevo can cut that to 2 hours, the ROI is immediate. We're ready to sign the pilot."</p>
+        <div class="t-author">
+          <div class="t-avatar">FA</div>
+          <div><div class="t-name">Fatima A.</div><div class="t-role">Marketing Director, Boutique Hotel, Hurghada</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:0.15s">
+        <div class="t-stars">★★★★★</div>
+        <p class="t-quote">"We've been looking for an AI solution for our Umrah packages for two seasons. The platform's understanding of religious tourism content is impressive. This is different."</p>
+        <div class="t-author">
+          <div class="t-avatar">KR</div>
+          <div><div class="t-name">Khalid R.</div><div class="t-role">Religious Tourism Operator, Riyadh</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CTA
+═══════════════════════════════════════════ -->
+<section id="cta-section">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <span class="eyebrow" style="color:rgba(255,255,255,0.7)">Ready to Transform Your Agency?</span>
+      <h2>Join Trevo's Founding <span style="color:var(--navy)">Pilot Program</span></h2>
+      <p>First 10 clients get pilot pricing locked for 12 months. No risk — cancel anytime.</p>
+      <div class="cta-actions">
+        <a href="#contact" class="btn btn-navy btn-arrow">Book Your Free Demo</a>
+        <a href="mailto:hello@trevo.io" class="btn btn-outline-white">Email Us Directly</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════ -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Get In Touch</span>
+      <h2>Book a <span>Free Demo</span></h2>
+      <p>30 minutes. See exactly how Trevo works for your business. No commitment required.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal-left">
+        <h3>Reach Us Directly</h3>
+        <p>We respond within 4 business hours. WhatsApp is our fastest channel for Egypt and KSA-based inquiries.</p>
+        <div class="contact-channels">
+          <a href="https://wa.me/201000000000" class="contact-channel">
+            <div class="ch-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+            WhatsApp (Fastest) — Egypt & KSA
+          </a>
+          <a href="mailto:hello@trevo.io" class="contact-channel">
+            <div class="ch-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            hello@trevo.io — Email
+          </a>
+          <a href="https://linkedin.com" class="contact-channel">
+            <div class="ch-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></div>
+            LinkedIn — Trevo Official
+          </a>
+          <div class="contact-channel" style="cursor:default">
+            <div class="ch-icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            Cairo, Egypt &amp; Riyadh, Saudi Arabia
+          </div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input class="form-input" type="text" placeholder="Mohamed">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input class="form-input" type="text" placeholder="Hassan">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" type="email" placeholder="your@agency.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">WhatsApp / Phone</label>
+            <input class="form-input" type="tel" placeholder="+20 100 000 0000">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Type</label>
+            <select class="form-select">
+              <option value="">Select your business type</option>
+              <option>Travel Agency</option>
+              <option>Hotel / Resort</option>
+              <option>DMC (Destination Management Company)</option>
+              <option>Religious Tourism Operator</option>
+              <option>Tour Operator</option>
+              <option>Tourism Board / Government</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message (Optional)</label>
+            <textarea class="form-textarea" placeholder="Tell us about your main marketing challenge..."></textarea>
+          </div>
+          <button class="form-submit" onclick="submitForm(event)">Book My Free Demo →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo" style="margin-bottom:0.5rem;display:inline-flex">
+          <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" width="22" height="22"><path d="M5 4v16M5 4h11M5 12h8M16 8h4M17 12h3"/></svg></div>
+          Trevo
+        </a>
+        <p data-t="foot_desc">The AI-powered Tourism Superplatform for MENA and the world. Built to empower travel agencies, hotels, and tourism businesses with smart technology.</p>
+        <div class="footer-socials">
+          <a class="social-btn" href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a class="social-btn" href="#" aria-label="Twitter/X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+          <a class="social-btn" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a class="social-btn" href="https://wa.me/201000000000" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5 data-t="foot_product">Product</h5>
+        <ul>
+          <li><a href="#features" data-t="nav_features">Features</a></li>
+          <li><a href="#pricing" data-t="nav_pricing">Pricing</a></li>
+          <li><a href="#roadmap" data-t="nav_roadmap">Roadmap</a></li>
+          <li><a href="#ai-demo">AI Demo</a></li>
+          <li><a href="#competitive">vs Competitors</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-t="foot_company">Company</h5>
+        <ul>
+          <li><a href="#team">About Team</a></li>
+          <li><a href="#market">Market Size</a></li>
+          <li><a href="#contact" data-t="nav_contact">Contact</a></li>
+          <li><a href="trevo-investor.html" data-t="foot_investors">Investors</a></li>
+          <li><a href="trevo-investor.html" data-t="foot_press">Press Kit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 data-t="foot_resources">Resources</h5>
+        <ul>
+          <li><a href="trevo-blog.html" data-t="foot_blog">Blog</a></li>
+          <li><a href="trevo-arabic.html" style="color:var(--orange)">الموقع العربي</a></li>
+          <li><a href="trevo-blog.html#resources" data-t="foot_cases">Case Studies</a></li>
+          <li><a href="trevo-blog.html#resources" data-t="foot_loi">LOI Template</a></li>
+          <li><a href="trevo-blog.html#resources" data-t="foot_api">API Docs</a></li>
+          <li><a href="trevo-blog.html#resources" data-t="foot_partner">Partner Program</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-t="foot_copy">© 2026 Trevo Tourism Technology. All rights reserved. Egypt & Saudi Arabia.</p>
+      <div class="footer-legal">
+        <a href="#" data-t="foot_privacy">Privacy Policy</a>
+        <a href="#" data-t="foot_terms">Terms of Service</a>
+        <a href="#" data-t="foot_cookies">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+// ─── NAVBAR SCROLL ───
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  navbar.classList.toggle('scrolled',window.scrollY>60);
+  document.getElementById('scroll-top').classList.toggle('visible',window.scrollY>400);
+});
+
+// ─── MOBILE NAV ───
+function openMobile(){document.getElementById('mobileNav').classList.add('open');document.body.style.overflow='hidden'}
+function closeMobile(){document.getElementById('mobileNav').classList.remove('open');document.body.style.overflow=''}
+
+// ═══════════════════════════════════════════════════════
+//  TREVO BILINGUAL ENGINE v2  (EN ↔ AR  |  RTL support)
+// ═══════════════════════════════════════════════════════
+const T={
+  en:{nav_features:"Features",nav_market:"Market",nav_pricing:"Pricing",nav_roadmap:"Roadmap",nav_about:"About",nav_contact:"Contact",nav_demo:"Book Demo",nav_blog:"Blog",nav_investors:"Investors",nav_lang:"عربي",hero_eyebrow:"AI-Powered Tourism Technology",hero_h1:"The Smart <span class='highlight'>Tourism</span> Superplatform",hero_p:"AI-driven marketing automation, smart booking tools, and immersive travel experiences — built for tourism businesses across Egypt, KSA, and MENA.",hero_cta1:"Book a Free Demo",hero_cta2:"Explore Features",stat1:"Global TAM",stat2:"Target Agencies",stat3:"Starting Price",prob_eyebrow:"The Problem",prob_h2:"Tourism Businesses Are <span style='color:var(--orange)'>Left Behind</span>",prob_p:"MENA's 6,350+ travel agencies, hotels, and tour operators are stuck with manual processes, fragmented tools, and no AI advantage.",prob1_h:"No digital marketing strategy",prob1_p:"68% of MENA agencies manage social media manually — no content calendar, no AI, no consistency.",prob2_h:"Tools not built for tourism",prob2_p:"Global SaaS (HubSpot, Salesforce) costs $800–5,000/month — too expensive, no Arabic UX, no tourism focus.",prob3_h:"Freelancers are inconsistent",prob3_p:"Local agencies charge $500–2,000/month for manual, non-scalable work with no data or analytics.",prob4_h:"No booking technology",prob4_p:"Most agencies use WhatsApp and spreadsheets to manage bookings — zero automation, zero insight.",sol_eyebrow:"The Solution",sol_h3:"Trevo: One Platform. Everything You Need.",sol_p:"AI-powered, Arabic-first, and priced for MENA SMEs — from $50/month.",sol1_h:"AI Marketing Automation",sol1_p:"Content calendars, social campaigns, SEO — generated in seconds, in Arabic and English.",sol2_h:"Smart Booking & CRM",sol2_p:"Centralized booking management, client tracking, performance analytics — all in one dashboard.",sol3_h:"B2C Travel Platform",sol3_p:"Smart itineraries, AR/VR destination previews, real-time maps, and marketplace for travelers.",sol4_h:"Data & Analytics",sol4_p:"Real-time performance dashboards, AI-powered insights, and booking conversion tracking.",feat_eyebrow:"Platform Features",feat_h2:"Everything Tourism Businesses <span>Need to Scale</span>",feat_p:"One platform combining B2B SaaS, B2C travel tools, marketplace, and immersive tech.",feat1_h:"AI Content Generator",feat1_p:"Generate a full month of tourism content — social posts, campaigns, email sequences — in minutes.",feat2_h:"Marketing Analytics Dashboard",feat2_p:"Track campaign performance, booking conversions, social engagement, and ROI — all in real time.",feat3_h:"Smart Booking & CRM",feat3_p:"Manage all client bookings, inquiries, and follow-ups from one place. Auto-assign packages.",feat4_h:"AR/VR Destination Previews",feat4_p:"Let travelers explore destinations virtually before booking — immersive 3D previews.",feat5_h:"Tourism Marketplace",feat5_p:"Connect travelers to local experiences, guides, hotels, and tours. Commission-based platform.",feat6_h:"Travel FinTech & Wallet",feat6_p:"Multi-currency wallet, cross-border payments, BNPL for travel packages, and travel insurance.",feat7_h:"Live Trip Tracker",feat7_p:"Real-time map tracking for every journey, shareable itineraries, and offline travel guides.",feat8_h:"Creator & Influencer Hub",feat8_p:"Platform for travel content creators — publish and monetize with sponsorships and affiliate links.",feat9_h:"AI Data & Analytics API",feat9_p:"License Trevo's tourism intelligence to governments, airports, and hotel chains.",how_eyebrow:"How It Works",how_h2:"Get Started in <span>4 Simple Steps</span>",how_p:"From sign-up to your first AI-generated campaign in under 30 minutes.",step1_h:"Set Up Your Profile",step1_p:"Add your agency details, destinations, packages, and target markets. Takes 10 minutes.",step2_h:"Generate AI Content",step2_p:"Trevo's AI creates a full month of social media content, campaigns, and SEO articles.",step3_h:"Launch & Track",step3_p:"Publish content, manage bookings, and watch your analytics dashboard fill with real-time data.",step4_h:"Scale & Grow",step4_p:"As Trevo learns your audience, recommendations improve. Unlock marketplace, AR/VR, and FinTech.",demo_eyebrow:"Live AI Demo",demo_h2:"See Trevo's AI <span>Generate Content</span>",demo_p:"Type a destination or package name and watch Trevo create tourism content in seconds.",demo_placeholder:"e.g. 'Luxor Heritage Tour — 5 days'",demo_btn:"Generate \u2728",demo_empty:"Try one of the examples above or type your own package to see AI-generated tourism content...",demo_typing:"Trevo AI is generating content",market_eyebrow:"Market Opportunity",market_h2:"A <span>$950 Billion</span> Global Opportunity",market_p:"Trevo targets seven converging industries that power the global experience economy — starting in MENA.",tam_h:"TAM — Total Addressable Market",tam_p:"Global tourism + tech convergence across 7 sectors",tam_v:"$950B",tam_sub:"Global ceiling",sam_h:"SAM — Serviceable Available Market",sam_p:"20–30 countries, digitally-ready tourism operators, 5–7 years",sam_v:"$95–120B",sam_sub:"10–12% of TAM",som_h:"SOM — Obtainable Market (3–5 Years)",som_p:"Egypt + KSA beachhead \u2192 MENA expansion",som_v:"$2–3.5B",som_sub:"2–3% of SAM",price_eyebrow:"Simple Pricing",price_h2:"Start for <span>$50/month.</span> Scale as You Grow.",price_p:"No setup fees for the first 10 pilot clients. Cancel anytime. Annual plans save 2 months.",roi_h3:"Calculate Your ROI",roi_p:"See how much time and money Trevo saves your agency every month.",roi_lbl1:"Staff hours on marketing/week",roi_lbl2:"Monthly marketing spend",roi_lbl3:"Monthly bookings target",roi_savings:"Estimated Monthly Savings",roi_time:"Time saved",roi_bookings:"Booking uplift",roi_cta:"Start Saving Now",comp_eyebrow:"Competitive Advantage",comp_h2:"Trevo Wins in the <span>Uncontested Quadrant</span>",comp_p:"No existing solution combines tourism-specific AI, Arabic-first UX, and SME pricing in one platform.",road_eyebrow:"Strategic Roadmap",road_h2:"From Beachhead to <span>Global Platform</span>",road_p:"Five phases from Egypt MVP to a $100M+ ARR global tourism superplatform by 2030.",team_eyebrow:"The Founding Team",team_h2:"32+ Years of <span>Tourism Expertise</span>",team_p:"Operators who built their careers in the industry — now building the technology to transform it.",test_eyebrow:"What People Are Saying",test_h2:"Early Feedback from <span>Tourism Leaders</span>",test_p:"Reactions from tourism operators who've seen the Trevo platform in action.",cta_eyebrow:"Ready to Transform Your Agency?",cta_h2:"Join Trevo's Founding <span style='color:var(--navy)'>Pilot Program</span>",cta_p:"First 10 clients get pilot pricing locked for 12 months. No risk — cancel anytime.",cta_btn1:"Book Your Free Demo",cta_btn2:"Email Us Directly",contact_eyebrow:"Get In Touch",contact_h2:"Book a <span>Free Demo</span>",contact_p:"30 minutes. See exactly how Trevo works for your business. No commitment required.",contact_info_h:"Reach Us Directly",contact_info_p:"We respond within 4 business hours. WhatsApp is our fastest channel for Egypt and KSA-based inquiries.",form_fname:"First Name",form_lname:"Last Name",form_email:"Email Address",form_phone:"WhatsApp / Phone",form_type:"Business Type",form_type_p:"Select your business type",form_msg:"Message (Optional)",form_msg_p:"Tell us about your main marketing challenge...",form_submit:"Book My Free Demo \u2192",form_success:"\u2713 Request Sent! We'll contact you within 4 hours.",foot_desc:"The AI-powered Tourism Superplatform for MENA and the world. Built to empower travel agencies, hotels, and tourism businesses.",foot_product:"Product",foot_company:"Company",foot_resources:"Resources",foot_features:"Features",foot_pricing:"Pricing",foot_roadmap:"Roadmap",foot_demo:"AI Demo",foot_vs:"vs Competitors",foot_about:"About Team",foot_market:"Market Size",foot_contact:"Contact",foot_investors:"Investors",foot_press:"Press Kit",foot_blog:"Blog",foot_cases:"Case Studies",foot_loi:"LOI Template",foot_api:"API Docs",foot_partner:"Partner Program",foot_copy:"\u00a9 2026 Trevo Tourism Technology. All rights reserved. Egypt & Saudi Arabia.",foot_privacy:"Privacy Policy",foot_terms:"Terms of Service",foot_cookies:"Cookie Policy",cookie_p:"We use cookies to enhance your experience. By continuing to use Trevo, you agree to our use of cookies.",cookie_more:"Learn more",cookie_accept:"Accept",cookie_decline:"Decline"},
+  ar:{nav_features:"\u0627\u0644\u0645\u0645\u064a\u0632\u0627\u062a",nav_market:"\u0627\u0644\u0633\u0648\u0642",nav_pricing:"\u0627\u0644\u0623\u0633\u0639\u0627\u0631",nav_roadmap:"\u062e\u0627\u0631\u0637\u0629 \u0627\u0644\u0637\u0631\u064a\u0642",nav_about:"\u0645\u0646 \u0646\u062d\u0646",nav_contact:"\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627",nav_demo:"\u0627\u062d\u062c\u0632 \u0639\u0631\u0636\u0627\u064b",nav_blog:"\u0627\u0644\u0645\u062f\u0648\u0646\u0629",nav_investors:"\u0627\u0644\u0645\u0633\u062a\u062b\u0645\u0631\u0648\u0646",nav_lang:"English",hero_eyebrow:"\u062a\u0642\u0646\u064a\u0629 \u0627\u0644\u0633\u064a\u0627\u062d\u0629 \u0627\u0644\u0645\u062f\u0639\u0648\u0645\u0629 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a",hero_h1:"\u0645\u0646\u0635\u0629 <span class='highlight'>\u0627\u0644\u0633\u064a\u0627\u062d\u0629</span> \u0627\u0644\u0630\u0643\u064a\u0629 \u0627\u0644\u0634\u0627\u0645\u0644\u0629",hero_p:"\u0623\u062a\u0645\u062a\u0629 \u0627\u0644\u062a\u0633\u0648\u064a\u0642 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0648\u0623\u062f\u0648\u0627\u062a \u0627\u0644\u062d\u062c\u0632 \u0627\u0644\u0630\u0643\u064a\u0629 \u0648\u062a\u062c\u0627\u0631\u0628 \u0627\u0644\u0633\u0641\u0631 \u0627\u0644\u063a\u0627\u0645\u0631\u0629 \u2014 \u0645\u0635\u0645\u0645\u0629 \u0644\u0644\u0634\u0631\u0643\u0627\u062a \u0627\u0644\u0633\u064a\u0627\u062d\u064a\u0629 \u0641\u064a \u0645\u0635\u0631 \u0648\u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629 \u0648MENA.",hero_cta1:"\u0627\u062d\u062c\u0632 \u0639\u0631\u0636\u0627\u064b \u0645\u062c\u0627\u0646\u064a\u0627\u064b",hero_cta2:"\u0627\u0633\u062a\u0643\u0634\u0641 \u0627\u0644\u0645\u0645\u064a\u0632\u0627\u062a",stat1:"\u0627\u0644\u0633\u0648\u0642 \u0627\u0644\u0625\u062c\u0645\u0627\u0644\u064a",stat2:"\u0648\u0643\u0627\u0644\u0627\u062a \u0645\u0633\u062a\u0647\u062f\u0641\u0629",stat3:"\u064a\u0628\u062f\u0623 \u0645\u0646",prob_eyebrow:"\u0627\u0644\u0645\u0634\u0643\u0644\u0629",prob_h2:"\u0634\u0631\u0643\u0627\u062a \u0627\u0644\u0633\u064a\u0627\u062d\u0629 <span style='color:var(--orange)'>\u062a\u062a\u0623\u062e\u0631 \u0639\u0646 \u0627\u0644\u0631\u0643\u0628</span>",prob_p:"\u0623\u0643\u062b\u0631 \u0645\u0646 6,350 \u0648\u0643\u0627\u0644\u0629 \u0633\u0641\u0631 \u0648\u0641\u0646\u0627\u062f\u0642 \u0648\u0645\u0634\u063a\u0644\u064a \u062c\u0648\u0644\u0627\u062a \u0641\u064a MENA \u062a\u0639\u0645\u0644 \u0628\u0639\u0645\u0644\u064a\u0627\u062a \u064a\u062f\u0648\u064a\u0629 \u0648\u0623\u062f\u0648\u0627\u062a \u0645\u062c\u0632\u0623\u0629 \u062f\u0648\u0646 \u0623\u064a \u0645\u064a\u0632\u0629 \u0644\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a.",prob1_h:"\u0644\u0627 \u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629 \u062a\u0633\u0648\u064a\u0642 \u0631\u0642\u0645\u064a",prob1_p:"68% \u0645\u0646 \u0648\u0643\u0627\u0644\u0627\u062a MENA \u062a\u062f\u064a\u0631 \u0648\u0633\u0627\u0626\u0644 \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0627\u0644\u0627\u062c\u062a\u0645\u0627\u0639\u064a \u064a\u062f\u0648\u064a\u0627\u064b \u2014 \u0628\u0644\u0627 \u062c\u062f\u0648\u0644 \u0645\u062d\u062a\u0648\u0649 \u0648\u0644\u0627 \u0630\u0643\u0627\u0621 \u0627\u0635\u0637\u0646\u0627\u0639\u064a.",prob2_h:"\u0623\u062f\u0648\u0627\u062a \u063a\u064a\u0631 \u0645\u0635\u0645\u0645\u0629 \u0644\u0644\u0633\u064a\u0627\u062d\u0629",prob2_p:"\u062a\u0643\u0644\u0641 \u0645\u0646\u0635\u0627\u062a SaaS \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629 800\u20135000 \u062f\u0648\u0644\u0627\u0631 \u0634\u0647\u0631\u064a\u0627\u064b \u2014 \u0628\u0627\u0647\u0638\u0629 \u0648\u0628\u0644\u0627 \u0648\u0627\u062c\u0647\u0629 \u0639\u0631\u0628\u064a\u0629 \u0623\u0648 \u062a\u0631\u0643\u064a\u0632 \u0633\u064a\u0627\u062d\u064a.",prob3_h:"\u0627\u0644\u0645\u0633\u062a\u0642\u0644\u0648\u0646 \u063a\u064a\u0631 \u0645\u0648\u062b\u0648\u0642\u064a\u0646",prob3_p:"\u062a\u062a\u0642\u0627\u0636\u0649 \u0627\u0644\u0648\u0643\u0627\u0644\u0627\u062a \u0627\u0644\u0645\u062d\u0644\u064a\u0629 500\u20132000 \u062f\u0648\u0644\u0627\u0631 \u0634\u0647\u0631\u064a\u0627\u064b \u0644\u0639\u0645\u0644 \u064a\u062f\u0648\u064a \u063a\u064a\u0631 \u0642\u0627\u0628\u0644 \u0644\u0644\u062a\u0648\u0633\u0639 \u0648\u0628\u0644\u0627 \u0628\u064a\u0627\u0646\u0627\u062a.",prob4_h:"\u0644\u0627 \u062a\u0642\u0646\u064a\u0629 \u062d\u062c\u0632",prob4_p:"\u0645\u0639\u0638\u0645 \u0627\u0644\u0648\u0643\u0627\u0644\u0627\u062a \u062a\u0633\u062a\u062e\u062f\u0645 \u0648\u0627\u062a\u0633\u0627\u0628 \u0648\u062c\u062f\u0627\u0648\u0644 \u0628\u064a\u0627\u0646\u0627\u062a \u0644\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u062d\u062c\u0648\u0632\u0627\u062a \u2014 \u0635\u0641\u0631 \u0623\u062a\u0645\u062a\u0629 \u0648\u0635\u0641\u0631 \u0631\u0624\u0649.",sol_eyebrow:"\u0627\u0644\u062d\u0644",sol_h3:"\u062a\u0631\u064a\u06a4\u0648: \u0645\u0646\u0635\u0629 \u0648\u0627\u062d\u062f\u0629. \u0643\u0644 \u0645\u0627 \u062a\u062d\u062a\u0627\u062c\u0647.",sol_p:"\u0645\u062f\u0639\u0648\u0645 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a\u060c \u0639\u0631\u0628\u064a \u0623\u0648\u0644\u0627\u064b\u060c \u0628\u0623\u0633\u0639\u0627\u0631 \u0645\u0646\u0627\u0633\u0628\u0629 \u0644\u0640 SMEs \u0641\u064a MENA \u2014 \u0627\u0628\u062a\u062f\u0627\u0621\u064b \u0645\u0646 50 \u062f\u0648\u0644\u0627\u0631 \u0634\u0647\u0631\u064a\u0627\u064b.",sol1_h:"\u0623\u062a\u0645\u062a\u0629 \u0627\u0644\u062a\u0633\u0648\u064a\u0642 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a",sol1_p:"\u062a\u0642\u0627\u0648\u064a\u0645 \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0648\u0627\u0644\u062d\u0645\u0644\u0627\u062a \u0648\u0627\u0644\u0640 SEO \u2014 \u062a\u064f\u0648\u0644\u064e\u0651\u062f \u0641\u064a \u062b\u0648\u0627\u0646\u064d \u0628\u0627\u0644\u0644\u063a\u062a\u064a\u0646 \u0627\u0644\u0639\u0631\u0628\u064a\u0629 \u0648\u0627\u0644\u0625\u0646\u062c\u0644\u064a\u0632\u064a\u0629.",sol2_h:"\u0627\u0644\u062d\u062c\u0632 \u0627\u0644\u0630\u0643\u064a \u0648\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0639\u0645\u0644\u0627\u0621",sol2_p:"\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u062d\u062c\u0648\u0632\u0627\u062a \u0627\u0644\u0645\u0631\u0643\u0632\u064a\u0629 \u0648\u062a\u062a\u0628\u0639 \u0627\u0644\u0639\u0645\u0644\u0627\u0621 \u0648\u062a\u062d\u0644\u064a\u0644\u0627\u062a \u0627\u0644\u0623\u062f\u0627\u0621 \u2014 \u0643\u0644 \u0634\u064a\u0621 \u0641\u064a \u0644\u0648\u062d\u0629 \u062a\u062d\u0643\u0645 \u0648\u0627\u062d\u062f\u0629.",sol3_h:"\u0645\u0646\u0635\u0629 \u0627\u0644\u0633\u0641\u0631 B2C",sol3_p:"\u0645\u0633\u0627\u0631\u0627\u062a \u0630\u0643\u064a\u0629 \u0648\u0645\u0639\u0627\u064a\u0646\u0627\u062a AR/VR \u0648\u062e\u0631\u0627\u0626\u0637 \u0645\u0628\u0627\u0634\u0631\u0629 \u0648\u0633\u0648\u0642 \u0644\u0644\u0645\u0633\u0627\u0641\u0631\u064a\u0646.",sol4_h:"\u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0648\u0627\u0644\u062a\u062d\u0644\u064a\u0644\u0627\u062a",sol4_p:"\u0644\u0648\u062d\u0627\u062a \u0623\u062f\u0627\u0621 \u0641\u0648\u0631\u064a\u0629 \u0648\u0631\u0624\u0649 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0648\u062a\u062a\u0628\u0639 \u062a\u062d\u0648\u064a\u0644\u0627\u062a \u0627\u0644\u062d\u062c\u0632.",feat_eyebrow:"\u0645\u0645\u064a\u0632\u0627\u062a \u0627\u0644\u0645\u0646\u0635\u0629",feat_h2:"\u0643\u0644 \u0645\u0627 \u062a\u062d\u062a\u0627\u062c\u0647 \u0627\u0644\u0634\u0631\u0643\u0627\u062a \u0627\u0644\u0633\u064a\u0627\u062d\u064a\u0629 <span>\u0644\u0644\u0646\u0645\u0648</span>",feat_p:"\u0645\u0646\u0635\u0629 \u0648\u0627\u062d\u062f\u0629 \u062a\u062c\u0645\u0639 B2B SaaS \u0648\u0623\u062f\u0648\u0627\u062a \u0627\u0644\u0633\u0641\u0631 B2C \u0648\u0627\u0644\u0633\u0648\u0642 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a \u0648\u0627\u0644\u062a\u0642\u0646\u064a\u0629 \u0627\u0644\u063a\u0627\u0645\u0631\u0629.",feat1_h:"\u0645\u0648\u0644\u0651\u062f \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a",feat1_p:"\u0623\u0646\u0634\u0626 \u0645\u062d\u062a\u0648\u0649 \u0633\u064a\u0627\u062d\u064a\u0627\u064b \u0644\u0634\u0647\u0631 \u0643\u0627\u0645\u0644 \u2014 \u0645\u0646\u0634\u0648\u0631\u0627\u062a \u0648\u062d\u0645\u0644\u0627\u062a \u0648\u0628\u0631\u064a\u062f \u2014 \u0641\u064a \u062f\u0642\u0627\u0626\u0642.",feat2_h:"\u0644\u0648\u062d\u0629 \u062a\u062d\u0643\u0645 \u0627\u0644\u062a\u0633\u0648\u064a\u0642 \u0648\u0627\u0644\u062a\u062d\u0644\u064a\u0644\u0627\u062a",feat2_p:"\u062a\u062a\u0628\u0639 \u0623\u062f\u0627\u0621 \u0627\u0644\u062d\u0645\u0644\u0627\u062a \u0648\u062a\u062d\u0648\u064a\u0644\u0627\u062a \u0627\u0644\u062d\u062c\u0632 \u0648\u0627\u0644\u062a\u0641\u0627\u0639\u0644 \u0627\u0644\u0627\u062c\u062a\u0645\u0627\u0639\u064a \u0648\u0627\u0644\u0639\u0627\u0626\u062f \u0641\u064a \u0627\u0644\u0648\u0642\u062a \u0627\u0644\u0641\u0639\u0644\u064a.",feat3_h:"\u0627\u0644\u062d\u062c\u0632 \u0627\u0644\u0630\u0643\u064a \u0648\u0625\u062f\u0627\u0631\u0629 \u0639\u0644\u0627\u0642\u0627\u062a \u0627\u0644\u0639\u0645\u0644\u0627\u0621",feat3_p:"\u0623\u062f\u0631 \u062c\u0645\u064a\u0639 \u062d\u062c\u0648\u0632\u0627\u062a \u0627\u0644\u0639\u0645\u0644\u0627\u0621 \u0648\u0627\u0644\u0627\u0633\u062a\u0641\u0633\u0627\u0631\u0627\u062a \u0645\u0646 \u0645\u0643\u0627\u0646 \u0648\u0627\u062d\u062f \u0648\u062a\u062a\u0628\u0639 \u0627\u0644\u0625\u064a\u0631\u0627\u062f\u0627\u062a.",feat4_h:"\u0645\u0639\u0627\u064a\u0646\u0627\u062a \u0627\u0644\u0648\u062c\u0647\u0627\u062a \u0628\u0640 AR/VR",feat4_p:"\u062f\u0639 \u0627\u0644\u0645\u0633\u0627\u0641\u0631\u064a\u0646 \u064a\u0633\u062a\u0643\u0634\u0641\u0648\u0646 \u0627\u0644\u0648\u062c\u0647\u0627\u062a \u0627\u0641\u062a\u0631\u0627\u0636\u064a\u0627\u064b \u0642\u0628\u0644 \u0627\u0644\u062d\u062c\u0632.",feat5_h:"\u0633\u0648\u0642 \u0627\u0644\u0633\u064a\u0627\u062d\u0629",feat5_p:"\u0631\u0628\u0637 \u0627\u0644\u0645\u0633\u0627\u0641\u0631\u064a\u0646 \u0628\u0627\u0644\u062a\u062c\u0627\u0631\u0628 \u0627\u0644\u0645\u062d\u0644\u064a\u0629 \u0648\u0627\u0644\u0645\u0631\u0634\u062f\u064a\u0646 \u0648\u0627\u0644\u0641\u0646\u0627\u062f\u0642 \u0648\u0627\u0644\u062c\u0648\u0644\u0627\u062a.",feat6_h:"\u0627\u0644\u0645\u062d\u0641\u0638\u0629 \u0627\u0644\u0645\u0627\u0644\u064a\u0629 \u0644\u0644\u0633\u0641\u0631",feat6_p:"\u0645\u062d\u0641\u0638\u0629 \u0645\u062a\u0639\u062f\u062f\u0629 \u0627\u0644\u0639\u0645\u0644\u0627\u062a \u0648\u0645\u062f\u0641\u0648\u0639\u0627\u062a \u0639\u0628\u0631 \u0627\u0644\u062d\u062f\u0648\u062f \u0648BNPL \u0644\u0628\u0627\u0642\u0627\u062a \u0627\u0644\u0633\u0641\u0631.",feat7_h:"\u062a\u062a\u0628\u0639 \u0627\u0644\u0631\u062d\u0644\u0629 \u0627\u0644\u0645\u0628\u0627\u0634\u0631",feat7_p:"\u062a\u062a\u0628\u0639 \u0627\u0644\u062e\u0631\u0627\u0626\u0637 \u0641\u064a \u0627\u0644\u0648\u0642\u062a \u0627\u0644\u0641\u0639\u0644\u064a \u0644\u0643\u0644 \u0631\u062d\u0644\u0629 \u0648\u0645\u0633\u0627\u0631\u0627\u062a \u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u0645\u0634\u0627\u0631\u0643\u0629 \u0648\u0623\u062f\u0644\u0629 \u0633\u0641\u0631 \u062f\u0648\u0646 \u0625\u0646\u062a\u0631\u0646\u062a.",feat8_h:"\u0645\u0631\u0643\u0632 \u0635\u0646\u0627\u0639 \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0648\u0627\u0644\u0645\u0624\u062b\u0631\u064a\u0646",feat8_p:"\u0645\u0646\u0635\u0629 \u0644\u0635\u0646\u0627\u0639 \u0645\u062d\u062a\u0648\u0649 \u0627\u0644\u0633\u0641\u0631 \u2014 \u0646\u0634\u0631 \u0648\u062a\u062c\u0646\u064a \u0623\u0631\u0628\u0627\u062d \u0645\u0639 \u0627\u0644\u0631\u0639\u0627\u064a\u0627\u062a \u0648\u0627\u0644\u0631\u0648\u0627\u0628\u0637 \u0627\u0644\u062a\u0627\u0628\u0639\u0629.",feat9_h:"\u0648\u0627\u062c\u0647\u0629 \u0628\u0631\u0645\u062c\u064a\u0629 \u0644\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0633\u064a\u0627\u062d\u064a\u0629",feat9_p:"\u0645\u0646\u062d \u0627\u0644\u062d\u0643\u0648\u0645\u0627\u062a \u0648\u0627\u0644\u0645\u0637\u0627\u0631\u0627\u062a \u0648\u0633\u0644\u0627\u0633\u0644 \u0627\u0644\u0641\u0646\u0627\u062f\u0642 \u0631\u062e\u0635\u0629 \u0627\u0633\u062a\u062e\u062f\u0627\u0645 \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0633\u064a\u0627\u062d\u064a \u0644\u062a\u0631\u064a\u06a4\u0648.",how_eyebrow:"\u0643\u064a\u0641 \u062a\u0639\u0645\u0644",how_h2:"\u0627\u0628\u062f\u0623 \u0641\u064a <span>4 \u062e\u0637\u0648\u0627\u062a \u0628\u0633\u064a\u0637\u0629</span>",how_p:"\u0645\u0646 \u0627\u0644\u062a\u0633\u062c\u064a\u0644 \u0625\u0644\u0649 \u0623\u0648\u0644 \u062d\u0645\u0644\u0629 \u0645\u0648\u0644\u0651\u062f\u0629 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a \u0641\u064a \u0623\u0642\u0644 \u0645\u0646 30 \u062f\u0642\u064a\u0642\u0629.",step1_h:"\u0625\u0639\u062f\u0627\u062f \u0645\u0644\u0641\u0643 \u0627\u0644\u0634\u062e\u0635\u064a",step1_p:"\u0623\u0636\u0641 \u062a\u0641\u0627\u0635\u064a\u0644 \u0648\u0643\u0627\u0644\u062a\u0643 \u0648\u0627\u0644\u0648\u062c\u0647\u0627\u062a \u0648\u0627\u0644\u0628\u0627\u0642\u0627\u062a \u0648\u0627\u0644\u0623\u0633\u0648\u0627\u0642 \u0627\u0644\u0645\u0633\u062a\u0647\u062f\u0641\u0629. \u064a\u0633\u062a\u063a\u0631\u0642 10 \u062f\u0642\u0627\u0626\u0642.",step2_h:"\u062a\u0648\u0644\u064a\u062f \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0628\u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a",step2_p:"\u064a\u064f\u0646\u0634\u0626 \u0630\u0643\u0627\u0621 \u062a\u0631\u064a\u06a4\u0648 \u0645\u062d\u062a\u0648\u0649 \u0634\u0647\u0631 \u0643\u0627\u0645\u0644 \u0645\u0646 \u0645\u0646\u0634\u0648\u0631\u0627\u062a \u0648\u0645\u0642\u0627\u0644\u0627\u062a SEO \u0628\u0627\u0644\u0644\u063a\u062a\u064a\u0646.",step3_h:"\u0625\u0637\u0644\u0627\u0642 \u0648\u062a\u062a\u0628\u0639",step3_p:"\u0627\u0646\u0634\u0631 \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0648\u0623\u062f\u0631 \u0627\u0644\u062d\u062c\u0648\u0632\u0627\u062a \u0648\u0631\u0627\u0642\u0628 \u0644\u0648\u062d\u0629 \u0627\u0644\u062a\u062d\u0644\u064a\u0644\u0627\u062a \u0628\u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0627\u0644\u0641\u0648\u0631\u064a\u0629.",step4_h:"\u062a\u0637\u0648\u0631 \u0648\u0627\u0646\u0645\u0648",step4_p:"\u0643\u0644\u0645\u0627 \u062a\u0639\u0644\u0651\u0645 \u062a\u0631\u064a\u06a4\u0648 \u062c\u0645\u0647\u0648\u0631\u0643\u060c \u062a\u062d\u0633\u0646\u062a \u0627\u0644\u062a\u0648\u0635\u064a\u0627\u062a. \u0627\u0641\u062a\u062d \u0627\u0644\u0633\u0648\u0642 \u0648AR/VR \u0648FinTech \u0645\u0639 \u0646\u0645\u0648\u0643.",demo_eyebrow:"\u0639\u0631\u0636 \u0645\u0628\u0627\u0634\u0631 \u0644\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a",demo_h2:"\u0634\u0627\u0647\u062f \u0630\u0643\u0627\u0621 \u062a\u0631\u064a\u06a4\u0648 <span>\u064a\u0648\u0644\u0651\u062f \u0627\u0644\u0645\u062d\u062a\u0648\u0649</span>",demo_p:"\u0627\u0643\u062a\u0628 \u0627\u0633\u0645 \u0648\u062c\u0647\u0629 \u0623\u0648 \u0628\u0627\u0642\u0629 \u0648\u0634\u0627\u0647\u062f \u062a\u0631\u064a\u06a4\u0648 \u064a\u064f\u0646\u0634\u0626 \u0645\u062d\u062a\u0648\u0649 \u0633\u064a\u0627\u062d\u064a\u0627\u064b \u0641\u064a \u062b\u0648\u0627\u0646\u064d.",demo_placeholder:"\u0645\u062b\u0627\u0644: '\u062c\u0648\u0644\u0629 \u062a\u0631\u0627\u062b \u0627\u0644\u0623\u0642\u0635\u0631 \u2014 5 \u0623\u064a\u0627\u0645'",demo_btn:"\u062a\u0648\u0644\u064a\u062f \u2728",demo_empty:"\u062c\u0631\u0651\u0628 \u0623\u062d\u062f \u0627\u0644\u0623\u0645\u062b\u0644\u0629 \u0623\u0639\u0644\u0627\u0647 \u0623\u0648 \u0627\u0643\u062a\u0628 \u0628\u0627\u0642\u062a\u0643 \u0644\u0631\u0624\u064a\u0629 \u0627\u0644\u0645\u062d\u062a\u0648\u0649 \u0627\u0644\u0630\u064a \u064a\u0648\u0644\u062f\u0647 \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0627\u0635\u0637\u0646\u0627\u0639\u064a...",demo_typing:"\u0630\u0643\u0627\u0621 \u062a\u0631\u064a\u06a4\u0648 \u064a\u0648\u0644\u0651\u062f \u0627\u0644\u0645\u062d\u062a\u0648\u0649",market_eyebrow:"\u0641\u0631\u0635\u0629 \u0627\u0644\u0633\u0648\u0642",market_h2:"\u0641\u0631\u0635\u0629 \u0639\u0627\u0644\u0645\u064a\u0629 \u0628\u0640 <span>950 \u0645\u0644\u064a\u0627\u0631 \u062f\u0648\u0644\u0627\u0631</span>",market_p:"\u062a\u0633\u062a\u0647\u062f\u0641 \u062a\u0631\u064a\u06a4\u0648 \u0633\u0628\u0639 \u0635\u0646\u0627\u0639\u0627\u062a \u0645\u062a\u0642\u0627\u0637\u0639\u0629 \u062a\u064f\u062d\u0631\u0651\u0643 \u0627\u0642\u062a\u0635\u0627\u062f \u0627\u0644\u062a\u062c\u0627\u0631\u0628 \u0627\u0644\u0639\u0627\u0644\u0645\u064a \u2014 \u0628\u062f\u0621\u064b \u0645\u0646 MENA \u0648\u0627\u0644\u062a\u0648\u0633\u0639 \u0639\u0627\u0644\u0645\u064a\u0627\u064b.",tam_h:"\u0627\u0644\u0633\u0648\u0642 \u0627\u0644\u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0642\u0627\u0628\u0644 \u0644\u0644\u0639\u0646\u0648\u0646\u0629 (TAM)",tam_p:"\u062a\u0642\u0627\u0637\u0639 \u0627\u0644\u0633\u064a\u0627\u062d\u0629 \u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629 \u0648\u0627\u0644\u062a\u0642\u0646\u064a\u0629 \u0639\u0628\u0631 7 \u0642\u0637\u0627\u0639\u0627\u062a",tam_v:"$950B",tam_sub:"\u0627\u0644\u0633\u0642\u0641 \u0627\u0644\u0639\u0627\u0644\u0645\u064a",sam_h:"\u0627\u0644\u0633\u0648\u0642 \u0627\u0644\u062e\u062f\u0645\u064a \u0627\u0644\u0645\u062a\u0627\u062d (SAM)",sam_p:"20\u201330 \u062f\u0648\u0644\u0629\u060c \u0645\u0634\u063a\u0644\u0648 \u0633\u064a\u0627\u062d\u0629 \u062c\u0627\u0647\u0632\u0648\u0646 \u0631\u0642\u0645\u064a\u0627\u064b\u060c 5\u20137 \u0633\u0646\u0648\u0627\u062a",sam_v:"$95\u2013120B",sam_sub:"10\u201312% \u0645\u0646 TAM",som_h:"\u0627\u0644\u0633\u0648\u0642 \u0627\u0644\u0642\u0627\u0628\u0644 \u0644\u0644\u062d\u0635\u0648\u0644 \u0639\u0644\u064a\u0647 (SOM) \u2014 3\u20135 \u0633\u0646\u0648\u0627\u062a",som_p:"\u0645\u0635\u0631 + \u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629 \u2190 \u0627\u0644\u062a\u0648\u0633\u0639 \u0641\u064a MENA",som_v:"$2\u20133.5B",som_sub:"2\u20133% \u0645\u0646 SAM",price_eyebrow:"\u0623\u0633\u0639\u0627\u0631 \u0628\u0633\u064a\u0637\u0629",price_h2:"\u0627\u0628\u062f\u0623 \u0628\u0640 <span>50 \u062f\u0648\u0644\u0627\u0631 \u0634\u0647\u0631\u064a\u0627\u064b</span> \u0648\u0627\u0646\u0645\u0648 \u0645\u0639\u0646\u0627.",price_p:"\u0628\u0644\u0627 \u0631\u0633\u0648\u0645 \u0625\u0639\u062f\u0627\u062f \u0644\u0623\u0648\u0644 10 \u0639\u0645\u0644\u0627\u0621 \u062a\u062c\u0631\u064a\u0628\u064a\u064a\u0646. \u0625\u0644\u063a\u0627\u0621 \u0641\u064a \u0623\u064a \u0648\u0642\u062a. \u0627\u0644\u062e\u0637\u0637 \u0627\u0644\u0633\u0646\u0648\u064a\u0629 \u062a\u0648\u0641\u0631 \u0634\u0647\u0631\u064a\u0646.",roi_h3:"\u0627\u062d\u0633\u0628 \u0639\u0627\u0626\u062f \u0627\u0633\u062a\u062b\u0645\u0627\u0631\u0643",roi_p:"\u0627\u0643\u062a\u0634\u0641 \u0643\u0645 \u0645\u0646 \u0627\u0644\u0648\u0642\u062a \u0648\u0627\u0644\u0645\u0627\u0644 \u064a\u0648\u0641\u0651\u0631 \u062a\u0631\u064a\u06a4\u0648 \u0644\u0648\u0643\u0627\u0644\u062a\u0643 \u0643\u0644 \u0634\u0647\u0631.",roi_lbl1:"\u0633\u0627\u0639\u0627\u062a \u0627\u0644\u0645\u0648\u0638\u0641\u064a\u0646 \u0641\u064a \u0627\u0644\u062a\u0633\u0648\u064a\u0642/\u0623\u0633\u0628\u0648\u0639\u064a\u0627\u064b",roi_lbl2:"\u0625\u0646\u0641\u0627\u0642 \u0627\u0644\u062a\u0633\u0648\u064a\u0642 \u0627\u0644\u0634\u0647\u0631\u064a",roi_lbl3:"\u0647\u062f\u0641 \u0627\u0644\u062d\u062c\u0648\u0632\u0627\u062a \u0627\u0644\u0634\u0647\u0631\u064a",roi_savings:"\u0627\u0644\u062a\u0648\u0641\u064a\u0631 \u0627\u0644\u0634\u0647\u0631\u064a \u0627\u0644\u062a\u0642\u062f\u064a\u0631\u064a",roi_time:"\u0648\u0642\u062a \u0645\u0648\u0641\u064e\u0651\u0631",roi_bookings:"\u0632\u064a\u0627\u062f\u0629 \u0627\u0644\u062d\u062c\u0648\u0632\u0627\u062a",roi_cta:"\u0627\u0628\u062f\u0623 \u0627\u0644\u062a\u0648\u0641\u064a\u0631 \u0627\u0644\u0622\u0646",comp_eyebrow:"\u0627\u0644\u0645\u064a\u0632\u0629 \u0627\u0644\u062a\u0646\u0627\u0641\u0633\u064a\u0629",comp_h2:"\u062a\u0631\u064a\u06a4\u0648 \u062a\u0641\u0648\u0632 \u0641\u064a <span>\u0631\u0628\u0639 \u0627\u0644\u0633\u0648\u0642 \u063a\u064a\u0631 \u0627\u0644\u0645\u062a\u0646\u0627\u0632\u0639 \u0639\u0644\u064a\u0647</span>",comp_p:"\u0644\u0627 \u064a\u0648\u062c\u062f \u062d\u0644 \u0642\u0627\u0626\u0645 \u064a\u062c\u0645\u0639 \u0627\u0644\u0630\u0643\u0627\u0621 \u0627\u0644\u0633\u064a\u0627\u062d\u064a \u0648\u062a\u062c\u0631\u0628\u0629 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645 \u0627\u0644\u0639\u0631\u0628\u064a\u0629 \u0648\u0623\u0633\u0639\u0627\u0631 \u0627\u0644\u0645\u0646\u0634\u0622\u062a \u0627\u0644\u0635\u063a\u064a\u0631\u0629 \u0641\u064a \u0645\u0646\u0635\u0629 \u0648\u0627\u062d\u062f\u0629.",road_eyebrow:"\u062e\u0627\u0631\u0637\u0629 \u0627\u0644\u0637\u0631\u064a\u0642 \u0627\u0644\u0627\u0633\u062a\u0631\u0627\u062a\u064a\u062c\u064a\u0629",road_h2:"\u0645\u0646 \u0646\u0642\u0637\u0629 \u0627\u0644\u0627\u0646\u0637\u0644\u0627\u0642 \u0625\u0644\u0649 <span>\u0645\u0646\u0635\u0629 \u0639\u0627\u0644\u0645\u064a\u0629</span>",road_p:"\u062e\u0645\u0633 \u0645\u0631\u0627\u062d\u0644 \u0645\u0646 MVP \u0645\u0635\u0631 \u0625\u0644\u0649 \u0645\u0646\u0635\u0629 \u0633\u064a\u0627\u062d\u0629 \u0639\u0627\u0644\u0645\u064a\u0629 \u0628\u0639\u0627\u0626\u062f \u0633\u0646\u0648\u064a \u064a\u062a\u062c\u0627\u0648\u0632 100 \u0645\u0644\u064a\u0648\u0646 \u062f\u0648\u0644\u0627\u0631 \u0628\u062d\u0644\u0648\u0644 2030.",team_eyebrow:"\u0641\u0631\u064a\u0642 \u0627\u0644\u0645\u0624\u0633\u0633\u064a\u0646",team_h2:"\u0623\u0643\u062b\u0631 \u0645\u0646 <span>32 \u0639\u0627\u0645\u0627\u064b \u0645\u0646 \u0627\u0644\u062e\u0628\u0631\u0629 \u0627\u0644\u0633\u064a\u0627\u062d\u064a\u0629</span>",team_p:"\u0645\u0634\u063a\u0651\u0644\u0648\u0646 \u0628\u0646\u0648\u0627 \u0645\u0633\u064a\u0631\u062a\u0647\u0645 \u0641\u064a \u0647\u0630\u0647 \u0627\u0644\u0635\u0646\u0627\u0639\u0629 \u2014 \u064a\u0628\u0646\u0648\u0646 \u0627\u0644\u0622\u0646 \u0627\u0644\u062a\u0642\u0646\u064a\u0629 \u0644\u062a\u062d\u0648\u064a\u0644\u0647\u0627.",test_eyebrow:"\u0645\u0627 \u064a\u0642\u0648\u0644\u0647 \u0627\u0644\u0646\u0627\u0633",test_h2:"\u062a\u0639\u0644\u064a\u0642\u0627\u062a \u0645\u0628\u0643\u0631\u0629 \u0645\u0646 <span>\u0642\u0627\u062f\u0629 \u0627\u0644\u0633\u064a\u0627\u062d\u0629</span>",test_p:"\u0631\u062f\u0648\u062f \u0641\u0639\u0644 \u0645\u0634\u063a\u0651\u0644\u064a \u0627\u0644\u0633\u064a\u0627\u062d\u0629 \u0627\u0644\u0630\u064a\u0646 \u0634\u0627\u0647\u062f\u0648\u0627 \u0645\u0646\u0635\u0629 \u062a\u0631\u064a\u06a4\u0648 \u0639\u0644\u0649 \u0623\u0631\u0636 \u0627\u0644\u0648\u0627\u0642\u0639.",cta_eyebrow:"\u0647\u0644 \u0623\u0646\u062a \u0645\u0633\u062a\u0639\u062f \u0644\u062a\u062d\u0648\u064a\u0644 \u0648\u0643\u0627\u0644\u062a\u0643\u061f",cta_h2:"\u0627\u0646\u0636\u0645 \u0625\u0644\u0649 \u0628\u0631\u0646\u0627\u0645\u062c \u062a\u0631\u064a\u06a4\u0648 <span style='color:var(--navy)'>\u0627\u0644\u062a\u062c\u0631\u064a\u0628\u064a \u0627\u0644\u062a\u0623\u0633\u064a\u0633\u064a</span>",cta_p:"\u0623\u0648\u0644 10 \u0639\u0645\u0644\u0627\u0621 \u064a\u062d\u0635\u0644\u0648\u0646 \u0639\u0644\u0649 \u0633\u0639\u0631 \u062a\u062c\u0631\u064a\u0628\u064a \u0645\u062b\u0628\u0651\u062a \u0644\u0645\u062f\u0629 12 \u0634\u0647\u0631\u0627\u064b. \u0644\u0627 \u0645\u062e\u0627\u0637\u0631\u0629 \u2014 \u0625\u0644\u063a\u0627\u0621 \u0641\u064a \u0623\u064a \u0648\u0642\u062a.",cta_btn1:"\u0627\u062d\u062c\u0632 \u0639\u0631\u0636\u0643 \u0627\u0644\u0645\u062c\u0627\u0646\u064a",cta_btn2:"\u0631\u0627\u0633\u0644\u0646\u0627 \u0645\u0628\u0627\u0634\u0631\u0629\u064b",contact_eyebrow:"\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627",contact_h2:"\u0627\u062d\u062c\u0632 <span>\u0639\u0631\u0636\u0627\u064b \u0645\u062c\u0627\u0646\u064a\u0627\u064b</span>",contact_p:"30 \u062f\u0642\u064a\u0642\u0629. \u0634\u0627\u0647\u062f \u0643\u064a\u0641 \u064a\u0639\u0645\u0644 \u062a\u0631\u064a\u06a4\u0648 \u0644\u0639\u0645\u0644\u0643. \u0628\u0644\u0627 \u0623\u064a \u0627\u0644\u062a\u0632\u0627\u0645.",contact_info_h:"\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627 \u0645\u0628\u0627\u0634\u0631\u0629\u064b",contact_info_p:"\u0646\u0631\u062f \u062e\u0644\u0627\u0644 4 \u0633\u0627\u0639\u0627\u062a \u0639\u0645\u0644. \u0648\u0627\u062a\u0633\u0627\u0628 \u0647\u0648 \u0642\u0646\u0627\u062a\u0646\u0627 \u0627\u0644\u0623\u0633\u0631\u0639 \u0644\u0644\u0627\u0633\u062a\u0641\u0633\u0627\u0631\u0627\u062a \u0645\u0646 \u0645\u0635\u0631 \u0648\u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629.",form_fname:"\u0627\u0644\u0627\u0633\u0645 \u0627\u0644\u0623\u0648\u0644",form_lname:"\u0627\u0633\u0645 \u0627\u0644\u0639\u0627\u0626\u0644\u0629",form_email:"\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a",form_phone:"\u0648\u0627\u062a\u0633\u0627\u0628 / \u0627\u0644\u0647\u0627\u062a\u0641",form_type:"\u0646\u0648\u0639 \u0627\u0644\u0639\u0645\u0644",form_type_p:"\u0627\u062e\u062a\u0631 \u0646\u0648\u0639 \u0639\u0645\u0644\u0643",form_msg:"\u0631\u0633\u0627\u0644\u0629 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a\u0629)",form_msg_p:"\u0623\u062e\u0628\u0631\u0646\u0627 \u0639\u0646 \u062a\u062d\u062f\u064a\u0627\u062a \u0627\u0644\u062a\u0633\u0648\u064a\u0642 \u0627\u0644\u0631\u0626\u064a\u0633\u064a\u0629 \u0644\u062f\u064a\u0643...",form_submit:"\u0627\u062d\u062c\u0632 \u0639\u0631\u0636\u064a \u0627\u0644\u0645\u062c\u0627\u0646\u064a \u2190",form_success:"\u2713 \u062a\u0645 \u0627\u0644\u0625\u0631\u0633\u0627\u0644! \u0633\u0646\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0643 \u062e\u0644\u0627\u0644 4 \u0633\u0627\u0639\u0627\u062a.",foot_desc:"\u0645\u0646\u0635\u0629 \u0627\u0644\u0633\u064a\u0627\u062d\u0629 \u0627\u0644\u0630\u0643\u064a\u0629 \u0627\u0644\u0634\u0627\u0645\u0644\u0629 \u0644\u0640 MENA \u0648\u0627\u0644\u0639\u0627\u0644\u0645. \u0644\u062a\u0645\u0643\u064a\u0646 \u0648\u0643\u0627\u0644\u0627\u062a \u0627\u0644\u0633\u0641\u0631 \u0648\u0627\u0644\u0641\u0646\u0627\u062f\u0642 \u0648\u0627\u0644\u0634\u0631\u0643\u0627\u062a \u0627\u0644\u0633\u064a\u0627\u062d\u064a\u0629.",foot_product:"\u0627\u0644\u0645\u0646\u062a\u062c",foot_company:"\u0627\u0644\u0634\u0631\u0643\u0629",foot_resources:"\u0627\u0644\u0645\u0648\u0627\u0631\u062f",foot_features:"\u0627\u0644\u0645\u0645\u064a\u0632\u0627\u062a",foot_pricing:"\u0627\u0644\u0623\u0633\u0639\u0627\u0631",foot_roadmap:"\u062e\u0627\u0631\u0637\u0629 \u0627\u0644\u0637\u0631\u064a\u0642",foot_demo:"\u0639\u0631\u0636 AI",foot_vs:"\u0645\u0642\u0627\u0631\u0646\u0629 \u0627\u0644\u0645\u0646\u0627\u0641\u0633\u064a\u0646",foot_about:"\u0645\u0646 \u0646\u062d\u0646",foot_market:"\u062d\u062c\u0645 \u0627\u0644\u0633\u0648\u0642",foot_contact:"\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0646\u0627",foot_investors:"\u0627\u0644\u0645\u0633\u062a\u062b\u0645\u0631\u0648\u0646",foot_press:"\u0645\u062c\u0645\u0648\u0639\u0629 \u0627\u0644\u0635\u062d\u0627\u0641\u0629",foot_blog:"\u0627\u0644\u0645\u062f\u0648\u0646\u0629",foot_cases:"\u062f\u0631\u0627\u0633\u0627\u062a \u0627\u0644\u062d\u0627\u0644\u0629",foot_loi:"\u0646\u0645\u0648\u0630\u062c \u062e\u0637\u0627\u0628 \u0627\u0644\u0646\u064a\u0629",foot_api:"\u062a\u0648\u062b\u064a\u0642 \u0627\u0644\u0640 API",foot_partner:"\u0628\u0631\u0646\u0627\u0645\u062c \u0627\u0644\u0634\u0631\u0627\u0643\u0629",foot_copy:"\u00a9 2026 \u062a\u0631\u064a\u06a4\u0648 \u0644\u0644\u062a\u0643\u0646\u0648\u0644\u0648\u062c\u064a\u0627 \u0627\u0644\u0633\u064a\u0627\u062d\u064a\u0629. \u062c\u0645\u064a\u0639 \u0627\u0644\u062d\u0642\u0648\u0642 \u0645\u062d\u0641\u0648\u0638\u0629. \u0645\u0635\u0631 \u0648\u0627\u0644\u0645\u0645\u0644\u0643\u0629 \u0627\u0644\u0639\u0631\u0628\u064a\u0629 \u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629.",foot_privacy:"\u0633\u064a\u0627\u0633\u0629 \u0627\u0644\u062e\u0635\u0648\u0635\u064a\u0629",foot_terms:"\u0634\u0631\u0648\u0637 \u0627\u0644\u062e\u062f\u0645\u0629",foot_cookies:"\u0633\u064a\u0627\u0633\u0629 \u0645\u0644\u0641\u0627\u062a \u062a\u0639\u0631\u064a\u0641 \u0627\u0644\u0627\u0631\u062a\u0628\u0627\u0637",cookie_p:"\u0646\u0633\u062a\u062e\u062f\u0645 \u0645\u0644\u0641\u0627\u062a \u062a\u0639\u0631\u064a\u0641 \u0627\u0644\u0627\u0631\u062a\u0628\u0627\u0637 \u0644\u062a\u062d\u0633\u064a\u0646 \u062a\u062c\u0631\u0628\u062a\u0643. \u0628\u0627\u0633\u062a\u0645\u0631\u0627\u0631 \u0627\u0633\u062a\u062e\u062f\u0627\u0645\u0643 \u0644\u062a\u0631\u064a\u06a4\u0648\u060c \u0623\u0646\u062a \u062a\u0648\u0627\u0641\u0642 \u0639\u0644\u0649 \u0627\u0633\u062a\u062e\u062f\u0627\u0645\u0646\u0627 \u0644\u0647\u0627.",cookie_more:"\u0627\u0639\u0631\u0641 \u0627\u0644\u0645\u0632\u064a\u062f",cookie_accept:"\u0642\u0628\u0648\u0644",cookie_decline:"\u0631\u0641\u0636"}
+};
+
+let currentLang=localStorage.getItem('trevo-lang')||'en';
+function applyLang(lang){
+  currentLang=lang;
+  localStorage.setItem('trevo-lang',lang);
+  const d=document.documentElement;
+  const isAr=lang==='ar';
+  d.setAttribute('lang',lang);
+  d.setAttribute('dir',isAr?'rtl':'ltr');
+  document.body.style.fontFamily=isAr?"'Cairo',sans-serif":"'Montserrat','Helvetica Neue',Arial,sans-serif";
+  const lb=document.getElementById('langBtn');
+  if(lb)lb.textContent=T[lang].nav_lang;
+  const mlb=document.getElementById('mobileLangBtn');
+  if(mlb)mlb.textContent=isAr?'English':'عربي';
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    const key=el.dataset.t;
+    if(T[lang][key]!==undefined){
+      if(el.tagName==='INPUT'&&el.type!=='submit'){el.placeholder=T[lang][key];}
+      else if(el.tagName==='TEXTAREA'){el.placeholder=T[lang][key];}
+      else{el.innerHTML=T[lang][key];}
+    }
+  });
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    if(el.dataset[lang])el.innerHTML=el.dataset[lang];
+  });
+  calcROI();
+}
+function toggleLang(){applyLang(currentLang==='en'?'ar':'en');}
+document.addEventListener('DOMContentLoaded',()=>{if(currentLang==='ar')applyLang('ar');});
+
+// ─── SCROLL REVEAL ───
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>observer.observe(el));
+
+// ─── ROI CALCULATOR ───
+function calcROI(){
+  const hours=parseInt(document.getElementById('hoursSlider').value);
+  const spend=parseInt(document.getElementById('spendSlider').value);
+  const bookings=parseInt(document.getElementById('bookingsSlider').value);
+  document.getElementById('hoursVal').textContent=hours+' hrs';
+  document.getElementById('spendVal').textContent='$'+spend;
+  document.getElementById('bookingsVal').textContent=bookings;
+  // Trevo at $100/month (growth plan), saves ~75% of time & replaces freelancer spend
+  const trevoPrice=100;
+  const savings=Math.max(0,spend-trevoPrice);
+  const timeSaved=Math.round(hours*0.75);
+  const bookingUplift=Math.round(bookings*0.18);
+  document.getElementById('roiSavings').textContent='$'+savings.toLocaleString();
+  document.getElementById('roiHours').textContent=timeSaved+'hrs';
+  document.getElementById('roiBookings').textContent='+'+bookingUplift;
+}
+calcROI();
+
+// ─── AI DEMO ───
+const demoContent={
+  'Pyramids of Giza Package':`🏛️ <strong>Social Media Caption (Instagram):</strong><br><br>✨ Experience the wonder of the ancient world! Our exclusive <em>Pyramids of Giza Package</em> takes you on an unforgettable 5-day journey through Egypt's most iconic landmarks.<br><br>🎯 What's included:<br>• Private guided tour of the Great Pyramid<br>• Sphinx sunset photography session<br>• 5-star Nile-view hotel accommodation<br>• Egyptian Museum VIP access<br>• All transfers & meals included<br><br>💰 Starting from $299/person<br>🗓️ Available daily — book now before it's full!<br><br>#Pyramids #Egypt #EgyptTravel #AncientEgypt #TravelAgency #CairoTravel #TourismEgypt`,
+  'Nile Cruise 7 Days':`⚓ <strong>Email Campaign Subject:</strong> "Set sail on history — Your Nile Cruise awaits!"<br><br>Dear [First Name],<br><br>Imagine waking up each morning to the gentle rhythm of the Nile, as ancient temples and golden shores drift past your window...<br><br>Our 7-Day Nile Cruise from Luxor to Aswan is Egypt's most romantic journey, covering:<br>✅ Karnak Temple & Valley of the Kings<br>✅ Abu Simbel sunrise visit<br>✅ Philae Temple by night<br>✅ All-inclusive luxury cruising<br>✅ Expert Egyptologist guide throughout<br><br>🎁 EARLY BIRD: Book before December 31st and save 20%<br><br>Reply to this email or WhatsApp us to reserve your cabin today.`,
+  'Hurghada Beach Resort':`🌊 <strong>AR/VR Preview Script:</strong><br><br>"Welcome to your virtual preview of Paradise Bay Resort, Hurghada. Walk through our beachfront suite, feel the Red Sea breeze on our private beach, and explore our world-class dive center — all before you book...<br><br><strong>Package Highlights:</strong><br>🏖️ 7 nights all-inclusive from $450<br>🤿 Free diving & snorkeling equipment<br>🍽️ 5 international restaurants<br>💆 Spa & wellness center<br>🌅 Private beach access — no crowds<br><br>#RedSea #HurghadaResort #AllInclusive #EgyptBeach"`,
+  'Umrah Package Ramadan':`🕌 <strong>Arabic Social Post (Ramadan Campaign):</strong><br><br>بسم الله الرحمن الرحيم<br><br>احجز رحلة عمرتك في رمضان الكريم مع أفضل الباقات المتكاملة ✨<br><br>🕋 <strong>باقة عمرة رمضان المميزة</strong><br>✅ تذاكر طيران مباشرة<br>✅ إقامة 4 نجوم بجوار الحرم<br>✅ مواصلات مكيفة<br>✅ مرشد ديني متخصص<br>✅ وجبات سحور وإفطار<br><br>💰 ابتداءً من 2,500 ريال للشخص<br>📞 تواصل معنا الآن — الأماكن محدودة!<br><br>#عمرة_رمضان #عمرة #رمضان_كريم #الحج_والعمرة`,
+  'Desert Safari AlUla':`🏜️ <strong>Influencer Brief for AlUla Content Creator:</strong><br><br><strong>Campaign:</strong> AlUla Desert Safari Experience<br><strong>Target:</strong> 25–40 adventurous travelers, Instagram + TikTok<br><br><strong>Key Messages:</strong><br>"AlUla is Saudi Arabia's best-kept secret — but not for long. Experience rose-red canyons, Nabataean tombs, and starlit desert camps like nowhere else on earth."<br><br><strong>Content Requirements:</strong><br>📸 10 Instagram posts + 5 Reels<br>🎬 1 TikTok hero video (60-sec)<br>📍 Geotag: AlUla, Saudi Arabia<br>📅 Post over 2 weeks<br>💰 Sponsored by [Agency Name] via Trevo<br><br>#AlUla #SaudiTourism #DesertSafari #VisitSaudi`
+};
+
+function runDemo(input){
+  const output=document.getElementById('demoOutput');
+  const key=Object.keys(demoContent).find(k=>input.toLowerCase().includes(k.toLowerCase()))||input;
+  document.getElementById('demoInput').value=input;
+  output.innerHTML='<span class="demo-typing">Trevo AI is generating content</span>';
+  setTimeout(()=>{
+    const content=demoContent[key]||`🌍 <strong>AI Content Generated for: "${input}"</strong><br><br>📣 <em>Social Media Post:</em><br>Discover the magic of ${input}! Our expertly crafted tourism package offers you an unforgettable experience with professional guides, premium accommodation, and memories that last a lifetime.<br><br>✅ All-inclusive packages available<br>✅ Arabic & English speaking guides<br>✅ Flexible booking — cancel anytime<br>✅ Best price guarantee<br><br>📞 Contact us now to reserve your spot!<br>#${input.replace(/\s+/g,'').replace(/[^a-zA-Z0-9]/g,'')} #Tourism #Travel #Egypt`;
+    output.innerHTML=content;
+  },1800);
+}
+
+// ─── FORM SUBMIT ───
+function submitForm(e){
+  e.preventDefault();
+  const btn=e.target;
+  btn.textContent='✓ Sending...';
+  setTimeout(()=>{
+    btn.textContent='✓ Request Sent! We\'ll contact you within 4 hours.';
+    btn.style.background='#22c55e';
+    setTimeout(()=>{btn.textContent='Book My Free Demo →';btn.style.background='';},4000);
+  },1200);
+}
+
+// ─── COOKIE BANNER ───
+function acceptCookie(){localStorage.setItem('trevo-cookies','accepted');document.getElementById('cookie-banner').style.display='none'}
+function dismissCookie(){localStorage.setItem('trevo-cookies','declined');document.getElementById('cookie-banner').style.display='none'}
+window.addEventListener('load',()=>{
+  if(!localStorage.getItem('trevo-cookies')){
+    setTimeout(()=>document.getElementById('cookie-banner').classList.add('visible'),2000);
+  }
+});
+
+// ─── COUNTER ANIMATION ───
+function animateCounters(){
+  document.querySelectorAll('.stat-n').forEach(el=>{
+    const text=el.textContent;
+    const num=parseFloat(text.replace(/[^0-9.]/g,''));
+    if(!num)return;
+    const prefix=text.match(/^[^0-9]*/)[0]||'';
+    const suffix=text.match(/[^0-9.]*$/)[0]||'';
+    let start=0;
+    const step=num/50;
+    const interval=setInterval(()=>{
+      start+=step;
+      if(start>=num){start=num;clearInterval(interval)}
+      el.textContent=prefix+(num<10?start.toFixed(1):Math.round(start))+suffix;
+    },30);
+  });
+}
+const heroObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){animateCounters();heroObserver.disconnect()}});
+},{threshold:0.5});
+const heroStats=document.querySelector('.hero-stats');
+if(heroStats)heroObserver.observe(heroStats);
+</script>
+</body>
+</html>
