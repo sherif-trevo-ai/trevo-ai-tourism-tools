@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Orange rounded square background -->
+  <rect x="10" y="10" width="180" height="180" rx="40" ry="40" fill="#F5A623"/>
+  <!-- Navy T vertical stroke -->
+  <path d="M68 52 L68 148" stroke="#1A3A6C" stroke-width="22" stroke-linecap="round" fill="none"/>
+  <!-- Navy T top horizontal bar -->
+  <path d="M68 52 L132 52" stroke="#1A3A6C" stroke-width="22" stroke-linecap="round" fill="none"/>
+  <!-- Navy T mid crossbar -->
+  <path d="M68 100 L105 100" stroke="#1A3A6C" stroke-width="18" stroke-linecap="round" fill="none"/>
+  <!-- Orange accent stripe 1 (top right) -->
+  <path d="M118 66 L148 66" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.85"/>
+  <!-- Orange accent stripe 2 (mid right) -->
+  <path d="M118 100 L148 100" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.85"/>
+</svg>

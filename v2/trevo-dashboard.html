@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trevo Dashboard — AI Tourism Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ═══════════════ TOKENS ═══════════════ */
+:root{
+  --navy:#1A3A6C;--navy-deep:#122B55;--navy-mid:#1E4080;--navy-light:#2A5099;
+  --orange:#F5A623;--orange-dk:#D4891A;--orange-pale:#FFF4DE;
+  --white:#FFFFFF;--cream:#FAF8F3;--warm:#F5F2EC;
+  --gray-50:#F9F8F6;--gray-100:#EDEAE4;--gray-200:#D9D6CF;
+  --gray-400:#9E9B96;--gray-700:#4A4845;--near-black:#1C1B18;
+  --green:#22c55e;--green-pale:#dcfce7;--red:#ef4444;--red-pale:#fee2e2;
+  --blue:#3b82f6;--blue-pale:#dbeafe;--purple:#8b5cf6;--purple-pale:#ede9fe;
+  --font:'Montserrat','Helvetica Neue',sans-serif;
+  --font-ar:'Cairo',sans-serif;
+  --sidebar-w:248px;--topbar-h:60px;
+  --r-sm:6px;--r-md:12px;--r-lg:18px;--r-pill:999px;
+  --shadow-sm:0 1px 6px rgba(0,0,0,0.06);
+  --shadow-md:0 4px 20px rgba(26,58,108,0.10);
+  --t:all 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--gray-50);color:var(--near-black);font-size:14px}
+[dir="rtl"] body{font-family:var(--font-ar)}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit;font-size:inherit}
+input,select,textarea{font-family:inherit;font-size:inherit}
+
+/* ═══════════════ LOGIN SCREEN ═══════════════ */
+#login-screen{position:fixed;inset:0;background:var(--navy-deep);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.5s ease}
+#login-screen.hide{opacity:0;pointer-events:none}
+.login-box{background:var(--white);border-radius:var(--r-lg);padding:2.5rem;width:min(420px,90vw);box-shadow:var(--shadow-md)}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:2rem}
+.login-logo-icon{width:44px;height:44px;border-radius:11px;flex-shrink:0;overflow:hidden}
+.login-logo-icon svg{width:100%;height:100%}
+.login-logo-text{font-size:1.5rem;font-weight:800;color:var(--navy)}
+.login-box h2{font-size:1.2rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem}
+.login-box p{font-size:0.82rem;color:var(--gray-400);margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:0.78rem;font-weight:600;color:var(--navy);margin-bottom:0.35rem}
+.form-group input{width:100%;border:1.5px solid var(--gray-200);border-radius:var(--r-md);padding:0.65rem 0.9rem;outline:none;transition:var(--t);color:var(--near-black)}
+.form-group input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(245,166,35,0.14)}
+.login-hint{font-size:0.75rem;color:var(--gray-400);margin-bottom:1.25rem;padding:0.6rem 0.8rem;background:var(--warm);border-radius:var(--r-sm)}
+.login-btn{width:100%;padding:0.8rem;background:var(--navy);color:var(--white);border-radius:var(--r-pill);font-weight:700;font-size:0.9rem;transition:var(--t);border:none;cursor:pointer}
+.login-btn:hover{background:var(--navy-mid)}
+
+/* ═══════════════ LAYOUT ═══════════════ */
+#app{display:flex;height:100vh;overflow:hidden}
+
+/* ═══════════════ SIDEBAR ═══════════════ */
+#sidebar{width:var(--sidebar-w);background:var(--navy-deep);display:flex;flex-direction:column;flex-shrink:0;transition:var(--t);position:relative;z-index:100}
+#sidebar.collapsed{width:64px}
+.sb-header{padding:1rem 1rem 0;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:1rem}
+.sb-logo{display:flex;align-items:center;gap:9px;overflow:hidden;flex:1;min-width:0}
+.sb-logo-icon{width:36px;height:36px;border-radius:9px;flex-shrink:0;overflow:hidden}
+.sb-logo-icon svg{width:100%;height:100%}
+.sb-logo-text{font-size:1.2rem;font-weight:800;color:var(--white);white-space:nowrap;transition:var(--t)}
+#sidebar.collapsed .sb-logo-text{opacity:0;width:0}
+.sb-toggle{width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--t)}
+.sb-toggle:hover{background:rgba(255,255,255,0.15)}
+.sb-toggle svg{width:14px;height:14px;color:rgba(255,255,255,0.6);transition:transform 0.3s}
+#sidebar.collapsed .sb-toggle svg{transform:rotate(180deg)}
+.sb-nav{flex:1;overflow-y:auto;padding:0.75rem 0;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.15) transparent}
+.sb-section-label{font-size:0.62rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);padding:0.75rem 1rem 0.3rem;overflow:hidden;white-space:nowrap;transition:var(--t)}
+#sidebar.collapsed .sb-section-label{opacity:0}
+.sb-item{display:flex;align-items:center;gap:10px;padding:0.6rem 1rem;cursor:pointer;transition:var(--t);border-radius:var(--r-md);margin:1px 6px;position:relative}
+.sb-item:hover{background:rgba(255,255,255,0.07)}
+.sb-item.active{background:rgba(245,166,35,0.18);border:1px solid rgba(245,166,35,0.25)}
+.sb-item.active .sb-item-icon{color:var(--orange)}
+.sb-item.active .sb-item-text{color:var(--white);font-weight:600}
+.sb-item-icon{width:20px;height:20px;flex-shrink:0;color:rgba(255,255,255,0.5);transition:var(--t)}
+.sb-item-text{font-size:0.83rem;font-weight:500;color:rgba(255,255,255,0.65);white-space:nowrap;overflow:hidden;transition:var(--t)}
+#sidebar.collapsed .sb-item-text{opacity:0;width:0}
+.sb-badge{background:var(--orange);color:var(--white);font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:var(--r-pill);margin-left:auto;transition:var(--t);flex-shrink:0}
+#sidebar.collapsed .sb-badge{display:none}
+.sb-tooltip{display:none;position:absolute;left:calc(100% + 8px);background:var(--near-black);color:var(--white);font-size:0.75rem;padding:0.3rem 0.7rem;border-radius:6px;white-space:nowrap;z-index:200;pointer-events:none}
+#sidebar.collapsed .sb-item:hover .sb-tooltip{display:block}
+.sb-footer{padding:0.75rem;border-top:1px solid rgba(255,255,255,0.07)}
+.sb-user{display:flex;align-items:center;gap:9px;padding:0.5rem;border-radius:var(--r-md);cursor:pointer;transition:var(--t);overflow:hidden}
+.sb-user:hover{background:rgba(255,255,255,0.07)}
+.sb-avatar{width:32px;height:32px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:var(--white);flex-shrink:0}
+.sb-user-info{overflow:hidden;transition:var(--t)}
+.sb-user-name{font-size:0.8rem;font-weight:700;color:var(--white);white-space:nowrap}
+.sb-user-role{font-size:0.68rem;color:rgba(255,255,255,0.45);white-space:nowrap}
+#sidebar.collapsed .sb-user-info{opacity:0;width:0}
+
+/* ═══════════════ MAIN ═══════════════ */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* ═══════════════ TOPBAR ═══════════════ */
+#topbar{height:var(--topbar-h);background:var(--white);border-bottom:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;gap:1rem;flex-shrink:0}
+.topbar-left{display:flex;align-items:center;gap:0.75rem}
+.topbar-page-title{font-size:1rem;font-weight:700;color:var(--navy)}
+.topbar-breadcrumb{font-size:0.75rem;color:var(--gray-400);display:flex;align-items:center;gap:4px}
+.topbar-right{display:flex;align-items:center;gap:0.6rem}
+.topbar-btn{width:36px;height:36px;border-radius:var(--r-md);background:var(--gray-50);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--t);position:relative;border:1px solid var(--gray-100)}
+.topbar-btn:hover{background:var(--gray-100)}
+.topbar-btn svg{width:16px;height:16px;color:var(--gray-700)}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--orange);border:1.5px solid var(--white)}
+.topbar-search{display:flex;align-items:center;gap:6px;background:var(--gray-50);border:1px solid var(--gray-100);border-radius:var(--r-pill);padding:0.4rem 0.85rem;transition:var(--t)}
+.topbar-search:focus-within{border-color:var(--orange);box-shadow:0 0 0 2px rgba(245,166,35,0.12)}
+.topbar-search input{border:none;background:transparent;outline:none;font-size:0.82rem;width:180px;color:var(--near-black)}
+.topbar-search input::placeholder{color:var(--gray-400)}
+.topbar-search svg{width:14px;height:14px;color:var(--gray-400);flex-shrink:0}
+.lang-toggle-db{background:var(--navy);color:var(--white);padding:0.3rem 0.85rem;border-radius:var(--r-pill);font-size:0.75rem;font-weight:700;cursor:pointer;transition:var(--t)}
+.lang-toggle-db:hover{background:var(--navy-mid)}
+.mob-sb-btn{display:none;width:36px;height:36px;border-radius:var(--r-md);background:var(--gray-50);border:1px solid var(--gray-100);align-items:center;justify-content:center;cursor:pointer}
+.mob-sb-btn svg{width:18px;height:18px;color:var(--navy)}
+
+/* ═══════════════ CONTENT AREA ═══════════════ */
+#content{flex:1;overflow-y:auto;padding:1.5rem;scrollbar-width:thin;scrollbar-color:var(--gray-200) transparent}
+
+/* ═══════════════ PANELS ═══════════════ */
+.panel{display:none}
+.panel.active{display:block}
+
+/* ═══════════════ SHARED COMPONENTS ═══════════════ */
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;gap:1rem;flex-wrap:wrap}
+.page-header-left h1{font-size:1.2rem;font-weight:800;color:var(--navy);margin-bottom:0.2rem}
+.page-header-left p{font-size:0.82rem;color:var(--gray-400)}
+.page-header-right{display:flex;gap:0.5rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:0.55rem 1.1rem;border-radius:var(--r-pill);font-weight:600;font-size:0.8rem;transition:var(--t);cursor:pointer;border:none;font-family:inherit}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-primary:hover{background:var(--orange-dk);transform:translateY(-1px)}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-mid)}
+.btn-ghost{background:var(--white);color:var(--navy);border:1px solid var(--gray-200)}
+.btn-ghost:hover{background:var(--warm);border-color:var(--gray-400)}
+.btn-sm{padding:0.35rem 0.8rem;font-size:0.75rem}
+.btn-icon{width:32px;height:32px;padding:0;border-radius:var(--r-md);justify-content:center;background:var(--white);border:1px solid var(--gray-200);color:var(--gray-700)}
+.btn-icon:hover{background:var(--warm)}
+.btn-icon svg{width:14px;height:14px}
+
+/* Card */
+.card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--gray-100);box-shadow:var(--shadow-sm);padding:1.25rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.card-title{font-size:0.88rem;font-weight:700;color:var(--navy)}
+.card-sub{font-size:0.72rem;color:var(--gray-400);margin-top:1px}
+
+/* KPI Grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem}
+.kpi-card{background:var(--white);border-radius:var(--r-lg);border:1px solid var(--gray-100);box-shadow:var(--shadow-sm);padding:1.1rem;position:relative;overflow:hidden;transition:var(--t)}
+.kpi-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.kpi-card::after{content:'';position:absolute;top:0;right:0;width:4px;height:100%;border-radius:0 var(--r-lg) var(--r-lg) 0}
+.kpi-eyebrow{font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-400);margin-bottom:0.5rem}
+.kpi-value{font-size:1.8rem;font-weight:900;line-height:1;color:var(--navy);margin-bottom:0.3rem}
+.kpi-delta{font-size:0.72rem;font-weight:600;display:flex;align-items:center;gap:3px}
+.kpi-delta.up{color:#16a34a}
+.kpi-delta.down{color:#dc2626}
+
+/* Table */
+.table-wrap{overflow-x:auto;border-radius:var(--r-md);border:1px solid var(--gray-100)}
+.data-table{width:100%;border-collapse:collapse;font-size:0.82rem;min-width:500px}
+.data-table th{background:var(--warm);color:var(--navy);font-weight:700;font-size:0.72rem;padding:0.65rem 1rem;text-align:left;letter-spacing:0.04em;text-transform:uppercase;border-bottom:1px solid var(--gray-100);white-space:nowrap}
+.data-table td{padding:0.65rem 1rem;border-bottom:1px solid var(--gray-50);color:var(--near-black);vertical-align:middle}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--gray-50)}
+
+/* Status badges */
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:0.7rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:var(--r-pill)}
+.badge-green{background:var(--green-pale);color:#15803d}
+.badge-orange{background:var(--orange-pale);color:var(--orange-dk)}
+.badge-red{background:var(--red-pale);color:#b91c1c}
+.badge-blue{background:var(--blue-pale);color:#1d4ed8}
+.badge-purple{background:var(--purple-pale);color:#6d28d9}
+.badge-gray{background:var(--gray-100);color:var(--gray-700)}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* Pills */
+.pill{display:inline-block;padding:0.18rem 0.65rem;border-radius:var(--r-pill);font-size:0.72rem;font-weight:600}
+.pill-orange{background:var(--orange-pale);color:var(--orange-dk)}
+.pill-navy{background:rgba(26,58,108,0.1);color:var(--navy)}
+
+/* Progress bar */
+.progress{height:6px;background:var(--gray-100);border-radius:3px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:3px;transition:width 1s ease}
+
+/* Avatar */
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:800;color:var(--white);flex-shrink:0}
+
+/* Input / Select */
+.field-label{display:block;font-size:0.75rem;font-weight:600;color:var(--navy);margin-bottom:0.3rem}
+.field-input,.field-select,.field-textarea{width:100%;border:1.5px solid var(--gray-200);border-radius:var(--r-md);padding:0.6rem 0.85rem;outline:none;transition:var(--t);background:var(--white);color:var(--near-black);font-family:inherit;font-size:0.85rem}
+.field-input:focus,.field-select:focus,.field-textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(245,166,35,0.12)}
+.field-textarea{resize:vertical;min-height:90px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.field-group{margin-bottom:1rem}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--gray-100);margin-bottom:1.25rem}
+.tab-btn{padding:0.6rem 1.1rem;font-size:0.82rem;font-weight:600;color:var(--gray-400);border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:var(--t);cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit}
+.tab-btn:hover{color:var(--navy)}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--orange)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* Charts container */
+.chart-wrap{position:relative;height:200px}
+.chart-wrap.tall{height:260px}
+
+/* 2-col grid */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+
+/* Timeline/feed */
+.feed{display:flex;flex-direction:column;gap:0}
+.feed-item{display:flex;gap:0.85rem;padding:0.75rem 0;border-bottom:1px solid var(--gray-50);align-items:flex-start}
+.feed-item:last-child{border-bottom:none}
+.feed-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.feed-content h4{font-size:0.82rem;font-weight:600;color:var(--near-black);margin-bottom:0.15rem}
+.feed-content p{font-size:0.75rem;color:var(--gray-400)}
+
+/* Pipeline stages */
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.pipeline::before{content:'';position:absolute;top:24px;left:5%;right:5%;height:2px;background:var(--gray-100);z-index:0}
+.pipeline-stage{text-align:center;position:relative;z-index:1}
+.stage-circle{width:48px;height:48px;border-radius:50%;border:2px solid var(--gray-100);background:var(--white);display:flex;align-items:center;justify-content:center;margin:0 auto 0.5rem;font-size:0.75rem;font-weight:800;color:var(--gray-400);transition:var(--t)}
+.stage-circle.active{border-color:var(--orange);background:var(--orange-pale);color:var(--orange-dk)}
+.stage-circle.done{border-color:var(--green);background:var(--green-pale);color:#15803d}
+.stage-label{font-size:0.68rem;font-weight:600;color:var(--gray-400)}
+.stage-count{font-size:1rem;font-weight:800;color:var(--navy)}
+
+/* Content generator */
+.content-preview{background:var(--warm);border-radius:var(--r-md);padding:1rem;font-size:0.82rem;line-height:1.7;color:var(--near-black);min-height:120px;border:1.5px solid var(--gray-100)}
+.content-preview.loading::after{content:'Generating...';animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+.content-type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.6rem;margin-bottom:1.25rem}
+.content-type-btn{background:var(--white);border:1.5px solid var(--gray-100);border-radius:var(--r-md);padding:0.7rem;text-align:center;cursor:pointer;transition:var(--t)}
+.content-type-btn:hover,.content-type-btn.active{border-color:var(--orange);background:var(--orange-pale)}
+.content-type-btn.active{border-width:2px}
+.ct-icon{font-size:1.2rem;margin-bottom:0.3rem}
+.ct-label{font-size:0.72rem;font-weight:600;color:var(--navy)}
+
+/* Calendar grid */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:0.75rem}
+.cal-day-header{font-size:0.65rem;font-weight:700;text-align:center;color:var(--gray-400);padding:0.3rem 0;text-transform:uppercase}
+.cal-day{min-height:60px;border-radius:var(--r-sm);border:1px solid var(--gray-100);padding:4px;background:var(--white);position:relative;font-size:0.68rem}
+.cal-day .day-num{font-weight:700;color:var(--navy);margin-bottom:2px}
+.cal-day.today{border-color:var(--orange);background:var(--orange-pale)}
+.cal-day.empty{background:transparent;border-color:transparent}
+.cal-event{font-size:0.6rem;padding:1px 4px;border-radius:2px;margin-bottom:2px;color:white;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:600}
+.ev-orange{background:var(--orange)}
+.ev-navy{background:var(--navy)}
+.ev-green{background:#22c55e}
+
+/* AI Typing effect */
+@keyframes typewriter{from{width:0}to{width:100%}}
+.typewriter{overflow:hidden;white-space:nowrap;animation:typewriter 2s steps(40) forwards}
+
+/* Mobile sidebar overlay */
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99}
+.sb-overlay.show{display:block}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media(max-width:900px){
+  #sidebar{position:fixed;top:0;bottom:0;left:0;z-index:100;transform:translateX(-100%)}
+  #sidebar.mob-open{transform:translateX(0)}
+  .mob-sb-btn{display:flex}
+  .topbar-search{display:none}
+  .two-col,.three-col{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .pipeline{grid-template-columns:repeat(3,1fr);gap:0.5rem}
+  .pipeline::before{display:none}
+  .content-type-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:480px){
+  #content{padding:1rem}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .pipeline{grid-template-columns:repeat(2,1fr)}
+  .page-header{flex-direction:column}
+  .content-type-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* RTL adjustments */
+[dir="rtl"] #sidebar{left:auto;right:0;transform:translateX(100%)}
+[dir="rtl"] #sidebar.mob-open{transform:translateX(0)}
+[dir="rtl"] .kpi-card::after{right:auto;left:0;border-radius:var(--r-lg) 0 0 var(--r-lg)}
+[dir="rtl"] .data-table th,[dir="rtl"] .data-table td{text-align:right}
+[dir="rtl"] .feed-item{flex-direction:row-reverse}
+[dir="rtl"] .topbar-left,[dir="rtl"] .topbar-right{flex-direction:row-reverse}
+[dir="rtl"] .sb-item{flex-direction:row-reverse}
+[dir="rtl"] .sb-badge{margin-left:0;margin-right:auto}
+[dir="rtl"] .card-header{flex-direction:row-reverse}
+[dir="rtl"] .page-header{flex-direction:row-reverse}
+[dir="rtl"] .btn{flex-direction:row-reverse}
+</style>
+</head>
+<body>
+
+<!-- ═══ MOBILE OVERLAY ═══ -->
+<div class="sb-overlay" id="sbOverlay" onclick="closeMobSb()"></div>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="46" height="46" rx="11" fill="#F5A623"/>
+          <path d="M13 11 L13 37" stroke="#1A3A6C" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+          <path d="M13 11 L32 11" stroke="#1A3A6C" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+          <path d="M13 24 L24 24" stroke="#1A3A6C" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+          <path d="M28 17 L37 17" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.9"/>
+          <path d="M28 24 L37 24" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="login-logo-text">Trevo</div>
+    </div>
+    <h2 id="login-title">Welcome back</h2>
+    <p id="login-sub">Sign in to your Trevo dashboard</p>
+    <div class="form-group">
+      <label id="lbl-email">Email address</label>
+      <input type="email" id="loginEmail" value="demo@agency.com" placeholder="demo@agency.com">
+    </div>
+    <div class="form-group">
+      <label id="lbl-pass">Password</label>
+      <input type="password" id="loginPass" value="demo1234" placeholder="••••••••">
+    </div>
+    <div class="login-hint" id="login-hint">
+      Demo: use any email + password to enter the platform
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In →</button>
+    <div style="text-align:center;margin-top:1rem;display:flex;gap:0.5rem;justify-content:center">
+      <button onclick="setLoginLang('en')" style="font-size:0.75rem;color:var(--gray-400);background:none;border:none;cursor:pointer">English</button>
+      <span style="color:var(--gray-200)">|</span>
+      <button onclick="setLoginLang('ar')" style="font-size:0.75rem;color:var(--gray-400);background:none;border:none;cursor:pointer">عربي</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo">
+        <div class="sb-logo-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="46" height="46" rx="11" fill="#F5A623"/>
+            <path d="M13 11 L13 37" stroke="#1A3A6C" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+            <path d="M13 11 L32 11" stroke="#1A3A6C" stroke-width="5.5" stroke-linecap="round" fill="none"/>
+            <path d="M13 24 L24 24" stroke="#1A3A6C" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+            <path d="M28 17 L37 17" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.9"/>
+            <path d="M28 24 L37 24" stroke="white" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.9"/>
+          </svg>
+        </div>
+        <span class="sb-logo-text">Trevo</span>
+      </div>
+      <button class="sb-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="sb-nav">
+      <div class="sb-section-label" data-t="sb_main">MAIN</div>
+      <div class="sb-item active" onclick="showPanel('overview',this)" data-t-sb="sb_overview">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span class="sb-item-text" data-t="sb_overview">Overview</span>
+        <span class="sb-tooltip">Overview</span>
+      </div>
+      <div class="sb-item" onclick="showPanel('ai-content',this)">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <span class="sb-item-text" data-t="sb_ai">AI Content Studio</span>
+        <span class="sb-tooltip">AI Content Studio</span>
+      </div>
+      <div class="sb-item" onclick="showPanel('crm',this)">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8z"/></svg>
+        <span class="sb-item-text" data-t="sb_crm">CRM & Clients</span>
+        <span class="sb-badge">5</span>
+        <span class="sb-tooltip">CRM & Clients</span>
+      </div>
+      <div class="sb-item" onclick="showPanel('bookings',this)">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span class="sb-item-text" data-t="sb_bookings">Bookings</span>
+        <span class="sb-badge">12</span>
+        <span class="sb-tooltip">Bookings</span>
+      </div>
+      <div class="sb-item" onclick="showPanel('analytics',this)">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <span class="sb-item-text" data-t="sb_analytics">Analytics</span>
+        <span class="sb-tooltip">Analytics</span>
+      </div>
+      <div class="sb-item" onclick="showPanel('calendar',this)">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="sb-item-text" data-t="sb_calendar">Content Calendar</span>
+        <span class="sb-tooltip">Content Calendar</span>
+      </div>
+
+      <div class="sb-section-label" data-t="sb_platform">PLATFORM</div>
+      <div class="sb-item" onclick="showPanel('marketplace',this)">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        <span class="sb-item-text" data-t="sb_marketplace">Marketplace</span>
+        <span class="sb-tooltip">Marketplace</span>
+      </div>
+      <div class="sb-item" onclick="showPanel('reports',this)">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span class="sb-item-text" data-t="sb_reports">Reports</span>
+        <span class="sb-tooltip">Reports</span>
+      </div>
+
+      <div class="sb-section-label" data-t="sb_account">ACCOUNT</div>
+      <div class="sb-item" onclick="showPanel('settings',this)">
+        <svg class="sb-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <span class="sb-item-text" data-t="sb_settings">Settings</span>
+        <span class="sb-tooltip">Settings</span>
+      </div>
+    </div>
+
+    <div class="sb-footer">
+      <div class="sb-user">
+        <div class="sb-avatar">SA</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name">Sherif A.</div>
+          <div class="sb-user-role" data-t="sb_growth">Growth Plan</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div id="main">
+    <!-- TOPBAR -->
+    <div id="topbar">
+      <div class="topbar-left">
+        <button class="mob-sb-btn" onclick="openMobSb()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div>
+          <div class="topbar-page-title" id="topbar-title">Overview</div>
+          <div class="topbar-breadcrumb"><span>Trevo</span><span>›</span><span id="topbar-breadcrumb">Dashboard</span></div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input type="text" placeholder="Search..." id="topSearchInput" data-t-ph="search_ph">
+        </div>
+        <button class="topbar-btn" title="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <button class="lang-toggle-db" id="dbLangBtn" onclick="toggleDbLang()">عربي</button>
+        <a href="trevo-website.html" class="btn btn-ghost btn-sm" style="text-decoration:none">← Website</a>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+      <!-- ═══ OVERVIEW PANEL ═══ -->
+      <div class="panel active" id="panel-overview">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 data-t="ov_title">Good morning, Sherif 👋</h1>
+            <p data-t="ov_sub">Here's what's happening with your agency today</p>
+          </div>
+          <div class="page-header-right">
+            <button class="btn btn-primary" onclick="showPanel('ai-content',null)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <span data-t="ov_gen_btn">Generate Content</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Row -->
+        <div class="kpi-grid">
+          <div class="kpi-card" style="--c:var(--orange)"><div class="kpi-card" style="display:none"></div>
+            <div class="kpi-eyebrow" data-t="kpi_revenue">Monthly Revenue</div>
+            <div class="kpi-value">$8,240</div>
+            <div class="kpi-delta up">↑ 22% vs last month</div>
+            <div class="progress" style="margin-top:10px"><div class="progress-fill" style="width:72%;background:var(--orange)"></div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-eyebrow" data-t="kpi_bookings">Active Bookings</div>
+            <div class="kpi-value">47</div>
+            <div class="kpi-delta up">↑ 12 new this week</div>
+            <div class="progress"><div class="progress-fill" style="width:58%;background:var(--navy)"></div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-eyebrow" data-t="kpi_leads">New Leads</div>
+            <div class="kpi-value">23</div>
+            <div class="kpi-delta up">↑ 34% engagement</div>
+            <div class="progress"><div class="progress-fill" style="width:34%;background:#22c55e"></div></div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-eyebrow" data-t="kpi_posts">Posts Published</div>
+            <div class="kpi-value">28</div>
+            <div class="kpi-delta up">↑ 18 hrs saved</div>
+            <div class="progress"><div class="progress-fill" style="width:87%;background:#8b5cf6"></div></div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <!-- Revenue Chart -->
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title" data-t="chart_revenue">Revenue Trend</div><div class="card-sub">Last 6 months</div></div>
+              <button class="btn btn-ghost btn-sm">Export</button>
+            </div>
+            <div class="chart-wrap tall"><canvas id="revenueChart"></canvas></div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="card-header">
+              <div><div class="card-title" data-t="activity_title">Recent Activity</div><div class="card-sub">Last 24 hours</div></div>
+            </div>
+            <div class="feed">
+              <div class="feed-item"><div class="feed-dot" style="background:var(--green)"></div><div class="feed-content"><h4>New booking — Pyramids 7-Day</h4><p>Mohamed Hassan · $920 · 2 hrs ago</p></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--orange)"></div><div class="feed-content"><h4>AI content published — 5 posts</h4><p>Instagram + Facebook · Nile Cruise package · 4 hrs ago</p></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--navy)"></div><div class="feed-content"><h4>New lead from website</h4><p>Fatima Al-Rashid · Hurghada package · 6 hrs ago</p></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--purple)"></div><div class="feed-content"><h4>Campaign performance report ready</h4><p>October campaign · +38% reach · 8 hrs ago</p></div></div>
+              <div class="feed-item"><div class="feed-dot" style="background:var(--blue)"></div><div class="feed-content"><h4>WhatsApp follow-up sent</h4><p>Auto-sent to 12 pending leads · 10 hrs ago</p></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pipeline Overview -->
+        <div class="card" style="margin-top:1.25rem">
+          <div class="card-header">
+            <div><div class="card-title" data-t="pipeline_title">Booking Pipeline</div><div class="card-sub">This month</div></div>
+            <button class="btn btn-ghost btn-sm" onclick="showPanel('crm',null)">View CRM →</button>
+          </div>
+          <div class="pipeline">
+            <div class="pipeline-stage"><div class="stage-circle done">✓</div><div class="stage-label" data-t="stage_inquiry">Inquiry</div><div class="stage-count">23</div></div>
+            <div class="pipeline-stage"><div class="stage-circle done">✓</div><div class="stage-label" data-t="stage_quoted">Quoted</div><div class="stage-count">14</div></div>
+            <div class="pipeline-stage"><div class="stage-circle active">●</div><div class="stage-label" data-t="stage_neg">Negotiating</div><div class="stage-count">8</div></div>
+            <div class="pipeline-stage"><div class="stage-circle">○</div><div class="stage-label" data-t="stage_conf">Confirmed</div><div class="stage-count">11</div></div>
+            <div class="pipeline-stage"><div class="stage-circle">○</div><div class="stage-label" data-t="stage_paid">Paid</div><div class="stage-count">7</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ AI CONTENT STUDIO ═══ -->
+      <div class="panel" id="panel-ai-content">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 data-t="ai_title">AI Content Studio</h1>
+            <p data-t="ai_sub">Generate tourism marketing content in seconds — Arabic & English</p>
+          </div>
+          <div class="page-header-right">
+            <button class="btn btn-ghost btn-sm">History</button>
+            <button class="btn btn-primary" onclick="generateContent()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span data-t="ai_gen_btn">Generate</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <!-- Left: Generator -->
+          <div>
+            <div class="card" style="margin-bottom:1.25rem">
+              <div class="card-title" style="margin-bottom:1rem" data-t="ai_config">Content Configuration</div>
+              <div class="field-group">
+                <label class="field-label" data-t="ai_package">Package / Destination</label>
+                <input class="field-input" id="aiPackage" placeholder="e.g. Pyramids 7-Day, Nile Cruise, Umrah Package" value="Pyramids of Giza — 7 Day Package">
+              </div>
+              <div class="field-row">
+                <div>
+                  <label class="field-label" data-t="ai_lang_lbl">Content Language</label>
+                  <select class="field-select" id="aiLang">
+                    <option value="both">Arabic + English</option>
+                    <option value="ar">Arabic only</option>
+                    <option value="en">English only</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="field-label" data-t="ai_tone">Tone</label>
+                  <select class="field-select" id="aiTone">
+                    <option>Exciting & promotional</option>
+                    <option>Professional & trustworthy</option>
+                    <option>Religious & reverent</option>
+                    <option>Luxury & aspirational</option>
+                    <option>Family-friendly</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title" style="margin-bottom:1rem" data-t="ai_type">Content Type</div>
+              <div class="content-type-grid">
+                <div class="content-type-btn active" onclick="selectType(this,'instagram')"><div class="ct-icon">📸</div><div class="ct-label">Instagram Post</div></div>
+                <div class="content-type-btn" onclick="selectType(this,'facebook')"><div class="ct-icon">📘</div><div class="ct-label">Facebook Post</div></div>
+                <div class="content-type-btn" onclick="selectType(this,'whatsapp')"><div class="ct-icon">💬</div><div class="ct-label">WhatsApp Blast</div></div>
+                <div class="content-type-btn" onclick="selectType(this,'email')"><div class="ct-icon">📧</div><div class="ct-label">Email Campaign</div></div>
+                <div class="content-type-btn" onclick="selectType(this,'seo')"><div class="ct-icon">🔍</div><div class="ct-label">SEO Article</div></div>
+                <div class="content-type-btn" onclick="selectType(this,'reel')"><div class="ct-icon">🎬</div><div class="ct-label">Reel Script</div></div>
+              </div>
+              <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="generateContent()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span data-t="ai_gen_btn">Generate Content</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Preview -->
+          <div>
+            <div class="card" style="margin-bottom:1.25rem">
+              <div class="card-header">
+                <div><div class="card-title" data-t="ai_preview">Generated Content</div><div class="card-sub" id="ai-preview-sub">Instagram Post — Arabic + English</div></div>
+                <div style="display:flex;gap:0.4rem">
+                  <button class="btn btn-icon" title="Copy" onclick="copyContent()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="14" height="14"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button>
+                  <button class="btn btn-ghost btn-sm" onclick="generateContent()" data-t="ai_regen">Regenerate</button>
+                </div>
+              </div>
+              <div class="content-preview" id="aiOutput">Click "Generate Content" to see AI-generated tourism marketing content for your package...</div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><div class="card-title" data-t="ai_score">AI Quality Score</div></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;text-align:center">
+                <div style="padding:0.75rem;background:var(--green-pale);border-radius:var(--r-md)"><div style="font-size:1.2rem;font-weight:800;color:#15803d" id="score-readability">87</div><div style="font-size:0.65rem;color:#15803d;font-weight:600">Readability</div></div>
+                <div style="padding:0.75rem;background:var(--orange-pale);border-radius:var(--r-md)"><div style="font-size:1.2rem;font-weight:800;color:var(--orange-dk)" id="score-engagement">92</div><div style="font-size:0.65rem;color:var(--orange-dk);font-weight:600">Engagement</div></div>
+                <div style="padding:0.75rem;background:var(--blue-pale);border-radius:var(--r-md)"><div style="font-size:1.2rem;font-weight:800;color:#1d4ed8" id="score-seo">78</div><div style="font-size:0.65rem;color:#1d4ed8;font-weight:600">SEO Score</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ CRM PANEL ═══ -->
+      <div class="panel" id="panel-crm">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 data-t="crm_title">CRM & Clients</h1>
+            <p data-t="crm_sub">Manage all leads, clients, and booking conversations</p>
+          </div>
+          <div class="page-header-right">
+            <button class="btn btn-ghost btn-sm">Export</button>
+            <button class="btn btn-primary">+ Add Lead</button>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('crm','all',this)" data-t="crm_all">All Leads (47)</button>
+          <button class="tab-btn" onclick="switchTab('crm','new',this)" data-t="crm_new">New (12)</button>
+          <button class="tab-btn" onclick="switchTab('crm','hot',this)" data-t="crm_hot">Hot (8)</button>
+          <button class="tab-btn" onclick="switchTab('crm','converted',this)" data-t="crm_conv">Converted (18)</button>
+        </div>
+
+        <!-- Search + filters -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap">
+          <input class="field-input" style="flex:1;min-width:180px" placeholder="Search leads...">
+          <select class="field-select" style="width:auto;min-width:120px"><option>All stages</option><option>Inquiry</option><option>Quoted</option><option>Negotiating</option><option>Confirmed</option></select>
+          <select class="field-select" style="width:auto;min-width:120px"><option>All packages</option><option>Pyramids</option><option>Nile Cruise</option><option>Hurghada</option><option>Umrah</option></select>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-t="th_client">Client</th>
+                <th data-t="th_package">Package</th>
+                <th data-t="th_value">Value</th>
+                <th data-t="th_stage">Stage</th>
+                <th data-t="th_date">Inquiry Date</th>
+                <th data-t="th_followup">Follow-up</th>
+                <th data-t="th_actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="background:var(--navy)">MH</div><div><div style="font-weight:600">Mohamed Hassan</div><div style="font-size:0.72rem;color:var(--gray-400)">+20 100 000 1234</div></div></div></td><td>Pyramids 7-Day</td><td style="font-weight:700;color:var(--navy)">$920</td><td><span class="badge badge-orange">Negotiating</span></td><td>Dec 12, 2026</td><td><span class="badge badge-blue">Tomorrow</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="background:var(--orange)">FA</div><div><div style="font-weight:600">Fatima Al-Rashid</div><div style="font-size:0.72rem;color:var(--gray-400)">+966 50 000 5678</div></div></div></td><td>Hurghada Beach</td><td style="font-weight:700;color:var(--navy)">$480</td><td><span class="badge badge-green">Confirmed</span></td><td>Dec 10, 2026</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="background:#8b5cf6">KR</div><div><div style="font-weight:600">Khalid Al-Rashidi</div><div style="font-size:0.72rem;color:var(--gray-400)">+966 55 000 9012</div></div></div></td><td>Umrah Ramadan</td><td style="font-weight:700;color:var(--navy)">$1,800</td><td><span class="badge badge-blue">Quoted</span></td><td>Dec 9, 2026</td><td><span class="badge badge-orange">Today</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="background:#22c55e">SA</div><div><div style="font-weight:600">Sara Ahmed</div><div style="font-size:0.72rem;color:var(--gray-400)">+20 111 000 3456</div></div></div></td><td>Nile Cruise 5-Day</td><td style="font-weight:700;color:var(--navy)">$650</td><td><span class="badge badge-purple">New</span></td><td>Dec 8, 2026</td><td><span class="badge badge-red">Overdue</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+              <tr><td><div style="display:flex;align-items:center;gap:8px"><div class="avatar" style="background:#1098ad">AK</div><div><div style="font-weight:600">Ahmed Kamel</div><div style="font-size:0.72rem;color:var(--gray-400)">+971 50 000 7890</div></div></div></td><td>Luxor Heritage</td><td style="font-weight:700;color:var(--navy)">$740</td><td><span class="badge badge-green">Paid</span></td><td>Dec 5, 2026</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══ BOOKINGS PANEL ═══ -->
+      <div class="panel" id="panel-bookings">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 data-t="book_title">Booking Manager</h1>
+            <p data-t="book_sub">All confirmed bookings and travel schedules</p>
+          </div>
+          <div class="page-header-right">
+            <button class="btn btn-ghost btn-sm">Export CSV</button>
+            <button class="btn btn-primary">+ New Booking</button>
+          </div>
+        </div>
+
+        <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">
+          <div class="kpi-card"><div class="kpi-eyebrow">Confirmed</div><div class="kpi-value" style="font-size:1.5rem">18</div><div class="kpi-delta up">This month</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Departing Soon</div><div class="kpi-value" style="font-size:1.5rem">5</div><div class="kpi-delta" style="color:var(--orange)">Next 7 days</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Total Revenue</div><div class="kpi-value" style="font-size:1.5rem">$8,240</div><div class="kpi-delta up">↑ 22%</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Avg Package Value</div><div class="kpi-value" style="font-size:1.5rem">$458</div><div class="kpi-delta up">↑ 8%</div></div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Booking ID</th><th data-t="th_client">Client</th><th data-t="th_package">Package</th><th>Departure</th><th>Pax</th><th>Value</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td style="font-family:monospace;font-size:0.75rem">#TRV-2026-047</td><td>Mohamed Hassan</td><td>Pyramids 7-Day</td><td>Dec 20, 2026</td><td>2</td><td style="font-weight:700">$920</td><td><span class="badge badge-green">Confirmed</span></td><td><button class="btn btn-ghost btn-sm">Details</button></td></tr>
+              <tr><td style="font-family:monospace;font-size:0.75rem">#TRV-2026-046</td><td>Fatima Al-Rashid</td><td>Hurghada Beach 5D</td><td>Dec 18, 2026</td><td>4</td><td style="font-weight:700">$1,920</td><td><span class="badge badge-green">Paid</span></td><td><button class="btn btn-ghost btn-sm">Details</button></td></tr>
+              <tr><td style="font-family:monospace;font-size:0.75rem">#TRV-2026-045</td><td>Ahmed Kamel</td><td>Luxor Heritage Tour</td><td>Jan 5, 2027</td><td>2</td><td style="font-weight:700">$740</td><td><span class="badge badge-blue">Deposit Paid</span></td><td><button class="btn btn-ghost btn-sm">Details</button></td></tr>
+              <tr><td style="font-family:monospace;font-size:0.75rem">#TRV-2026-044</td><td>Sara Ahmed</td><td>Nile Cruise 5-Day</td><td>Jan 12, 2027</td><td>3</td><td style="font-weight:700">$1,950</td><td><span class="badge badge-orange">Pending Payment</span></td><td><button class="btn btn-ghost btn-sm">Details</button></td></tr>
+              <tr><td style="font-family:monospace;font-size:0.75rem">#TRV-2026-043</td><td>Khalid Al-Rashidi</td><td>Umrah Ramadan Package</td><td>Mar 1, 2027</td><td>5</td><td style="font-weight:700">$9,000</td><td><span class="badge badge-blue">Quoted</span></td><td><button class="btn btn-ghost btn-sm">Details</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══ ANALYTICS PANEL ═══ -->
+      <div class="panel" id="panel-analytics">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 data-t="an_title">Analytics Dashboard</h1>
+            <p data-t="an_sub">Real-time performance across all marketing channels</p>
+          </div>
+          <div class="page-header-right">
+            <select class="field-select" style="width:auto"><option>Last 30 days</option><option>Last 3 months</option><option>This year</option></select>
+            <button class="btn btn-primary">Export Report</button>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi-eyebrow">Total Reach</div><div class="kpi-value">48.2K</div><div class="kpi-delta up">↑ 38% this month</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Engagement Rate</div><div class="kpi-value">6.4%</div><div class="kpi-delta up">↑ Industry avg: 2.1%</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Cost Per Lead</div><div class="kpi-value">$12.40</div><div class="kpi-delta up">↓ 15% vs freelancer</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Conversion Rate</div><div class="kpi-value">28%</div><div class="kpi-delta up">↑ 22% vs manual</div></div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><div><div class="card-title">Channel Performance</div><div class="card-sub">Reach by platform</div></div></div>
+            <div class="chart-wrap tall"><canvas id="channelChart"></canvas></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div><div class="card-title">Booking Conversions</div><div class="card-sub">Weekly bookings from digital</div></div></div>
+            <div class="chart-wrap tall"><canvas id="conversionChart"></canvas></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:1.25rem">
+          <div class="card-header"><div class="card-title">AI Insights & Recommendations</div></div>
+          <div style="display:flex;flex-direction:column;gap:0.75rem">
+            <div style="background:var(--orange-pale);border-left:3px solid var(--orange);border-radius:var(--r-sm);padding:0.85rem;font-size:0.82rem"><strong>📈 Timing:</strong> Your Nile Cruise posts get 3× more engagement on Thursdays at 7 PM. Schedule your next campaign for Thursday evening.</div>
+            <div style="background:var(--blue-pale);border-left:3px solid var(--blue);border-radius:var(--r-sm);padding:0.85rem;font-size:0.82rem"><strong>🎯 Audience:</strong> Gulf visitors (Saudi, UAE) have the highest booking rate at 34%. Increase Arabic content targeting Gulf audiences by 20%.</div>
+            <div style="background:var(--green-pale);border-left:3px solid var(--green);border-radius:var(--r-sm);padding:0.85rem;font-size:0.82rem"><strong>💡 Content:</strong> Posts with Egyptian Arabic dialect outperform Modern Standard Arabic by 28% in engagement. Use colloquial tone for social media.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ CALENDAR PANEL ═══ -->
+      <div class="panel" id="panel-calendar">
+        <div class="page-header">
+          <div class="page-header-left">
+            <h1 data-t="cal_title">Content Calendar</h1>
+            <p data-t="cal_sub">Plan and schedule your AI-generated content</p>
+          </div>
+          <div class="page-header-right">
+            <button class="btn btn-ghost btn-sm">← Prev</button>
+            <span style="font-size:0.85rem;font-weight:700;color:var(--navy);padding:0 0.75rem">December 2026</span>
+            <button class="btn btn-ghost btn-sm">Next →</button>
+            <button class="btn btn-primary" onclick="showPanel('ai-content',null)">+ Generate Posts</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cal-grid">
+            <div class="cal-day-header">Sun</div><div class="cal-day-header">Mon</div><div class="cal-day-header">Tue</div><div class="cal-day-header">Wed</div><div class="cal-day-header">Thu</div><div class="cal-day-header">Fri</div><div class="cal-day-header">Sat</div>
+            <!-- Week 1 -->
+            <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day"><div class="day-num">1</div><div class="cal-event ev-orange">IG: Pyramids</div></div><div class="cal-day"><div class="day-num">2</div></div><div class="cal-day"><div class="day-num">3</div><div class="cal-event ev-navy">Email: Dec Deals</div></div><div class="cal-day"><div class="day-num">4</div></div>
+            <!-- Week 2 -->
+            <div class="cal-day"><div class="day-num">5</div><div class="cal-event ev-green">FB: Nile Cruise</div></div><div class="cal-day"><div class="day-num">6</div></div><div class="cal-day"><div class="day-num">7</div><div class="cal-event ev-orange">IG: Hurghada</div></div><div class="cal-day"><div class="day-num">8</div></div><div class="cal-day"><div class="day-num">9</div><div class="cal-event ev-navy">WhatsApp Blast</div></div><div class="cal-day"><div class="day-num">10</div></div><div class="cal-day"><div class="day-num">11</div></div>
+            <!-- Week 3 -->
+            <div class="cal-day"><div class="day-num">12</div><div class="cal-event ev-orange">IG: Luxor</div></div><div class="cal-day"><div class="day-num">13</div></div><div class="cal-day"><div class="day-num">14</div><div class="cal-event ev-green">Blog: Dec travel</div></div><div class="cal-day today"><div class="day-num">15</div><div class="cal-event ev-navy">Email: Umrah</div></div><div class="cal-day"><div class="day-num">16</div><div class="cal-event ev-orange">TikTok Reel</div></div><div class="cal-day"><div class="day-num">17</div></div><div class="cal-day"><div class="day-num">18</div></div>
+            <!-- Week 4 -->
+            <div class="cal-day"><div class="day-num">19</div><div class="cal-event ev-orange">IG: New Year</div></div><div class="cal-day"><div class="day-num">20</div></div><div class="cal-day"><div class="day-num">21</div><div class="cal-event ev-navy">WhatsApp: Promo</div></div><div class="cal-day"><div class="day-num">22</div></div><div class="cal-day"><div class="day-num">23</div></div><div class="cal-day"><div class="day-num">24</div><div class="cal-event ev-green">IG: Xmas Deals</div></div><div class="cal-day"><div class="day-num">25</div></div>
+            <!-- Week 5 -->
+            <div class="cal-day"><div class="day-num">26</div></div><div class="cal-day"><div class="day-num">27</div><div class="cal-event ev-orange">IG: Year End</div></div><div class="cal-day"><div class="day-num">28</div></div><div class="cal-day"><div class="day-num">29</div><div class="cal-event ev-navy">Email: Jan 2027</div></div><div class="cal-day"><div class="day-num">30</div></div><div class="cal-day"><div class="day-num">31</div><div class="cal-event ev-green">IG: New Year!</div></div><div class="cal-day empty"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ MARKETPLACE PANEL ═══ -->
+      <div class="panel" id="panel-marketplace">
+        <div class="page-header">
+          <div class="page-header-left"><h1>Marketplace</h1><p>Your packages listed on the Trevo B2C platform</p></div>
+          <div class="page-header-right"><button class="btn btn-primary">+ List Package</button></div>
+        </div>
+        <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">
+          <div class="kpi-card"><div class="kpi-eyebrow">Packages Listed</div><div class="kpi-value" style="font-size:1.5rem">12</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Views This Month</div><div class="kpi-value" style="font-size:1.5rem">3,840</div><div class="kpi-delta up">↑ 24%</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Booking Requests</div><div class="kpi-value" style="font-size:1.5rem">28</div></div>
+          <div class="kpi-card"><div class="kpi-eyebrow">Revenue (after 8%)</div><div class="kpi-value" style="font-size:1.5rem">$7,564</div><div class="kpi-delta up">Keep 92%</div></div>
+        </div>
+        <div class="three-col">
+          <div class="card"><div style="height:80px;background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:0.75rem">🏛️</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:0.3rem">Pyramids 7-Day Package</div><div style="font-size:0.78rem;color:var(--gray-400);margin-bottom:0.75rem">Cairo → Giza → Luxor</div><div style="display:flex;justify-content:space-between;align-items:center"><span class="badge badge-green">Active</span><span style="font-weight:800;color:var(--navy)">$920</span></div><div style="font-size:0.72rem;color:var(--gray-400);margin-top:0.4rem">142 views · 8 bookings</div></div>
+          <div class="card"><div style="height:80px;background:linear-gradient(135deg,#1098ad,#0ca678);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:0.75rem">⚓</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:0.3rem">Nile Cruise 5-Day</div><div style="font-size:0.78rem;color:var(--gray-400);margin-bottom:0.75rem">Luxor → Aswan</div><div style="display:flex;justify-content:space-between;align-items:center"><span class="badge badge-green">Active</span><span style="font-weight:800;color:var(--navy)">$650</span></div><div style="font-size:0.72rem;color:var(--gray-400);margin-top:0.4rem">98 views · 5 bookings</div></div>
+          <div class="card"><div style="height:80px;background:linear-gradient(135deg,var(--orange),#e8a020);border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:0.75rem">🌊</div><div style="font-weight:700;font-size:0.9rem;margin-bottom:0.3rem">Hurghada Beach Resort</div><div style="font-size:0.78rem;color:var(--gray-400);margin-bottom:0.75rem">Red Sea · All Inclusive</div><div style="display:flex;justify-content:space-between;align-items:center"><span class="badge badge-orange">Featured</span><span style="font-weight:800;color:var(--navy)">$480</span></div><div style="font-size:0.72rem;color:var(--gray-400);margin-top:0.4rem">217 views · 11 bookings</div></div>
+        </div>
+      </div>
+
+      <!-- ═══ REPORTS PANEL ═══ -->
+      <div class="panel" id="panel-reports">
+        <div class="page-header">
+          <div class="page-header-left"><h1>Reports</h1><p>Download and share performance reports</p></div>
+          <div class="page-header-right"><button class="btn btn-primary">Generate Report</button></div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:1rem">Available Reports</div>
+          <div class="table-wrap"><table class="data-table"><thead><tr><th>Report Name</th><th>Period</th><th>Generated</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+            <tr><td><strong>November 2026 Performance</strong></td><td>Nov 1–30, 2026</td><td>Dec 1, 2026</td><td><span class="badge badge-green">Ready</span></td><td><button class="btn btn-ghost btn-sm">Download PDF</button></td></tr>
+            <tr><td><strong>Q3 2026 Marketing Summary</strong></td><td>Jul–Sep 2026</td><td>Oct 3, 2026</td><td><span class="badge badge-green">Ready</span></td><td><button class="btn btn-ghost btn-sm">Download PDF</button></td></tr>
+            <tr><td><strong>AI Content ROI Analysis</strong></td><td>Oct–Nov 2026</td><td>Dec 5, 2026</td><td><span class="badge badge-green">Ready</span></td><td><button class="btn btn-ghost btn-sm">Download PDF</button></td></tr>
+            <tr><td><strong>December 2026 (In Progress)</strong></td><td>Dec 1–31, 2026</td><td>—</td><td><span class="badge badge-orange">Generating</span></td><td><button class="btn btn-ghost btn-sm" disabled>Pending</button></td></tr>
+          </tbody></table></div>
+        </div>
+      </div>
+
+      <!-- ═══ SETTINGS PANEL ═══ -->
+      <div class="panel" id="panel-settings">
+        <div class="page-header">
+          <div class="page-header-left"><h1 data-t="set_title">Settings</h1><p data-t="set_sub">Manage your agency profile and platform preferences</p></div>
+          <div class="page-header-right"><button class="btn btn-primary" onclick="saveSettings()">Save Changes</button></div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('set','profile',this)">Agency Profile</button>
+          <button class="tab-btn" onclick="switchTab('set','plan',this)">Subscription</button>
+          <button class="tab-btn" onclick="switchTab('set','integrations',this)">Integrations</button>
+          <button class="tab-btn" onclick="switchTab('set','notifications',this)">Notifications</button>
+        </div>
+
+        <div class="tab-panel active" id="set-tab-profile">
+          <div class="two-col">
+            <div class="card">
+              <div class="card-title" style="margin-bottom:1rem">Agency Information</div>
+              <div class="field-row"><div class="field-group"><label class="field-label">Agency Name</label><input class="field-input" value="Sherif Travel Agency"></div><div class="field-group"><label class="field-label">Business Type</label><select class="field-select"><option>Travel Agency</option><option>Hotel</option><option>DMC</option><option>Tour Operator</option></select></div></div>
+              <div class="field-group"><label class="field-label">Primary Destinations</label><input class="field-input" value="Pyramids, Luxor, Hurghada, Umrah"></div>
+              <div class="field-row"><div class="field-group"><label class="field-label">Country</label><select class="field-select"><option>Egypt</option><option>Saudi Arabia</option><option>UAE</option></select></div><div class="field-group"><label class="field-label">WhatsApp Number</label><input class="field-input" value="+20 100 000 0000" type="tel"></div></div>
+              <div class="field-group"><label class="field-label">Agency Bio (for AI content)</label><textarea class="field-textarea">We are a Cairo-based travel agency specializing in Egypt tours, Nile cruises, and Umrah packages. Established in 2010, we serve Gulf and European clients.</textarea></div>
+            </div>
+            <div class="card">
+              <div class="card-title" style="margin-bottom:1rem">AI Content Preferences</div>
+              <div class="field-group"><label class="field-label">Primary Language</label><select class="field-select"><option>Arabic + English (bilingual)</option><option>Arabic only</option><option>English only</option></select></div>
+              <div class="field-group"><label class="field-label">Arabic Dialect Style</label><select class="field-select"><option>Egyptian Arabic (colloquial)</option><option>Modern Standard Arabic (MSA)</option><option>Gulf Arabic</option></select></div>
+              <div class="field-group"><label class="field-label">Default Content Tone</label><select class="field-select"><option>Exciting & promotional</option><option>Professional & trustworthy</option><option>Religious & reverent</option><option>Luxury & aspirational</option></select></div>
+              <div class="field-group"><label class="field-label">Brand Voice Keywords</label><input class="field-input" value="authentic, unforgettable, expert, trusted, cultural"></div>
+              <div class="field-group"><label class="field-label">Emoji Usage in Posts</label><select class="field-select"><option>Yes — emojis enhance engagement</option><option>No — professional tone only</option></select></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="set-tab-plan">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:1rem">Current Subscription</div>
+            <div style="background:var(--orange-pale);border:1.5px solid rgba(245,166,35,0.4);border-radius:var(--r-md);padding:1.25rem;margin-bottom:1.25rem">
+              <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem">
+                <div><div style="font-size:1.1rem;font-weight:800;color:var(--navy)">Growth Plan</div><div style="font-size:0.82rem;color:var(--gray-700)">$100 / month · Renews Jan 15, 2027</div></div>
+                <button class="btn btn-primary">Upgrade to Pro</button>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem">
+              <div style="padding:0.75rem;border:1px solid var(--gray-100);border-radius:var(--r-md)"><div style="font-size:0.72rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.06em">AI Posts/month</div><div style="font-size:1.2rem;font-weight:800;color:var(--navy)">50 / 50</div><div class="progress"><div class="progress-fill" style="width:100%;background:var(--orange)"></div></div></div>
+              <div style="padding:0.75rem;border:1px solid var(--gray-100);border-radius:var(--r-md)"><div style="font-size:0.72rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.06em">CRM Contacts</div><div style="font-size:1.2rem;font-weight:800;color:var(--navy)">47 / 500</div><div class="progress"><div class="progress-fill" style="width:9%;background:var(--green)"></div></div></div>
+              <div style="padding:0.75rem;border:1px solid var(--gray-100);border-radius:var(--r-md)"><div style="font-size:0.72rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.06em">Email Campaigns</div><div style="font-size:1.2rem;font-weight:800;color:var(--navy)">3 / 10</div><div class="progress"><div class="progress-fill" style="width:30%;background:var(--blue)"></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="set-tab-integrations">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:1rem">Connected Channels</div>
+            <div style="display:flex;flex-direction:column;gap:0.75rem">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;border:1px solid var(--gray-100);border-radius:var(--r-md);flex-wrap:wrap;gap:0.5rem"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.2rem">📸</span><div><div style="font-weight:600;font-size:0.85rem">Instagram Business</div><div style="font-size:0.72rem;color:var(--gray-400)">@sherif_travel_agency · 4,280 followers</div></div></div><span class="badge badge-green">Connected</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;border:1px solid var(--gray-100);border-radius:var(--r-md);flex-wrap:wrap;gap:0.5rem"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.2rem">📘</span><div><div style="font-weight:600;font-size:0.85rem">Facebook Page</div><div style="font-size:0.72rem;color:var(--gray-400)">Sherif Travel · 12,400 likes</div></div></div><span class="badge badge-green">Connected</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;border:1px solid var(--gray-100);border-radius:var(--r-md);flex-wrap:wrap;gap:0.5rem"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.2rem">💬</span><div><div style="font-weight:600;font-size:0.85rem">WhatsApp Business API</div><div style="font-size:0.72rem;color:var(--gray-400)">+20 100 000 0000</div></div></div><span class="badge badge-green">Connected</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;border:1px solid var(--gray-100);border-radius:var(--r-md);flex-wrap:wrap;gap:0.5rem"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.2rem">🔍</span><div><div style="font-weight:600;font-size:0.85rem">Google Ads</div><div style="font-size:0.72rem;color:var(--gray-400)">Not connected yet</div></div></div><button class="btn btn-ghost btn-sm">Connect</button></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1rem;border:1px solid var(--gray-100);border-radius:var(--r-md);flex-wrap:wrap;gap:0.5rem"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.2rem">💳</span><div><div style="font-weight:600;font-size:0.85rem">Paymob (Egypt)</div><div style="font-size:0.72rem;color:var(--gray-400)">Not connected yet</div></div></div><button class="btn btn-ghost btn-sm">Connect</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="set-tab-notifications">
+          <div class="card">
+            <div class="card-title" style="margin-bottom:1rem">Notification Preferences</div>
+            <div style="display:flex;flex-direction:column;gap:0.85rem">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0;border-bottom:1px solid var(--gray-50)"><div><div style="font-size:0.85rem;font-weight:600">New booking confirmed</div><div style="font-size:0.75rem;color:var(--gray-400)">WhatsApp + Email</div></div><label style="position:relative;display:inline-block;width:40px;height:22px"><input type="checkbox" checked style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:var(--orange);border-radius:11px;transition:0.3s"></span></label></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0;border-bottom:1px solid var(--gray-50)"><div><div style="font-size:0.85rem;font-weight:600">New lead inquiry</div><div style="font-size:0.75rem;color:var(--gray-400)">WhatsApp + Email</div></div><label style="position:relative;display:inline-block;width:40px;height:22px"><input type="checkbox" checked style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:var(--orange);border-radius:11px;transition:0.3s"></span></label></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:0.75rem 0"><div><div style="font-size:0.85rem;font-weight:600">Weekly performance report</div><div style="font-size:0.75rem;color:var(--gray-400)">Email only — every Monday</div></div><label style="position:relative;display:inline-block;width:40px;height:22px"><input type="checkbox" checked style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:var(--orange);border-radius:11px;transition:0.3s"></span></label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end #content -->
+  </div><!-- end #main -->
+</div><!-- end #app -->
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/201000000000" target="_blank" style="position:fixed;bottom:1.5rem;right:1.5rem;width:50px;height:50px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.4);z-index:800;text-decoration:none" title="WhatsApp Support">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// ─── LOGIN ───
+function doLogin(){
+  const btn=document.getElementById('loginBtn');
+  btn.textContent='Signing in...';
+  setTimeout(()=>{
+    document.getElementById('login-screen').classList.add('hide');
+    initCharts();
+    setTimeout(()=>document.getElementById('login-screen').style.display='none',500);
+  },800);
+}
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+document.getElementById('loginEmail').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+
+// ─── SIDEBAR ───
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
+function openMobSb(){
+  document.getElementById('sidebar').classList.add('mob-open');
+  document.getElementById('sbOverlay').classList.add('show');
+}
+function closeMobSb(){
+  document.getElementById('sidebar').classList.remove('mob-open');
+  document.getElementById('sbOverlay').classList.remove('show');
+}
+
+// ─── PANELS ───
+const panelTitles={
+  overview:{en:'Overview',ar:'نظرة عامة'},
+  'ai-content':{en:'AI Content Studio',ar:'استوديو المحتوى AI'},
+  crm:{en:'CRM & Clients',ar:'CRM والعملاء'},
+  bookings:{en:'Booking Manager',ar:'مدير الحجوزات'},
+  analytics:{en:'Analytics',ar:'التحليلات'},
+  calendar:{en:'Content Calendar',ar:'تقويم المحتوى'},
+  marketplace:{en:'Marketplace',ar:'السوق الإلكتروني'},
+  reports:{en:'Reports',ar:'التقارير'},
+  settings:{en:'Settings',ar:'الإعدادات'},
+};
+function showPanel(id,clickedEl){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
+  const panel=document.getElementById('panel-'+id);
+  if(panel)panel.classList.add('active');
+  if(clickedEl)clickedEl.classList.add('active');
+  else{document.querySelectorAll('.sb-item').forEach(i=>{if(i.getAttribute('onclick')&&i.getAttribute('onclick').includes("'"+id+"'"))i.classList.add('active')})}
+  const lang=currentDbLang;
+  document.getElementById('topbar-title').textContent=panelTitles[id]?panelTitles[id][lang]:'Dashboard';
+  document.getElementById('topbar-breadcrumb').textContent=panelTitles[id]?panelTitles[id][lang]:'';
+  closeMobSb();
+}
+
+// ─── TABS ───
+function switchTab(prefix,id,btn){
+  document.querySelectorAll(`#panel-${prefix} .tab-btn`).forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll(`#panel-${prefix} .tab-panel`).forEach(p=>p.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  const panel=document.getElementById(prefix+'-tab-'+id);
+  if(panel)panel.classList.add('active');
+}
+
+// ─── CONTENT TYPE ───
+let currentType='instagram';
+function selectType(el,type){
+  document.querySelectorAll('.content-type-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  currentType=type;
+}
+
+// ─── AI CONTENT GENERATOR ───
+const contentTemplates={
+  instagram:{
+    en:"📸 ✨ Discover the Magic of Ancient Egypt!\n\nStep into 5,000 years of history with our exclusive 7-Day Pyramids Package. From the iconic Great Pyramid at sunrise to a breathtaking Sound & Light Show — every moment is unforgettable.\n\n🗓️ All-inclusive | Guided tours | 4-star hotels\n💰 Starting from $920/person\n📲 DM us or WhatsApp to book!\n\n#Egypt #Pyramids #EgyptTravel #TourismEgypt #CairoTravel #AncientEgypt #Wanderlust",
+    ar:"📸 ✨ اكتشف سحر مصر القديمة!\n\nانغمس في 5,000 عام من التاريخ مع باقتنا الحصرية لمدة 7 أيام — الأهرامات بالغروب، ورحلة النيل الساحرة، وليالي القاهرة التي لا تُنسى.\n\n🗓️ شامل كل شيء | جولات مع مرشد | فنادق 4 نجوم\n💰 تبدأ من 920$ للشخص\n📲 راسلنا أو تواصل واتساب للحجز!\n\n#مصر #الأهرامات #سياحة_مصر #القاهرة"
+  },
+  email:{
+    en:"Subject: Don't Miss This — Your Dream Egypt Adventure Awaits 🏛️\n\nDear [First Name],\n\nImagine waking up to a view of the Great Pyramid of Giza as the morning sun paints it golden...\n\nOur 7-Day Pyramids Package takes you on an unforgettable journey:\n✅ Private guided tour of the Great Pyramid & Sphinx\n✅ Cairo Museum VIP access — see Tutankhamun's treasures\n✅ Felucca ride on the Nile at sunset\n✅ 4-star accommodation throughout\n✅ All transfers & most meals included\n\n🎁 EARLY BIRD: Book before December 31st & save 15%\n💰 From $920/person\n\nReply to this email or WhatsApp us to reserve your spot.\n\nWarm regards,\nSherif Travel Agency Team",
+    ar:"الموضوع: لا تفوّت هذا — مغامرتك المصرية تنتظرك! 🏛️\n\nعزيزي [الاسم],\n\nتخيّل أن تستيقظ على منظر هرم الجيزة الأكبر والشمس الصباحية تُذهّبه...\n\nباقتنا لمدة 7 أيام تأخذك في رحلة لا تُنسى:\n✅ جولة خاصة مع مرشد في الأهرامات وأبو الهول\n✅ زيارة VIP للمتحف المصري — مقتنيات توت عنخ آمون\n✅ رحلة فلوكة على النيل عند الغروب\n✅ إقامة 4 نجوم طوال الرحلة\n\n🎁 عرض مبكر: احجز قبل 31 ديسمبر ووفّر 15%\n💰 تبدأ من 920$ للشخص\n\nراسلنا أو تواصل واتساب للحجز!"
+  },
+  whatsapp:{
+    en:"🌟 *SPECIAL OFFER — Pyramids 7-Day Package*\n\nHey [Name]! 👋\n\nJust wanted to share an amazing deal we have available right now:\n\n🏛️ *7 Days in Egypt — All Inclusive*\n✓ Pyramids + Sphinx tour\n✓ Cairo Museum\n✓ Nile Felucca ride\n✓ 4-star hotels + transfers\n\n💰 *From $920/person only!*\n🎁 *Book this week = FREE souvenir package*\n\nInterested? Reply YES and I'll send full details! 😊",
+    ar:"🌟 *عرض خاص — باقة الأهرامات 7 أيام*\n\nمرحباً [الاسم]! 👋\n\nأردت أن أشاركك عرضاً رائعاً متاح الآن:\n\n🏛️ *7 أيام في مصر — شامل كل شيء*\n✓ جولة الأهرامات وأبو الهول\n✓ المتحف المصري\n✓ رحلة فلوكة على النيل\n✓ فنادق 4 نجوم + مواصلات\n\n💰 *تبدأ من 920$ للشخص فقط!*\n🎁 *احجز هذا الأسبوع = هدايا تذكارية مجانية*\n\nمهتم؟ رد بـ نعم وسأرسل التفاصيل الكاملة! 😊"
+  },
+  facebook:{
+    en:"🏛️ THE WONDER OF THE ANCIENT WORLD IS CALLING!\n\nYour 7-day Egypt adventure includes:\n\n📍 Giza Pyramids & Great Sphinx\n📍 Valley of the Kings, Luxor\n📍 Egyptian Museum (3,500 artifacts)\n📍 Nile felucca at sunset\n📍 4-star hotels & private transfers\n\nAll-inclusive from $920/person | Groups welcome!\n\n👇 Comment 'EGYPT' below and we'll send you the full itinerary and booking form!\n\n#SherifTravel #EgyptTours #PyramidsTour",
+    ar:"🏛️ عجائب الدنيا القديمة تناديك!\n\nباقتك لمدة 7 أيام في مصر تشمل:\n\n📍 أهرامات الجيزة وأبو الهول\n📍 وادي الملوك، الأقصر\n📍 المتحف المصري (3,500 قطعة)\n📍 فلوكة على النيل عند الغروب\n📍 فنادق 4 نجوم ومواصلات خاصة\n\nشامل من 920$ للشخص | مرحب بالمجموعات!\n\n👇 اكتب 'مصر' في التعليقات وسنرسل لك البرنامج الكامل!"
+  },
+  seo:{
+    en:"# The Ultimate Guide to Egypt's Pyramids of Giza: What to See, When to Go, and How to Book\n\nEvery year, millions of travelers dream of standing in the shadow of the Great Pyramid of Giza — one of the Seven Wonders of the Ancient World and the only one still standing. If Egypt is on your bucket list, this comprehensive guide will tell you everything you need to know to plan the perfect trip.\n\n## Why Visit the Pyramids of Giza?\n\nBuilt over 4,500 years ago during Egypt's Old Kingdom period, the Pyramids of Giza represent one of humanity's greatest architectural achievements...\n\n[Full 1,200-word SEO article continues with: best time to visit, what to see, tips for tourists, how to book a package, FAQ section]",
+    ar:"# الدليل الشامل لأهرامات الجيزة: ما تراه، متى تذهب، وكيف تحجز\n\nكل عام، يحلم الملايين من المسافرين بالوقوف في ظل الهرم الأكبر في الجيزة — أحد عجائب الدنيا السبع القديمة والوحيد الذي لا يزال قائماً حتى اليوم...\n\n## لماذا تزور أهرامات الجيزة؟\n\nبُنيت منذ أكثر من 4,500 عام خلال عصر الدولة القديمة في مصر، وتمثل الأهرامات أحد أعظم الإنجازات المعمارية في تاريخ البشرية..."
+  },
+  reel:{
+    en:"🎬 REEL SCRIPT (60 seconds)\n\n[0-3s] HOOK: Close-up of sunrise behind pyramid peak\n📝 TEXT OVERLAY: \"Most people don't know this about Egypt...\"\n\n[3-10s] Pan out to reveal full Giza complex\n📝 TEXT: \"This is one of the 7 Wonders of the World\"\n🎵 Music: Epic, cinematic\n\n[10-25s] Quick cuts: Sphinx close-up / Cairo streets / Museum / Nile at sunset\n📝 TEXT: \"Our 7-day package covers it all\"\n\n[25-45s] Testimonial clip style (selfie mode)\n📝 TEXT: \"$920 all-inclusive. Breakfast, tours, transfers included.\"\n\n[45-55s] Booking CTA\n📝 TEXT: \"Link in bio | WhatsApp us now\"\n\n[55-60s] Logo + agency name\n📝 TEXT: \"Sherif Travel — Est. 2010\"",
+    ar:"🎬 سكريبت ريل (60 ثانية)\n\n[0-3s] خطاف: لقطة مقربة لشروق الشمس خلف قمة الهرم\n📝 نص: \"معظم الناس لا يعرفون هذا عن مصر...\"\n\n[3-10s] تراجع للكشف عن منطقة الجيزة بالكامل\n📝 نص: \"هذا أحد عجائب الدنيا السبع\"\n\n[10-25s] لقطات سريعة: أبو الهول / شوارع القاهرة / المتحف / النيل\n📝 نص: \"باقتنا 7 أيام تشمل كل شيء\"\n\n[25-45s] أسلوب مقاطع الشهادات\n📝 نص: \"920$ شامل كل شيء. إفطار وجولات ومواصلات.\"\n\n[45-60s]: \"رابط في البيو | تواصل واتساب\"\nشعار + اسم الوكالة"
+  }
+};
+
+let isGenerating=false;
+function generateContent(){
+  if(isGenerating)return;
+  isGenerating=true;
+  const pkg=document.getElementById('aiPackage').value||'Your Package';
+  const lang=document.getElementById('aiLang').value;
+  const out=document.getElementById('aiOutput');
+  const sub=document.getElementById('ai-preview-sub');
+  out.textContent='';
+  out.style.opacity='0.6';
+
+  const typeLabels={instagram:'Instagram Post',email:'Email Campaign',whatsapp:'WhatsApp Blast',facebook:'Facebook Post',seo:'SEO Article',reel:'Reel Script'};
+  const langLabel=lang==='both'?'Arabic + English':lang==='ar'?'Arabic':'English';
+  sub.textContent=`${typeLabels[currentType]} — ${langLabel}`;
+
+  const template=contentTemplates[currentType]||contentTemplates.instagram;
+  let finalContent='';
+  if(lang==='ar')finalContent=template.ar||template.en;
+  else if(lang==='en')finalContent=template.en;
+  else finalContent=template.en+'\n\n---\n\n'+template.ar;
+
+  // Simulate typing
+  let i=0;
+  out.style.opacity='1';
+  const interval=setInterval(()=>{
+    out.textContent=finalContent.slice(0,i);
+    i+=4;
+    if(i>=finalContent.length){
+      out.textContent=finalContent;
+      clearInterval(interval);
+      isGenerating=false;
+      // Update scores
+      document.getElementById('score-readability').textContent=Math.floor(Math.random()*15)+80;
+      document.getElementById('score-engagement').textContent=Math.floor(Math.random()*12)+84;
+      document.getElementById('score-seo').textContent=Math.floor(Math.random()*20)+72;
+    }
+  },18);
+}
+
+function copyContent(){
+  const txt=document.getElementById('aiOutput').textContent;
+  navigator.clipboard.writeText(txt).catch(()=>{});
+}
+
+// ─── CHARTS ───
+function initCharts(){
+  Chart.defaults.font.family="'Montserrat',sans-serif";
+  Chart.defaults.font.size=11;
+
+  // Revenue chart
+  const revenueCtx=document.getElementById('revenueChart');
+  if(revenueCtx){
+    new Chart(revenueCtx,{
+      type:'bar',
+      data:{
+        labels:['Jul','Aug','Sep','Oct','Nov','Dec'],
+        datasets:[{label:'Revenue ($)',data:[3200,4100,3800,5600,6700,8240],backgroundColor:'rgba(26,58,108,0.8)',borderRadius:6,hoverBackgroundColor:'rgba(245,166,35,0.9)'}]
+      },
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},border:{display:false}},y:{grid:{color:'rgba(0,0,0,0.04)'},border:{display:false},ticks:{callback:v=>'$'+v.toLocaleString()}}}}
+    });
+  }
+
+  // Channel chart
+  const channelCtx=document.getElementById('channelChart');
+  if(channelCtx){
+    new Chart(channelCtx,{
+      type:'doughnut',
+      data:{
+        labels:['Instagram','Facebook','WhatsApp','Google','Organic'],
+        datasets:[{data:[38,24,18,12,8],backgroundColor:['rgba(26,58,108,0.85)','rgba(245,166,35,0.85)','rgba(34,197,94,0.7)','rgba(59,130,246,0.7)','rgba(168,85,247,0.7)'],borderWidth:0}]
+      },
+      options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'right',labels:{usePointStyle:true,pointStyle:'circle',padding:12,font:{size:11}}}}}
+    });
+  }
+
+  // Conversion chart
+  const convCtx=document.getElementById('conversionChart');
+  if(convCtx){
+    new Chart(convCtx,{
+      type:'line',
+      data:{
+        labels:['W1','W2','W3','W4','W5','W6','W7','W8'],
+        datasets:[{label:'Bookings',data:[4,6,5,9,7,11,8,14],borderColor:'rgba(245,166,35,1)',backgroundColor:'rgba(245,166,35,0.1)',fill:true,tension:0.4,pointBackgroundColor:'rgba(245,166,35,1)',pointRadius:4}]
+      },
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},border:{display:false}},y:{grid:{color:'rgba(0,0,0,0.04)'},border:{display:false}}}}
+    });
+  }
+}
+
+// ─── SETTINGS SAVE ───
+function saveSettings(){
+  const btn=event.target;
+  btn.textContent='✓ Saved!';
+  btn.style.background='#22c55e';
+  setTimeout(()=>{btn.textContent='Save Changes';btn.style.background='';},2000);
+}
+
+// ─── BILINGUAL ───
+const DBT={
+  en:{
+    sb_main:'MAIN',sb_overview:'Overview',sb_ai:'AI Content Studio',sb_crm:'CRM & Clients',
+    sb_bookings:'Bookings',sb_analytics:'Analytics',sb_calendar:'Content Calendar',
+    sb_platform:'PLATFORM',sb_marketplace:'Marketplace',sb_reports:'Reports',
+    sb_account:'ACCOUNT',sb_settings:'Settings',sb_growth:'Growth Plan',
+    ov_title:'Good morning, Sherif 👋',ov_sub:"Here's what's happening with your agency today",
+    ov_gen_btn:'Generate Content',
+    kpi_revenue:'Monthly Revenue',kpi_bookings:'Active Bookings',kpi_leads:'New Leads',kpi_posts:'Posts Published',
+    chart_revenue:'Revenue Trend',activity_title:'Recent Activity',pipeline_title:'Booking Pipeline',
+    stage_inquiry:'Inquiry',stage_quoted:'Quoted',stage_neg:'Negotiating',stage_conf:'Confirmed',stage_paid:'Paid',
+    ai_title:'AI Content Studio',ai_sub:'Generate tourism marketing content in seconds — Arabic & English',
+    ai_gen_btn:'Generate',ai_config:'Content Configuration',ai_package:'Package / Destination',
+    ai_lang_lbl:'Content Language',ai_tone:'Tone',ai_type:'Content Type',
+    ai_preview:'Generated Content',ai_regen:'Regenerate',ai_score:'AI Quality Score',
+    crm_title:'CRM & Clients',crm_sub:'Manage all leads, clients, and booking conversations',
+    crm_all:'All Leads (47)',crm_new:'New (12)',crm_hot:'Hot (8)',crm_conv:'Converted (18)',
+    th_client:'Client',th_package:'Package',th_value:'Value',th_stage:'Stage',th_date:'Inquiry Date',th_followup:'Follow-up',th_actions:'Actions',
+    book_title:'Booking Manager',book_sub:'All confirmed bookings and travel schedules',
+    an_title:'Analytics Dashboard',an_sub:'Real-time performance across all marketing channels',
+    cal_title:'Content Calendar',cal_sub:'Plan and schedule your AI-generated content',
+    set_title:'Settings',set_sub:'Manage your agency profile and platform preferences',
+    search_ph:'Search...',
+  },
+  ar:{
+    sb_main:'الرئيسية',sb_overview:'نظرة عامة',sb_ai:'استوديو المحتوى AI',sb_crm:'CRM والعملاء',
+    sb_bookings:'الحجوزات',sb_analytics:'التحليلات',sb_calendar:'تقويم المحتوى',
+    sb_platform:'المنصة',sb_marketplace:'السوق الإلكتروني',sb_reports:'التقارير',
+    sb_account:'الحساب',sb_settings:'الإعدادات',sb_growth:'خطة النمو',
+    ov_title:'صباح الخير، شريف 👋',ov_sub:'إليك ما يحدث في وكالتك اليوم',
+    ov_gen_btn:'توليد محتوى',
+    kpi_revenue:'الإيرادات الشهرية',kpi_bookings:'الحجوزات النشطة',kpi_leads:'عملاء محتملون جدد',kpi_posts:'منشورات نُشرت',
+    chart_revenue:'اتجاه الإيرادات',activity_title:'النشاط الأخير',pipeline_title:'خط أنابيب الحجوزات',
+    stage_inquiry:'استفسار',stage_quoted:'تسعير',stage_neg:'تفاوض',stage_conf:'تأكيد',stage_paid:'دفع',
+    ai_title:'استوديو المحتوى AI',ai_sub:'أنشئ محتوى التسويق السياحي في ثوانٍ — عربي وإنجليزي',
+    ai_gen_btn:'توليد',ai_config:'إعداد المحتوى',ai_package:'الباقة / الوجهة',
+    ai_lang_lbl:'لغة المحتوى',ai_tone:'الأسلوب',ai_type:'نوع المحتوى',
+    ai_preview:'المحتوى المُولَّد',ai_regen:'إعادة توليد',ai_score:'تقييم جودة AI',
+    crm_title:'CRM والعملاء',crm_sub:'أدر جميع العملاء المحتملين والعملاء ومحادثات الحجوزات',
+    crm_all:'كل العملاء (47)',crm_new:'جدد (12)',crm_hot:'ساخنون (8)',crm_conv:'محوّلون (18)',
+    th_client:'العميل',th_package:'الباقة',th_value:'القيمة',th_stage:'المرحلة',th_date:'تاريخ الاستفسار',th_followup:'المتابعة',th_actions:'إجراءات',
+    book_title:'مدير الحجوزات',book_sub:'جميع الحجوزات المؤكدة وجداول السفر',
+    an_title:'لوحة التحليلات',an_sub:'الأداء الفوري عبر جميع قنوات التسويق',
+    cal_title:'تقويم المحتوى',cal_sub:'خطط وجدوِل محتواك المُولَّد بالذكاء الاصطناعي',
+    set_title:'الإعدادات',set_sub:'أدر ملف وكالتك وتفضيلات المنصة',
+    search_ph:'بحث...',
+  }
+};
+
+let currentDbLang=localStorage.getItem('trevo-lang')||'en';
+function applyDbLang(lang){
+  currentDbLang=lang;
+  localStorage.setItem('trevo-lang',lang);
+  const isAr=lang==='ar';
+  document.documentElement.setAttribute('lang',lang);
+  document.documentElement.setAttribute('dir',isAr?'rtl':'ltr');
+  document.body.style.fontFamily=isAr?"'Cairo',sans-serif":"'Montserrat','Helvetica Neue',sans-serif";
+  document.getElementById('dbLangBtn').textContent=isAr?'English':'عربي';
+  document.querySelectorAll('[data-t]').forEach(el=>{
+    const key=el.dataset.t;
+    if(DBT[lang][key]!==undefined)el.textContent=DBT[lang][key];
+  });
+  document.querySelectorAll('[data-t-ph]').forEach(el=>{
+    const key=el.dataset.tPh;
+    if(DBT[lang][key]!==undefined)el.placeholder=DBT[lang][key];
+  });
+}
+function toggleDbLang(){applyDbLang(currentDbLang==='en'?'ar':'en');}
+function setLoginLang(lang){
+  currentDbLang=lang;
+  const isAr=lang==='ar';
+  document.getElementById('login-title').textContent=isAr?'أهلاً بعودتك':'Welcome back';
+  document.getElementById('login-sub').textContent=isAr?'سجّل دخولك إلى لوحة تحكم ترفو':'Sign in to your Trevo dashboard';
+  document.getElementById('lbl-email').textContent=isAr?'البريد الإلكتروني':'Email address';
+  document.getElementById('lbl-pass').textContent=isAr?'كلمة المرور':'Password';
+  document.getElementById('login-hint').textContent=isAr?'تجريبي: استخدم أي بريد إلكتروني + كلمة مرور للدخول':'Demo: use any email + password to enter the platform';
+  document.getElementById('loginBtn').textContent=isAr?'تسجيل الدخول ←':'Sign In →';
+}
+if(currentDbLang==='ar')applyDbLang('ar');
+</script>
+</body>
+</html>

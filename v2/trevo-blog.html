@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trevo Blog — Tourism AI Insights & MENA Travel Trends</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1A3A6C;--navy-deep:#122B55;--navy-mid:#1E4080;
+  --orange:#F5A623;--orange-dark:#D4891A;--orange-pale:#FFF0D0;
+  --white:#FFFFFF;--cream:#FAF8F2;--gray-light:#F0EDE8;--gray-mid:#9E9B96;
+  --body-dark:#2D2D2D;
+  --font:'Montserrat','Helvetica Neue',Arial,sans-serif;
+  --r-sm:8px;--r-md:16px;--r-lg:24px;--r-full:999px;
+  --shadow-sm:0 2px 12px rgba(0,0,0,0.08);--shadow-md:0 8px 32px rgba(26,58,108,0.12);
+  --transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--white);color:var(--body-dark);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+h1{font-size:clamp(2rem,4vw,3rem);font-weight:900;line-height:1.08;letter-spacing:-0.02em}
+h2{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800}
+h3{font-size:1.15rem;font-weight:700;line-height:1.3}
+h4{font-size:0.92rem;font-weight:700}
+p{line-height:1.7}
+.eyebrow{font-size:0.7rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);margin-bottom:0.5rem;display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 6%}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0.65rem 1.5rem;border-radius:var(--r-full);font-weight:700;font-size:0.85rem;transition:var(--transition)}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px)}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-mid);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+.btn-outline:hover{background:var(--navy);color:var(--white)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.tag{display:inline-block;padding:0.2rem 0.7rem;border-radius:var(--r-full);font-size:0.7rem;font-weight:600;letter-spacing:0.04em}
+.tag-orange{background:rgba(245,166,35,0.15);color:var(--orange-dark);border:1px solid rgba(245,166,35,0.3)}
+.tag-navy{background:rgba(26,58,108,0.1);color:var(--navy);border:1px solid rgba(26,58,108,0.15)}
+.tag-green{background:rgba(34,197,94,0.1);color:#15803d;border:1px solid rgba(34,197,94,0.25)}
+.tag-purple{background:rgba(168,85,247,0.1);color:#7c3aed;border:1px solid rgba(168,85,247,0.25)}
+
+/* ─── NAV ─── */
+.topnav{background:var(--navy-deep);padding:0.85rem 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.15)}
+.topnav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav-logo{display:flex;align-items:center;gap:8px;font-size:1.3rem;font-weight:800;color:var(--white)}
+.logo-icon{width:30px;height:30px;border-radius:8px;background:var(--orange);display:flex;align-items:center;justify-content:center}
+.nav-links-sm{display:flex;gap:1rem}
+.nav-links-sm a{color:rgba(255,255,255,0.65);font-size:0.82rem;font-weight:500;transition:var(--transition)}
+.nav-links-sm a:hover{color:var(--white)}
+
+/* ─── HERO ─── */
+.blog-hero{background:var(--navy-deep);padding:4rem 0 5rem;position:relative;overflow:hidden}
+.blog-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:70px;background:var(--cream);clip-path:polygon(0 50%,100% 0,100% 100%,0 100%)}
+.blog-hero-inner{max-width:700px}
+.blog-hero h1{color:var(--white);margin-bottom:1rem}
+.blog-hero h1 span{color:var(--orange)}
+.blog-hero p{color:rgba(255,255,255,0.65);font-size:1rem;margin-bottom:2rem}
+.search-bar{display:flex;gap:0;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:var(--r-full);overflow:hidden;max-width:480px}
+.search-bar input{flex:1;background:transparent;border:none;outline:none;padding:0.75rem 1.25rem;color:var(--white);font-size:0.88rem;font-family:var(--font)}
+.search-bar input::placeholder{color:rgba(255,255,255,0.4)}
+.search-bar button{background:var(--orange);border:none;padding:0.75rem 1.25rem;color:var(--white);cursor:pointer;font-size:0.88rem;font-weight:600;font-family:var(--font)}
+
+/* ─── FILTERS ─── */
+.filters-bar{background:var(--cream);padding:1.25rem 0;border-bottom:1px solid var(--gray-light);position:sticky;top:57px;z-index:90}
+.filters-inner{display:flex;align-items:center;gap:0.5rem;overflow-x:auto;scrollbar-width:none}
+.filters-inner::-webkit-scrollbar{display:none}
+.filter-btn{white-space:nowrap;padding:0.4rem 1rem;border-radius:var(--r-full);font-size:0.78rem;font-weight:600;cursor:pointer;transition:var(--transition);border:1.5px solid var(--gray-light);background:var(--white);color:var(--gray-mid)}
+.filter-btn.active,.filter-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.filter-btn.orange.active,.filter-btn.orange:hover{background:var(--orange);border-color:var(--orange);color:var(--white)}
+
+/* ─── MAIN GRID ─── */
+.blog-main{background:var(--cream);padding:3.5rem 0}
+.blog-layout{display:grid;grid-template-columns:1fr 320px;gap:2.5rem;align-items:start}
+
+/* ─── FEATURED ─── */
+.featured-post{background:var(--white);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:1.5rem;display:grid;grid-template-columns:1fr 1fr}
+.featured-img{background:var(--navy);min-height:280px;position:relative;display:flex;align-items:flex-end;padding:1.5rem}
+.featured-img-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.08;font-size:8rem}
+.featured-tag{background:var(--orange);color:var(--white);padding:0.2rem 0.8rem;border-radius:var(--r-full);font-size:0.7rem;font-weight:700;position:relative;z-index:1}
+.featured-content{padding:2rem}
+.featured-content .eyebrow{margin-bottom:0.35rem}
+.featured-content h2{font-size:1.35rem;color:var(--navy);margin-bottom:0.75rem;line-height:1.25}
+.featured-content p{font-size:0.85rem;color:var(--gray-mid);margin-bottom:1.25rem;line-height:1.6}
+.post-meta{display:flex;align-items:center;gap:0.75rem;font-size:0.75rem;color:var(--gray-mid);margin-bottom:1rem}
+.post-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--gray-mid)}
+
+/* ─── POST CARDS ─── */
+.posts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem}
+.post-card{background:var(--white);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:var(--transition);cursor:pointer}
+.post-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+.post-card-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative}
+.post-card-img .img-tag{position:absolute;top:0.75rem;left:0.75rem}
+.post-card-body{padding:1.25rem}
+.post-card-body h3{font-size:0.95rem;color:var(--navy);margin:0.5rem 0 0.5rem;line-height:1.35}
+.post-card-body p{font-size:0.78rem;color:var(--gray-mid);line-height:1.5;margin-bottom:0.75rem}
+.post-card-footer{display:flex;align-items:center;justify-content:space-between;font-size:0.72rem;color:var(--gray-mid)}
+
+/* ─── SIDEBAR ─── */
+.sidebar{display:flex;flex-direction:column;gap:1.5rem}
+.sidebar-card{background:var(--white);border-radius:var(--r-lg);padding:1.5rem;box-shadow:var(--shadow-sm)}
+.sidebar-card h4{font-size:0.85rem;color:var(--navy);margin-bottom:1rem;font-weight:700;letter-spacing:0.02em}
+.sidebar-links{display:flex;flex-direction:column;gap:0}
+.sidebar-link{display:flex;align-items:flex-start;gap:0.75rem;padding:0.7rem 0;border-bottom:1px solid var(--gray-light);cursor:pointer;transition:var(--transition)}
+.sidebar-link:last-child{border-bottom:none}
+.sidebar-link:hover h5{color:var(--orange)}
+.sidebar-link h5{font-size:0.8rem;color:var(--navy);font-weight:600;line-height:1.3;transition:var(--transition)}
+.sidebar-link .sl-meta{font-size:0.68rem;color:var(--gray-mid);margin-top:0.2rem}
+.sidebar-link .sl-num{font-size:0.72rem;font-weight:700;color:var(--orange);flex-shrink:0;margin-top:2px}
+.newsletter-card{background:var(--navy);border-radius:var(--r-lg);padding:1.5rem}
+.newsletter-card h4{font-size:0.9rem;color:var(--white);margin-bottom:0.4rem}
+.newsletter-card p{font-size:0.78rem;color:rgba(255,255,255,0.6);margin-bottom:1rem;line-height:1.5}
+.newsletter-input{width:100%;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:var(--r-md);padding:0.65rem 1rem;color:var(--white);font-size:0.82rem;outline:none;font-family:var(--font);margin-bottom:0.5rem}
+.newsletter-input::placeholder{color:rgba(255,255,255,0.4)}
+.newsletter-submit{width:100%;background:var(--orange);color:var(--white);border:none;border-radius:var(--r-full);padding:0.65rem;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:var(--font);transition:var(--transition)}
+.newsletter-submit:hover{background:var(--orange-dark)}
+.stat-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.stat-mini{background:var(--cream);border-radius:var(--r-md);padding:0.75rem;text-align:center}
+.stat-mini .sv{font-size:1.2rem;font-weight:800;color:var(--navy)}
+.stat-mini .sl{font-size:0.68rem;color:var(--gray-mid);margin-top:0.15rem}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:0.4rem}
+.tag-cloud-item{padding:0.25rem 0.7rem;border-radius:var(--r-full);font-size:0.72rem;background:var(--cream);color:var(--navy);border:1px solid var(--gray-light);cursor:pointer;transition:var(--transition)}
+.tag-cloud-item:hover{background:var(--navy);color:var(--white);border-color:var(--navy)}
+
+/* ─── RESOURCES ─── */
+.resources-section{background:var(--white);padding:4rem 0}
+.resources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.resource-card{border-radius:var(--r-lg);padding:1.75rem;border:1px solid var(--gray-light);transition:var(--transition);position:relative;overflow:hidden}
+.resource-card:hover{box-shadow:var(--shadow-md);transform:translateY(-4px);border-color:var(--orange)}
+.resource-icon{font-size:2rem;margin-bottom:1rem}
+.resource-card h4{font-size:0.95rem;color:var(--navy);margin-bottom:0.5rem}
+.resource-card p{font-size:0.8rem;color:var(--gray-mid);line-height:1.5;margin-bottom:1.25rem}
+.resource-card .rc-tag{position:absolute;top:1rem;right:1rem}
+
+/* ─── CASE STUDY STRIP ─── */
+.case-strip{background:var(--navy-deep);padding:4rem 0}
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.case-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-lg);padding:1.5rem;transition:var(--transition)}
+.case-card:hover{background:rgba(255,255,255,0.11);border-color:var(--orange)}
+.case-result{font-size:1.8rem;font-weight:900;color:var(--orange);margin-bottom:0.3rem}
+.case-card h4{font-size:0.88rem;color:var(--white);margin-bottom:0.5rem}
+.case-card p{font-size:0.78rem;color:rgba(255,255,255,0.55);line-height:1.5}
+.case-client{margin-top:1rem;font-size:0.72rem;color:rgba(255,255,255,0.4);font-style:italic}
+
+/* ─── FOOTER ─── */
+.mini-footer{background:var(--navy-deep);padding:2rem 0;border-top:1px solid rgba(255,255,255,0.08)}
+.mini-footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.mini-footer p{font-size:0.8rem;color:rgba(255,255,255,0.4)}
+.mini-footer a{color:rgba(255,255,255,0.55);font-size:0.8rem;margin-left:1.25rem;transition:var(--transition)}
+.mini-footer a:hover{color:var(--orange)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .blog-layout{grid-template-columns:1fr}
+  .sidebar{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .featured-post{grid-template-columns:1fr}
+  .featured-img{min-height:180px}
+  .resources-grid{grid-template-columns:1fr 1fr}
+  .case-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .posts-grid{grid-template-columns:1fr}
+  .resources-grid{grid-template-columns:1fr}
+  .case-grid{grid-template-columns:1fr}
+  .sidebar{grid-template-columns:1fr}
+  .nav-links-sm{display:none}
+}
+
+[dir="rtl"] .topnav-inner{flex-direction:row-reverse}
+[dir="rtl"] .blog-hero-inner{direction:rtl;text-align:right}
+[dir="rtl"] .filters-inner{flex-direction:row-reverse}
+[dir="rtl"] .blog-layout{direction:rtl}
+[dir="rtl"] .sidebar{direction:rtl}
+[dir="rtl"] .mini-footer-inner{flex-direction:row-reverse}
+[dir="rtl"] .post-card-body,[dir="rtl"] .resource-card,[dir="rtl"] .case-card{text-align:right}
+[dir="rtl"] .post-card-footer{flex-direction:row-reverse}
+[dir="rtl"] .sidebar-link{flex-direction:row-reverse}
+[dir="rtl"] .case-strip{direction:rtl}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <div class="container">
+    <div class="topnav-inner">
+      <a href="trevo-website.html" class="nav-logo">
+        <div class="logo-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" width="16" height="16"><path d="M5 4v16M5 4h11M5 12h8M16 8h4M17 12h3"/></svg></div>
+        Trevo
+      </a>
+      <div class="nav-links-sm">
+        <a href="trevo-website.html">Home</a>
+        <a href="trevo-website.html#features">Features</a>
+        <a href="trevo-website.html#pricing">Pricing</a>
+        <a href="trevo-investor.html">Investors</a>
+      </div>
+      <button onclick="toggleLangBlog()" id="blogLangBtn" style="background:rgba(255,255,255,0.15);color:white;border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:0.3rem 0.9rem;font-size:0.8rem;font-weight:600;cursor:pointer">عربي</button><a href="trevo-arabic.html" style="color:rgba(255,255,255,0.8);font-size:0.82rem;font-weight:700;margin-left:0.75rem">عربي</a><a href="trevo-website.html#contact" class="btn btn-primary" style="padding:0.4rem 1rem;font-size:0.78rem" data-blog-t="demo_cta">Book Demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="blog-hero">
+  <div class="container">
+    <div class="blog-hero-inner">
+      <span class="eyebrow">Insights & Resources</span>
+      <h1>Tourism <span>AI</span> & MENA Travel Intelligence</h1>
+      <p>Insights, guides, and market intelligence for MENA travel agencies, hotels, and tourism operators navigating the AI era.</p>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search articles... e.g. AI marketing, Umrah, KSA tourism" oninput="filterPosts()">
+        <button>Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <div class="container">
+    <div class="filters-inner">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All Topics</button>
+      <button class="filter-btn" onclick="setFilter('ai',this)">AI & Technology</button>
+      <button class="filter-btn" onclick="setFilter('marketing',this)">Digital Marketing</button>
+      <button class="filter-btn" onclick="setFilter('mena',this)">MENA Market</button>
+      <button class="filter-btn" onclick="setFilter('egypt',this)">Egypt Tourism</button>
+      <button class="filter-btn" onclick="setFilter('ksa',this)">KSA & Vision 2030</button>
+      <button class="filter-btn" onclick="setFilter('strategy',this)">Business Strategy</button>
+      <button class="filter-btn orange" onclick="setFilter('guide',this)">Guides & Templates</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN BLOG -->
+<div class="blog-main">
+  <div class="container">
+    <div class="blog-layout">
+      <!-- LEFT: POSTS -->
+      <div>
+        <!-- FEATURED -->
+        <div class="featured-post reveal" data-category="ai mena">
+          <div class="featured-img" style="background:linear-gradient(135deg,var(--navy-deep),var(--navy-mid))">
+            <div class="featured-img-bg">🤖</div>
+            <span class="featured-tag">Featured</span>
+          </div>
+          <div class="featured-content">
+            <span class="eyebrow">AI & Technology</span>
+            <h2>How AI is Transforming Tourism Marketing in MENA — 2025 State of the Market</h2>
+            <div class="post-meta">
+              <span>Trevo Research Team</span>
+              <span class="dot"></span>
+              <span>November 2024</span>
+              <span class="dot"></span>
+              <span>12 min read</span>
+            </div>
+            <p>A deep dive into how artificial intelligence is reshaping how travel agencies, hotels, and DMCs in Egypt, Saudi Arabia, and the UAE market their services — with data from 200+ MENA tourism operators.</p>
+            <div style="display:flex;gap:0.4rem;margin-bottom:1.25rem;flex-wrap:wrap">
+              <span class="tag tag-orange">AI Marketing</span>
+              <span class="tag tag-navy">MENA</span>
+              <span class="tag tag-green">Research</span>
+            </div>
+            <a href="#" class="btn btn-navy" style="font-size:0.8rem">Read Full Report →</a>
+          </div>
+        </div>
+
+        <!-- POSTS GRID -->
+        <div class="posts-grid" id="postsGrid">
+
+          <div class="post-card reveal" data-category="marketing egypt" style="transition-delay:0.05s">
+            <div class="post-card-img" style="background:rgba(245,166,35,0.12)">
+              <span>📱</span>
+              <div class="img-tag"><span class="tag tag-orange">Marketing</span></div>
+            </div>
+            <div class="post-card-body">
+              <h3>The Complete Social Media Playbook for Egyptian Travel Agencies</h3>
+              <p>Step-by-step guide to building a content calendar, growing Instagram, and converting followers to bookings — in Arabic and English.</p>
+              <div class="post-card-footer">
+                <div style="display:flex;gap:0.5rem"><span class="tag tag-navy">Egypt</span><span class="tag tag-orange">Guide</span></div>
+                <span>8 min</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-card reveal" data-category="ksa strategy" style="transition-delay:0.1s">
+            <div class="post-card-img" style="background:rgba(26,58,108,0.08)">
+              <span>🕌</span>
+              <div class="img-tag"><span class="tag tag-navy">KSA</span></div>
+            </div>
+            <div class="post-card-body">
+              <h3>Saudi Vision 2030 & Tourism: What Every MENA Agency Needs to Know</h3>
+              <p>Saudi Arabia's $70B tourism target by 2030, AlUla, NEOM, and what it means for travel agencies targeting the Saudi outbound market.</p>
+              <div class="post-card-footer">
+                <div style="display:flex;gap:0.5rem"><span class="tag tag-navy">KSA</span><span class="tag tag-green">Strategy</span></div>
+                <span>10 min</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-card reveal" data-category="ai guide" style="transition-delay:0.15s">
+            <div class="post-card-img" style="background:rgba(168,85,247,0.1)">
+              <span>✍️</span>
+              <div class="img-tag"><span class="tag tag-purple">Template</span></div>
+            </div>
+            <div class="post-card-body">
+              <h3>7 AI Prompts That Generate Tourism Content in Minutes [Free Templates]</h3>
+              <p>Copy-paste AI prompts for travel packages, hotel marketing, Umrah packages, beach resorts, and cultural tours — in Arabic and English.</p>
+              <div class="post-card-footer">
+                <div style="display:flex;gap:0.5rem"><span class="tag tag-orange">AI</span><span class="tag tag-green">Free</span></div>
+                <span>6 min</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-card reveal" data-category="egypt mena" style="transition-delay:0.2s">
+            <div class="post-card-img" style="background:rgba(245,166,35,0.08)">
+              <span>🏛️</span>
+              <div class="img-tag"><span class="tag tag-orange">Egypt</span></div>
+            </div>
+            <div class="post-card-body">
+              <h3>Egypt's 30 Million Tourist Target: Opportunities for Local Agencies</h3>
+              <p>Egypt is aiming for 30M tourists by 2028. Here's how small and mid-size travel agencies can capture a piece of the incoming growth.</p>
+              <div class="post-card-footer">
+                <div style="display:flex;gap:0.5rem"><span class="tag tag-orange">Egypt</span><span class="tag tag-navy">Market</span></div>
+                <span>9 min</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-card reveal" data-category="strategy marketing" style="transition-delay:0.25s">
+            <div class="post-card-img" style="background:rgba(34,197,94,0.08)">
+              <span>💰</span>
+              <div class="img-tag"><span class="tag tag-green">Revenue</span></div>
+            </div>
+            <div class="post-card-body">
+              <h3>How to Price Your Tourism Packages for Maximum Conversions</h3>
+              <p>Pricing psychology, anchoring, bundle strategies, and BNPL for travel — practical revenue tactics for MENA tour operators and agencies.</p>
+              <div class="post-card-footer">
+                <div style="display:flex;gap:0.5rem"><span class="tag tag-green">Revenue</span><span class="tag tag-navy">Strategy</span></div>
+                <span>7 min</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-card reveal" data-category="ai technology" style="transition-delay:0.3s">
+            <div class="post-card-img" style="background:rgba(26,58,108,0.08)">
+              <span>🗺️</span>
+              <div class="img-tag"><span class="tag tag-navy">AR/VR</span></div>
+            </div>
+            <div class="post-card-body">
+              <h3>AR & VR in Tourism: How Immersive Tech Increases Booking Rates by 40%</h3>
+              <p>Virtual destination previews are reducing booking hesitation and increasing conversion rates. Here's the data and how MENA operators can use it.</p>
+              <div class="post-card-footer">
+                <div style="display:flex;gap:0.5rem"><span class="tag tag-navy">Tech</span><span class="tag tag-orange">Trends</span></div>
+                <span>11 min</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-card reveal" data-category="mena ksa guide" style="transition-delay:0.35s">
+            <div class="post-card-img" style="background:rgba(245,166,35,0.08)">
+              <span>🕋</span>
+              <div class="img-tag"><span class="tag tag-orange">Umrah</span></div>
+            </div>
+            <div class="post-card-body">
+              <h3>Marketing Hajj & Umrah Packages in 2025: Digital Strategies That Work</h3>
+              <p>Religious tourism is a $15B+ segment. This guide covers digital marketing, WhatsApp automation, and Arabic content strategies for Hajj/Umrah operators.</p>
+              <div class="post-card-footer">
+                <div style="display:flex;gap:0.5rem"><span class="tag tag-orange">Umrah</span><span class="tag tag-green">Guide</span></div>
+                <span>14 min</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="post-card reveal" data-category="marketing strategy" style="transition-delay:0.4s">
+            <div class="post-card-img" style="background:rgba(168,85,247,0.08)">
+              <span>📊</span>
+              <div class="img-tag"><span class="tag tag-purple">Analytics</span></div>
+            </div>
+            <div class="post-card-body">
+              <h3>The 5 KPIs Every Travel Agency Must Track (And How to Improve Them)</h3>
+              <p>Booking conversion rate, CAC, LTV, NPS, and repeat booking rate — explained for tourism SMEs with practical benchmarks for MENA operators.</p>
+              <div class="post-card-footer">
+                <div style="display:flex;gap:0.5rem"><span class="tag tag-purple">Analytics</span><span class="tag tag-navy">KPIs</span></div>
+                <span>8 min</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="text-align:center;margin-top:2rem">
+          <button class="btn btn-outline" id="loadMoreBtn" onclick="loadMore()">Load More Articles</button>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+
+        <!-- Newsletter -->
+        <div class="newsletter-card">
+          <h4>📬 Tourism AI Weekly</h4>
+          <p>Get MENA tourism market insights, AI tips, and platform updates every Tuesday — free.</p>
+          <input class="newsletter-input" type="email" id="emailInput" placeholder="your@agency.com">
+          <button class="newsletter-submit" onclick="subscribeNewsletter()">Subscribe Free →</button>
+          <p style="font-size:0.68rem;color:rgba(255,255,255,0.35);margin-top:0.5rem">2,400+ subscribers. Unsubscribe anytime.</p>
+        </div>
+
+        <!-- Market Stats -->
+        <div class="sidebar-card">
+          <h4>📈 MENA Tourism Numbers</h4>
+          <div class="stat-mini-grid">
+            <div class="stat-mini"><div class="sv">$70B</div><div class="sl">Saudi Vision 2030 Tourism Target</div></div>
+            <div class="stat-mini"><div class="sv">30M</div><div class="sl">Egypt Tourist Target by 2028</div></div>
+            <div class="stat-mini"><div class="sv">6,350+</div><div class="sl">MENA Travel Agencies (beachhead)</div></div>
+            <div class="stat-mini"><div class="sv">$15B+</div><div class="sl">Annual Hajj/Umrah Market Size</div></div>
+          </div>
+        </div>
+
+        <!-- Top Articles -->
+        <div class="sidebar-card">
+          <h4>🔥 Most Read This Week</h4>
+          <div class="sidebar-links">
+            <div class="sidebar-link">
+              <div class="sl-num">01</div>
+              <div><h5>7 AI Prompts for Tourism Content [Free]</h5><div class="sl-meta">AI · 6 min · 4,200 reads</div></div>
+            </div>
+            <div class="sidebar-link">
+              <div class="sl-num">02</div>
+              <div><h5>Saudi Vision 2030 & What It Means for Agencies</h5><div class="sl-meta">KSA · 10 min · 3,100 reads</div></div>
+            </div>
+            <div class="sidebar-link">
+              <div class="sl-num">03</div>
+              <div><h5>How to Price Packages for Maximum Conversions</h5><div class="sl-meta">Revenue · 7 min · 2,800 reads</div></div>
+            </div>
+            <div class="sidebar-link">
+              <div class="sl-num">04</div>
+              <div><h5>Marketing Hajj & Umrah in 2025</h5><div class="sl-meta">Umrah · 14 min · 2,400 reads</div></div>
+            </div>
+            <div class="sidebar-link">
+              <div class="sl-num">05</div>
+              <div><h5>Egypt's 30M Tourist Target: Opportunities</h5><div class="sl-meta">Egypt · 9 min · 1,900 reads</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tag Cloud -->
+        <div class="sidebar-card">
+          <h4>🏷️ Browse by Topic</h4>
+          <div class="tag-cloud">
+            <span class="tag-cloud-item" onclick="setFilter('ai',null)">AI Marketing</span>
+            <span class="tag-cloud-item" onclick="setFilter('egypt',null)">Egypt Tourism</span>
+            <span class="tag-cloud-item" onclick="setFilter('ksa',null)">Saudi Arabia</span>
+            <span class="tag-cloud-item">Umrah</span>
+            <span class="tag-cloud-item">Nile Cruise</span>
+            <span class="tag-cloud-item">Hotel Marketing</span>
+            <span class="tag-cloud-item">Social Media</span>
+            <span class="tag-cloud-item">WhatsApp</span>
+            <span class="tag-cloud-item">AR/VR Travel</span>
+            <span class="tag-cloud-item">Booking.com</span>
+            <span class="tag-cloud-item">Content Calendar</span>
+            <span class="tag-cloud-item">DMC Strategy</span>
+            <span class="tag-cloud-item">Revenue Growth</span>
+            <span class="tag-cloud-item">Arabic SEO</span>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="background:var(--orange);border-radius:var(--r-lg);padding:1.5rem;text-align:center">
+          <h4 style="color:var(--white);font-size:0.95rem;margin-bottom:0.5rem">See Trevo in Action</h4>
+          <p style="font-size:0.78rem;color:rgba(255,255,255,0.85);margin-bottom:1rem">Book a free 30-minute demo. No commitment required.</p>
+          <a href="trevo-website.html#contact" class="btn btn-navy" style="width:100%;justify-content:center;font-size:0.8rem">Book Free Demo →</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESOURCES -->
+<section class="resources-section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <span class="eyebrow">Free Resources</span>
+      <h2 style="color:var(--navy)">Tools & Templates for <span style="color:var(--orange)">MENA Tourism Operators</span></h2>
+      <p style="color:var(--gray-mid);max-width:540px;margin:0.6rem auto 0">Download, use, and adapt these resources for your tourism business. No signup required.</p>
+    </div>
+    <div class="resources-grid">
+      <div class="resource-card reveal" style="background:rgba(245,166,35,0.04)">
+        <div class="rc-tag"><span class="tag tag-green">Free Download</span></div>
+        <div class="resource-icon">📅</div>
+        <h4>90-Day Social Media Calendar Template</h4>
+        <p>Pre-built monthly content plan with post types, caption frameworks, and hashtag banks for Egyptian and Gulf tourism agencies.</p>
+        <a href="#" class="btn btn-navy" style="font-size:0.78rem">Download Excel →</a>
+      </div>
+      <div class="resource-card reveal" style="transition-delay:0.08s;background:rgba(26,58,108,0.03)">
+        <div class="rc-tag"><span class="tag tag-green">Free</span></div>
+        <div class="resource-icon">🤖</div>
+        <h4>50 AI Prompts for Tourism Marketing</h4>
+        <p>Ready-to-use prompts for Instagram captions, email campaigns, package descriptions, and Arabic translations — all tourism-specific.</p>
+        <a href="#" class="btn btn-navy" style="font-size:0.78rem">Download PDF →</a>
+      </div>
+      <div class="resource-card reveal" style="transition-delay:0.16s;background:rgba(168,85,247,0.03)">
+        <div class="rc-tag"><span class="tag tag-green">Free</span></div>
+        <div class="resource-icon">📊</div>
+        <h4>Agency Performance Dashboard (Excel)</h4>
+        <p>Track bookings, revenue, conversion rates, CAC, and social performance in one spreadsheet. No tools required — just open and fill.</p>
+        <a href="#" class="btn btn-navy" style="font-size:0.78rem">Download Excel →</a>
+      </div>
+      <div class="resource-card reveal" style="transition-delay:0.24s;background:rgba(34,197,94,0.03)">
+        <div class="rc-tag"><span class="tag tag-orange">Template</span></div>
+        <div class="resource-icon">✉️</div>
+        <h4>WhatsApp Booking Scripts Library</h4>
+        <p>20 proven WhatsApp message templates for inquiry follow-ups, booking confirmations, upsells, and re-engagement — in Arabic and English.</p>
+        <a href="#" class="btn btn-navy" style="font-size:0.78rem">Download PDF →</a>
+      </div>
+      <div class="resource-card reveal" style="transition-delay:0.32s;background:rgba(245,166,35,0.04)">
+        <div class="rc-tag"><span class="tag tag-orange">Guide</span></div>
+        <div class="resource-icon">🏨</div>
+        <h4>Hotel Digital Marketing Playbook 2025</h4>
+        <p>From Google Business to OTA optimization, Instagram Reels, and review management — complete guide for boutique hotels in MENA.</p>
+        <a href="#" class="btn btn-navy" style="font-size:0.78rem">Download PDF →</a>
+      </div>
+      <div class="resource-card reveal" style="transition-delay:0.4s;background:rgba(26,58,108,0.03)">
+        <div class="rc-tag"><span class="tag tag-orange">LOI Template</span></div>
+        <div class="resource-icon">🤝</div>
+        <h4>Letter of Intent (LOI) — Trevo Pilot</h4>
+        <p>Express your interest in joining Trevo's founding pilot program. Fill in your agency details and we'll follow up within 24 hours.</p>
+        <a href="trevo-website.html#contact" class="btn btn-primary" style="font-size:0.78rem">Get LOI →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES STRIP -->
+<section class="case-strip">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:2.5rem">
+      <span class="eyebrow" style="color:var(--orange)">Early Results</span>
+      <h2 style="color:var(--white)">What Tourism Operators Are <span style="color:var(--orange)">Already Seeing</span></h2>
+    </div>
+    <div class="case-grid">
+      <div class="case-card reveal">
+        <div class="case-result">+34%</div>
+        <h4>Social Media Engagement Uplift</h4>
+        <p>Cairo-based travel agency replaced manual content creation with Trevo's AI. Generated 30 posts in one session — engagement up 34% in the first month.</p>
+        <div class="case-client">→ Mid-size Travel Agency, Cairo, Egypt</div>
+      </div>
+      <div class="case-card reveal" style="transition-delay:0.1s">
+        <div class="case-result">18 hrs</div>
+        <h4>Staff Time Saved Per Week</h4>
+        <p>Boutique hotel in Hurghada used Trevo to automate their weekly content and email newsletter. Freed up 18 hours of marketing team time every week.</p>
+        <div class="case-client">→ Boutique Resort, Hurghada, Egypt</div>
+      </div>
+      <div class="case-card reveal" style="transition-delay:0.2s">
+        <div class="case-result">+22%</div>
+        <h4>Booking Conversion Rate</h4>
+        <p>Umrah operator in Riyadh deployed WhatsApp templates + AI-generated Arabic content for Ramadan campaign. Bookings up 22% vs previous Ramadan.</p>
+        <div class="case-client">→ Religious Tourism Operator, Riyadh, KSA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="mini-footer">
+  <div class="container">
+    <div class="mini-footer-inner">
+      <p>© 2026 Trevo Tourism Technology — Tourism AI Blog & Resources</p>
+      <div>
+        <a href="trevo-website.html">Home</a>
+        <a href="trevo-investor.html">Investors</a>
+        <a href="trevo-website.html#contact">Contact</a>
+        <a href="trevo-investor.html" id="blog_inv_link">Investors</a><a href="#">Privacy</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── REVEAL ───
+const obs=new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting)i.target.classList.add('visible')}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// ─── FILTER ───
+let activeFilter='all';
+function setFilter(f,btn){
+  activeFilter=f;
+  if(btn){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  filterPosts();
+}
+function filterPosts(){
+  const query=document.getElementById('searchInput').value.toLowerCase();
+  document.querySelectorAll('.post-card').forEach(card=>{
+    const cats=card.dataset.category||'';
+    const text=card.textContent.toLowerCase();
+    const matchFilter=activeFilter==='all'||cats.includes(activeFilter);
+    const matchSearch=!query||text.includes(query);
+    card.style.display=(matchFilter&&matchSearch)?'':'none';
+  });
+}
+
+// ─── LOAD MORE ───
+const extraPosts=[
+  {cat:'ai marketing',bg:'rgba(26,58,108,0.08)',icon:'🎯',tag:'AI',tagClass:'tag-navy',h:'Using ChatGPT vs. Trevo: Which AI Tool is Better for Tourism Content?',p:'A head-to-head comparison of general AI tools vs. tourism-specific AI — with real examples from MENA travel agencies.',tags:['AI','Comparison'],time:'8 min'},
+  {cat:'mena strategy',bg:'rgba(34,197,94,0.08)',icon:'🌍',tag:'MENA',tagClass:'tag-green',h:'Top 10 Emerging Tourism Markets in MENA That Agencies Must Target Now',p:'From AlUla to Aqaba, Hurgada to Musandam — the fastest-growing destinations your agency should be marketing in 2025.',tags:['MENA','Markets'],time:'12 min'},
+];
+let loaded=false;
+function loadMore(){
+  if(loaded){document.getElementById('loadMoreBtn').textContent='No More Articles';return}
+  const grid=document.getElementById('postsGrid');
+  extraPosts.forEach((p,i)=>{
+    const card=document.createElement('div');
+    card.className='post-card reveal';
+    card.dataset.category=p.cat;
+    card.style.transitionDelay=(0.05*(i+1))+'s';
+    card.innerHTML=`<div class="post-card-img" style="background:${p.bg}"><span>${p.icon}</span><div class="img-tag"><span class="tag ${p.tagClass}">${p.tag}</span></div></div><div class="post-card-body"><h3>${p.h}</h3><p>${p.p}</p><div class="post-card-footer"><div style="display:flex;gap:0.5rem">${p.tags.map(t=>`<span class="tag tag-navy">${t}</span>`).join('')}</div><span>${p.time}</span></div></div>`;
+    grid.appendChild(card);
+    setTimeout(()=>obs.observe(card),50);
+  });
+  loaded=true;
+  document.getElementById('loadMoreBtn').textContent='All Articles Loaded ✓';
+}
+
+// ─── NEWSLETTER ───
+function subscribeNewsletter(){
+  const email=document.getElementById('emailInput').value;
+  if(!email||!email.includes('@')){alert('Please enter a valid email address.');return}
+  const btn=document.querySelector('.newsletter-submit');
+  btn.textContent='✓ Subscribed!';
+  btn.style.background='#22c55e';
+  document.getElementById('emailInput').value='';
+  setTimeout(()=>{btn.textContent='Subscribe Free →';btn.style.background='';},3000);
+}
+</script>
+
+<script>
+const TB={
+  en:{
+    eyebrow:"Insights & Resources",
+    h1_pre:"Tourism ",h1_span:"AI",h1_post:" & MENA Travel Intelligence",
+    hero_p:"Insights, guides, and market intelligence for MENA travel agencies, hotels, and tourism operators navigating the AI era.",
+    search_ph:"Search articles... e.g. AI marketing, Umrah, KSA tourism",
+    filter_all:"All Topics",filter_ai:"AI & Technology",filter_mkt:"Digital Marketing",
+    filter_mena:"MENA Market",filter_egypt:"Egypt Tourism",filter_ksa:"KSA & Vision 2030",
+    filter_strategy:"Business Strategy",filter_guide:"Guides & Templates",
+    newsletter_h:"📬 Tourism AI Weekly",
+    newsletter_p:"Get MENA tourism market insights, AI tips, and platform updates every Tuesday — free.",
+    newsletter_ph:"your@agency.com",newsletter_btn:"Subscribe Free →",
+    newsletter_sub:"2,400+ subscribers. Unsubscribe anytime.",
+    stats_h:"📈 MENA Tourism Numbers",
+    top_h:"🔥 Most Read This Week",tags_h:"🏷️ Browse by Topic",
+    cta_h:"See Trevo in Action",cta_p:"Book a free 30-minute demo. No commitment required.",
+    cta_btn:"Book Free Demo →",
+    res_eyebrow:"Free Resources",
+    res_h2_pre:"Tools & Templates for ",res_h2_span:"MENA Tourism Operators",
+    res_p:"Download, use, and adapt these resources for your tourism business. No signup required.",
+    cases_eyebrow:"Early Results",
+    cases_h2_pre:"What Tourism Operators Are ",cases_h2_span:"Already Seeing",
+    load_more:"Load More Articles",load_done:"All Articles Loaded ✓",
+    copy:"© 2026 Trevo Tourism Technology — Tourism AI Blog & Resources",
+    demo_cta:"Book Demo",inv_link:"Investors"
+  },
+  ar:{
+    eyebrow:"رؤى وموارد",
+    h1_pre:"",h1_span:"الذكاء الاصطناعي",h1_post:" والسياحة في منطقة MENA",
+    hero_p:"رؤى وأدلة وذكاء سوقي لوكالات السفر والفنادق ومشغّلي السياحة في MENA في عصر الذكاء الاصطناعي.",
+    search_ph:"ابحث في المقالات... مثال: تسويق AI، عمرة، سياحة السعودية",
+    filter_all:"جميع المواضيع",filter_ai:"الذكاء الاصطناعي والتقنية",filter_mkt:"التسويق الرقمي",
+    filter_mena:"سوق MENA",filter_egypt:"سياحة مصر",filter_ksa:"السعودية ورؤية 2030",
+    filter_strategy:"استراتيجية الأعمال",filter_guide:"أدلة وقوالب",
+    newsletter_h:"📬 نشرة السياحة الأسبوعية",
+    newsletter_p:"احصل على رؤى سوق السياحة في MENA ونصائح الذكاء الاصطناعي وتحديثات المنصة كل ثلاثاء — مجاناً.",
+    newsletter_ph:"بريدك@وكالتك.com",newsletter_btn:"اشترك مجاناً →",
+    newsletter_sub:"أكثر من 2,400 مشترك. إلغاء الاشتراك في أي وقت.",
+    stats_h:"📈 أرقام سياحة MENA",
+    top_h:"🔥 الأكثر قراءةً هذا الأسبوع",tags_h:"🏷️ تصفح حسب الموضوع",
+    cta_h:"شاهد تريڤو في العمل",cta_p:"احجز عرضاً مجانياً لمدة 30 دقيقة. بلا أي التزام.",
+    cta_btn:"احجز عرضاً مجانياً →",
+    res_eyebrow:"موارد مجانية",
+    res_h2_pre:"أدوات وقوالب لـ ",res_h2_span:"مشغّلي السياحة في MENA",
+    res_p:"قم بتنزيل هذه الموارد واستخدامها وتكييفها لعملك السياحي. لا يلزم التسجيل.",
+    cases_eyebrow:"نتائج مبكرة",
+    cases_h2_pre:"ما يشهده مشغّلو السياحة ",cases_h2_span:"بالفعل",
+    load_more:"تحميل المزيد من المقالات",load_done:"تم تحميل جميع المقالات ✓",
+    copy:"© 2026 تريڤو للتكنولوجيا السياحية — مدونة ذكاء السياحة والموارد",
+    demo_cta:"احجز عرضاً",inv_link:"المستثمرون"
+  }
+};
+let blogLang=localStorage.getItem('trevo-lang')||'en';
+function applyLangBlog(lang){
+  blogLang=lang;
+  localStorage.setItem('trevo-lang',lang);
+  const isAr=lang==='ar';
+  document.documentElement.setAttribute('lang',lang);
+  document.documentElement.setAttribute('dir',isAr?'rtl':'ltr');
+  document.body.style.fontFamily=isAr?"'Cairo',sans-serif":"'Montserrat','Helvetica Neue',Arial,sans-serif";
+  document.getElementById('blogLangBtn').textContent=isAr?'English':'عربي';
+  // Update data-blog-t elements
+  document.querySelectorAll('[data-blog-t]').forEach(el=>{
+    const key=el.dataset.blogT;
+    if(TB[lang][key]!==undefined)el.textContent=TB[lang][key];
+  });
+  // Update filter buttons
+  const filterBtns=document.querySelectorAll('.filter-btn');
+  const keys=['filter_all','filter_ai','filter_mkt','filter_mena','filter_egypt','filter_ksa','filter_strategy','filter_guide'];
+  filterBtns.forEach((btn,i)=>{if(TB[lang][keys[i]])btn.textContent=TB[lang][keys[i]]});
+  // Update search placeholder
+  const si=document.getElementById('searchInput');
+  if(si)si.placeholder=TB[lang].search_ph;
+  // Update newsletter
+  const ni=document.getElementById('emailInput');
+  if(ni)ni.placeholder=TB[lang].newsletter_ph;
+  const nsub=document.querySelector('.newsletter-submit');
+  if(nsub)nsub.textContent=TB[lang].newsletter_btn;
+  // Update load more button
+  const lmb=document.getElementById('loadMoreBtn');
+  if(lmb&&lmb.textContent!==TB['en'].load_done&&lmb.textContent!==TB['ar'].load_done)
+    lmb.textContent=TB[lang].load_more;
+  // Update footer copy
+  const fc=document.querySelector('.mini-footer p');
+  if(fc)fc.textContent=TB[lang].copy;
+  // Update investor link
+  const invL=document.getElementById('blog_inv_link');
+  if(invL)invL.textContent=TB[lang].inv_link;
+}
+function toggleLangBlog(){applyLangBlog(blogLang==='en'?'ar':'en');}
+if(blogLang==='ar')applyLangBlog('ar');
+</script>
+
+</body>
+</html>

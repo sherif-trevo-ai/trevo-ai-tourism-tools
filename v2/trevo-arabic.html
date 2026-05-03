@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="تريڤو — منصة الذكاء الاصطناعي السياحية الأولى في MENA. حلول التسويق الذكي وإدارة الحجوزات لوكالات السفر والفنادق في مصر والسعودية ودول الخليج.">
+<meta property="og:title" content="تريڤو — منصة السياحة الذكية">
+<meta property="og:description" content="حوّل وكالتك السياحية بالذكاء الاصطناعي. محتوى تسويقي، حجوزات ذكية، وتحليلات فورية — ابتداءً من 50 دولار شهرياً.">
+<title>تريڤو — منصة السياحة الذكية | الصفحة العربية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TREVO ARABIC — BRAND TOKENS
+═══════════════════════════════════════ */
+:root {
+  --navy:       #1A3A6C;
+  --navy-deep:  #122B55;
+  --navy-mid:   #1E4080;
+  --navy-light: #2A5099;
+  --orange:     #F5A623;
+  --orange-dk:  #D4891A;
+  --orange-pale:#FFF4DE;
+  --gold:       #C9A227;
+  --gold-light: #F0D080;
+  --white:      #FFFFFF;
+  --cream:      #FAF8F2;
+  --warm-gray:  #F2EFE9;
+  --gray-light: #E8E5DF;
+  --gray-mid:   #9E9B96;
+  --near-black: #1C1C1C;
+  --body:       #2D2B28;
+
+  --font:       'Cairo', 'Tajawal', 'Helvetica Neue', sans-serif;
+  --r-sm:8px; --r-md:16px; --r-lg:24px; --r-xl:48px; --r-pill:999px;
+  --shadow-sm:  0 2px 14px rgba(0,0,0,0.07);
+  --shadow-md:  0 8px 40px rgba(26,58,108,0.13);
+  --shadow-lg:  0 20px 70px rgba(26,58,108,0.20);
+  --ease:       cubic-bezier(0.4,0,0.2,1);
+  --t:          all 0.3s var(--ease);
+}
+
+/* ═══════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--white);color:var(--body);line-height:1.7;overflow-x:hidden;direction:rtl}
+img{max-width:100%;height:auto;display:block}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:var(--font)}
+
+/* ═══════════════════════════════════════
+   TYPOGRAPHY
+═══════════════════════════════════════ */
+h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:900;line-height:1.1;letter-spacing:-0.01em}
+h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.15}
+h3{font-size:clamp(1.2rem,2.5vw,1.55rem);font-weight:700;line-height:1.25}
+h4{font-size:1rem;font-weight:700}
+p{line-height:1.75;font-weight:400}
+.eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--orange);margin-bottom:0.7rem;display:block;font-family:'Tajawal',sans-serif}
+
+/* ═══════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════ */
+.container{max-width:1200px;margin:0 auto;padding:0 5%}
+.section{padding:6.5rem 0}
+.section-header{text-align:center;margin-bottom:4rem}
+.section-header h2{color:var(--navy)}
+.section-header h2 .hl{color:var(--orange)}
+.section-header p{max-width:620px;margin:1rem auto 0;color:var(--gray-mid);font-size:1.05rem}
+
+/* ═══════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.75s var(--ease),transform 0.75s var(--ease)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-r{opacity:0;transform:translateX(36px);transition:opacity 0.75s var(--ease),transform 0.75s var(--ease)}
+.reveal-r.visible{opacity:1;transform:translateX(0)}
+.reveal-l{opacity:0;transform:translateX(-36px);transition:opacity 0.75s var(--ease),transform 0.75s var(--ease)}
+.reveal-l.visible{opacity:1;transform:translateX(0)}
+
+/* ═══════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0.85rem 2.2rem;border-radius:var(--r-pill);font-weight:700;font-size:0.92rem;letter-spacing:0.01em;transition:var(--t);font-family:var(--font)}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-primary:hover{background:var(--orange-dk);transform:translateY(-2px);box-shadow:0 10px 28px rgba(245,166,35,0.38)}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-mid);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn-outline{background:transparent;color:var(--navy);border:2px solid var(--navy)}
+.btn-outline:hover{background:var(--navy);color:var(--white);transform:translateY(-2px)}
+.btn-outline-white{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.55)}
+.btn-outline-white:hover{background:rgba(255,255,255,0.18);border-color:white}
+
+/* ═══════════════════════════════════════
+   DECORATIVE ELEMENTS
+═══════════════════════════════════════ */
+.arabic-pattern{position:absolute;opacity:0.04;pointer-events:none;font-size:12rem;font-weight:900;color:var(--orange);line-height:1;user-select:none}
+.geo-circle{position:absolute;border-radius:50%;border:1px solid rgba(245,166,35,0.15);pointer-events:none}
+.gold-line{height:3px;background:linear-gradient(90deg,var(--orange),var(--gold),transparent);border-radius:2px}
+.section-divider{width:60px;height:4px;background:var(--orange);border-radius:2px;margin:1rem auto}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+#navbar{position:fixed;top:0;right:0;left:0;z-index:1000;padding:1rem 0;transition:var(--t)}
+#navbar.scrolled{background:rgba(18,43,85,0.97);backdrop-filter:blur(14px);padding:0.65rem 0;box-shadow:0 4px 30px rgba(0,0,0,0.2)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:1.55rem;font-weight:900;color:var(--white);letter-spacing:-0.01em}
+.nav-logo .logo-sq{width:40px;height:40px;border-radius:11px;background:var(--orange);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:0.2rem;flex-direction:row-reverse}
+.nav-links a{color:rgba(255,255,255,0.78);font-size:0.88rem;font-weight:600;padding:0.4rem 0.9rem;border-radius:var(--r-pill);transition:var(--t)}
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,0.1)}
+.nav-actions{display:flex;align-items:center;gap:0.75rem;flex-direction:row-reverse}
+.lang-pill{background:rgba(255,255,255,0.12);color:var(--white);padding:0.3rem 1rem;border-radius:var(--r-pill);font-size:0.8rem;font-weight:700;border:1px solid rgba(255,255,255,0.22);transition:var(--t)}
+.lang-pill:hover{background:rgba(255,255,255,0.22)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:7px;cursor:pointer}
+.hamburger span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:var(--t)}
+/* Mobile nav */
+.mobile-menu{display:none;position:fixed;inset:0;background:var(--navy-deep);z-index:999;padding:5rem 2rem 2rem;flex-direction:column;gap:0.5rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--white);font-size:1.15rem;font-weight:700;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.mobile-close{position:absolute;top:1.3rem;left:1.5rem;color:var(--white);font-size:1.6rem;cursor:pointer;background:none;border:none}
+
+/* ═══════════════════════════════════════
+   HERO — Dramatic diagonal split
+═══════════════════════════════════════ */
+#hero{background:var(--navy-deep);min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:5rem}
+.hero-diagonal-bg{position:absolute;top:0;left:-5%;width:50%;height:100%;background:linear-gradient(135deg,rgba(245,166,35,0.08) 0%,transparent 70%);transform:skewX(-8deg);pointer-events:none}
+.hero-geo-1{width:550px;height:550px;top:-180px;left:-180px;background:radial-gradient(circle,rgba(245,166,35,0.06) 0%,transparent 70%)}
+.hero-geo-2{width:400px;height:400px;bottom:-120px;right:-80px;background:radial-gradient(circle,rgba(255,255,255,0.04) 0%,transparent 70%)}
+.hero-diagonal-bottom{position:absolute;bottom:0;left:0;right:0;height:120px;background:var(--cream);clip-path:polygon(0 55%,100% 0,100% 100%,0 100%)}
+.hero-content{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:center;padding:5rem 0 9rem;position:relative;z-index:1}
+.hero-text .eyebrow{animation:fadeUp 0.6s ease both}
+.hero-text h1{color:var(--white);margin-bottom:1.5rem;animation:fadeUp 0.6s ease 0.12s both}
+.hero-text h1 .hl{color:var(--orange);position:relative}
+.hero-text h1 .hl::after{content:'';position:absolute;bottom:-5px;right:0;left:0;height:3px;background:var(--orange);border-radius:2px;opacity:0.45}
+.hero-text p{color:rgba(255,255,255,0.72);font-size:1.08rem;max-width:490px;margin-bottom:2rem;animation:fadeUp 0.6s ease 0.24s both}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp 0.6s ease 0.36s both}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem;animation:fadeUp 0.6s ease 0.5s both}
+.hero-stat{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-md);padding:1.2rem;text-align:center;transition:var(--t)}
+.hero-stat:hover{background:rgba(255,255,255,0.11);border-color:rgba(245,166,35,0.3)}
+.stat-n{font-size:1.8rem;font-weight:900;color:var(--orange);display:block;line-height:1}
+.stat-l{font-size:0.78rem;color:rgba(255,255,255,0.58);margin-top:0.3rem;font-weight:600}
+/* Hero visual — dashboard mockup */
+.hero-visual{animation:fadeRight 0.8s ease 0.3s both;position:relative}
+.float-badge{position:absolute;background:var(--orange);color:white;border-radius:var(--r-pill);padding:0.5rem 1rem;font-size:0.78rem;font-weight:700;box-shadow:0 8px 28px rgba(245,166,35,0.38);animation:floatUD 3s ease-in-out infinite;white-space:nowrap;z-index:2}
+.float-badge.fb1{top:-12px;right:-10px;animation-delay:0s}
+.float-badge.fb2{bottom:20px;left:-15px;animation-delay:1.5s}
+.dash-card{background:rgba(255,255,255,0.09);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.14);border-radius:var(--r-lg);padding:1.5rem;margin-bottom:1rem}
+.dash-card-header{display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-direction:row-reverse}
+.dash-icon{width:38px;height:38px;border-radius:9px;background:var(--orange);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dash-icon svg{width:19px;height:19px}
+.dash-title{font-size:0.88rem;font-weight:700;color:var(--white);text-align:right}
+.dash-sub{font-size:0.72rem;color:rgba(255,255,255,0.48);text-align:right}
+.dash-row{display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.07);flex-direction:row-reverse}
+.dash-row:last-child{border-bottom:none}
+.dash-row span:first-child{font-size:0.8rem;color:rgba(255,255,255,0.58)}
+.dash-row span:last-child{font-size:0.85rem;font-weight:700;color:var(--orange)}
+.mini-bar-wrap{margin-top:0.75rem}
+.mini-bar-label{display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.35rem;color:rgba(255,255,255,0.6);flex-direction:row-reverse}
+.mini-bar{height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden}
+.mini-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--orange),var(--gold));animation:barGrow 1.5s ease forwards}
+@keyframes barGrow{from{width:0}to{width:var(--w)}}
+@keyframes floatUD{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeRight{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+
+/* ═══════════════════════════════════════
+   TRUST STRIP — Marquee
+═══════════════════════════════════════ */
+.trust-strip{background:var(--warm-gray);padding:1.5rem 0;overflow:hidden;border-top:1px solid rgba(0,0,0,0.05);border-bottom:1px solid rgba(0,0,0,0.05)}
+.marquee-track{display:flex;gap:2.5rem;animation:marqueeRTL 28s linear infinite;width:max-content;direction:ltr}
+.marquee-item{display:flex;align-items:center;gap:0.5rem;white-space:nowrap;font-size:0.85rem;font-weight:700;color:var(--gray-mid);opacity:0.75}
+.m-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0}
+@keyframes marqueeRTL{from{transform:translateX(0)}to{transform:translateX(50%)}}
+
+/* ═══════════════════════════════════════
+   PROBLEM — Numbered list, editorial
+═══════════════════════════════════════ */
+#problem{background:var(--cream);position:relative;overflow:hidden}
+.prob-arabic-bg{top:50%;right:-3%;transform:translateY(-50%);font-size:16rem;opacity:0.025;color:var(--navy);pointer-events:none;position:absolute;font-weight:900;font-family:'Cairo'}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.prob-eyebrow-block h2{color:var(--navy);margin-bottom:1rem}
+.prob-eyebrow-block p{color:var(--gray-mid);font-size:0.95rem;line-height:1.7}
+.prob-list{display:flex;flex-direction:column;gap:1.1rem}
+.prob-item{display:flex;gap:1.1rem;align-items:flex-start;padding:1.1rem 1.3rem;background:var(--white);border-radius:var(--r-md);border-right:3px solid var(--orange);box-shadow:var(--shadow-sm);transition:var(--t)}
+.prob-item:hover{transform:translateX(-4px);box-shadow:var(--shadow-md)}
+.prob-num{min-width:36px;height:36px;border-radius:50%;background:rgba(245,166,35,0.12);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:900;color:var(--orange-dk);flex-shrink:0}
+.prob-item h4{font-size:0.92rem;color:var(--navy);margin-bottom:0.25rem}
+.prob-item p{font-size:0.82rem;color:var(--gray-mid);line-height:1.55}
+
+/* ═══════════════════════════════════════
+   SOLUTION — Navy card with pillars
+═══════════════════════════════════════ */
+.sol-card{background:var(--navy);border-radius:var(--r-lg);padding:2.5rem;color:var(--white);position:relative;overflow:hidden;margin-top:1rem}
+.sol-card::before{content:'';position:absolute;top:-80px;left:-80px;width:260px;height:260px;border-radius:50%;background:rgba(245,166,35,0.08)}
+.sol-card::after{content:'';position:absolute;bottom:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,0.04)}
+.sol-pillars{display:flex;flex-direction:column;gap:0.85rem;margin-top:1.5rem;position:relative;z-index:1}
+.sol-pillar{display:flex;align-items:center;gap:0.85rem;padding:0.95rem 1.1rem;background:rgba(255,255,255,0.07);border-radius:var(--r-md);border:1px solid rgba(255,255,255,0.1);transition:var(--t);flex-direction:row-reverse}
+.sol-pillar:hover{background:rgba(255,255,255,0.12);border-color:rgba(245,166,35,0.35)}
+.pillar-num{width:34px;height:34px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:900;color:var(--white);flex-shrink:0}
+.pillar-text{text-align:right}
+.pillar-text h4{font-size:0.9rem;font-weight:700;color:var(--white)}
+.pillar-text p{font-size:0.78rem;color:rgba(255,255,255,0.6);line-height:1.45}
+
+/* ═══════════════════════════════════════
+   FEATURES — Arabic-first grid
+═══════════════════════════════════════ */
+#features{background:var(--white)}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.feat-card{background:var(--white);border:1.5px solid var(--gray-light);border-radius:var(--r-lg);padding:1.75rem;transition:var(--t);position:relative;overflow:hidden}
+.feat-card::after{content:'';position:absolute;bottom:0;right:0;left:0;height:3px;background:var(--orange);transform:scaleX(0);transform-origin:right;transition:var(--t)}
+.feat-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(245,166,35,0.4)}
+.feat-card:hover::after{transform:scaleX(1)}
+.feat-card.featured{background:var(--navy);border-color:transparent}
+.feat-icon{width:54px;height:54px;border-radius:15px;background:rgba(26,58,108,0.08);display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+.feat-card.featured .feat-icon{background:rgba(245,166,35,0.18)}
+.feat-icon svg{width:27px;height:27px;color:var(--navy)}
+.feat-card.featured .feat-icon svg{color:var(--orange)}
+.feat-card h3{font-size:1.05rem;color:var(--navy);margin-bottom:0.5rem}
+.feat-card.featured h3{color:var(--white)}
+.feat-card p{font-size:0.83rem;color:var(--gray-mid);line-height:1.6}
+.feat-card.featured p{color:rgba(255,255,255,0.62)}
+.feat-badge{margin-top:1rem}
+.badge-pill{display:inline-block;padding:0.25rem 0.85rem;border-radius:var(--r-pill);font-size:0.72rem;font-weight:700}
+.badge-orange{background:rgba(245,166,35,0.15);color:var(--orange-dk);border:1px solid rgba(245,166,35,0.3)}
+.badge-navy{background:rgba(26,58,108,0.1);color:var(--navy);border:1px solid rgba(26,58,108,0.15)}
+.badge-green{background:rgba(34,197,94,0.1);color:#15803d;border:1px solid rgba(34,197,94,0.25)}
+
+/* ═══════════════════════════════════════
+   HOW IT WORKS — RTL timeline
+═══════════════════════════════════════ */
+#how{background:var(--cream)}
+.steps-wrap{position:relative;padding:2rem 0}
+.steps-line{position:absolute;top:52px;right:10%;left:10%;height:2px;background:linear-gradient(270deg,var(--orange),var(--gold),var(--orange));z-index:0}
+.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;z-index:1}
+.step-block{text-align:center;padding:0 1rem}
+.step-icon-wrap{width:90px;height:90px;border-radius:50%;background:var(--white);border:3px solid var(--orange);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;box-shadow:0 0 0 8px rgba(245,166,35,0.1),var(--shadow-sm);position:relative}
+.step-icon-wrap svg{width:38px;height:38px;color:var(--orange)}
+.step-num{position:absolute;top:-8px;right:50%;transform:translateX(50%);width:22px;height:22px;border-radius:50%;background:var(--orange);color:var(--white);font-size:0.68rem;font-weight:900;display:flex;align-items:center;justify-content:center}
+.step-block h4{font-size:0.95rem;font-weight:800;color:var(--navy);margin-bottom:0.5rem}
+.step-block p{font-size:0.8rem;color:var(--gray-mid);line-height:1.55}
+
+/* ═══════════════════════════════════════
+   PRICING — 4 tiers
+═══════════════════════════════════════ */
+#pricing{background:var(--white)}
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;align-items:start}
+.price-card{background:var(--white);border-radius:var(--r-lg);padding:1.75rem;border:1.5px solid var(--gray-light);transition:var(--t);position:relative}
+.price-card.popular{border-color:var(--orange);transform:scale(1.03);box-shadow:var(--shadow-md)}
+.price-card.popular::before{content:'الأكثر طلباً';position:absolute;top:-14px;right:50%;transform:translateX(50%);background:var(--orange);color:var(--white);font-size:0.72rem;font-weight:700;padding:0.3rem 1rem;border-radius:var(--r-pill);white-space:nowrap}
+.price-card:hover:not(.popular){transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.price-tier{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-mid);margin-bottom:0.75rem;font-family:'Tajawal'}
+.price-amount{margin-bottom:0.5rem}
+.price-amount .cur{font-size:1rem;font-weight:700;color:var(--navy);vertical-align:top;line-height:2.2}
+.price-amount .num{font-size:2.5rem;font-weight:900;color:var(--navy);line-height:1}
+.price-amount .per{font-size:0.85rem;color:var(--gray-mid)}
+.price-desc{font-size:0.82rem;color:var(--gray-mid);margin-bottom:1.5rem;line-height:1.55}
+.price-feats{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.75rem}
+.price-feat{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.82rem;color:var(--body);flex-direction:row-reverse}
+.price-feat .chk{color:#22c55e;flex-shrink:0;margin-top:2px}
+.price-card.popular .price-tier{color:var(--orange-dk)}
+.price-card.dark{background:var(--navy-deep);border-color:transparent}
+.price-card.dark .price-tier{color:var(--orange)}
+.price-card.dark .price-amount .cur,.price-card.dark .price-amount .num{color:var(--white)}
+.price-card.dark .price-desc{color:rgba(255,255,255,0.58)}
+.price-card.dark .price-feat{color:rgba(255,255,255,0.8)}
+
+/* ═══════════════════════════════════════
+   ROI CALCULATOR
+═══════════════════════════════════════ */
+.roi-wrap{background:var(--navy);border-radius:var(--r-lg);padding:2.5rem;margin-top:2.5rem}
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center}
+.roi-inputs{display:flex;flex-direction:column;gap:1.1rem}
+.roi-lbl{display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:0.4rem;flex-direction:row-reverse}
+.roi-lbl span:first-child{color:rgba(255,255,255,0.65)}
+.roi-val-span{color:var(--orange);font-weight:700}
+.roi-slider{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:rgba(255,255,255,0.18);outline:none;direction:ltr}
+.roi-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--orange);cursor:pointer;box-shadow:0 0 0 3px rgba(245,166,35,0.28)}
+.roi-result{text-align:center}
+.roi-big{font-size:3.2rem;font-weight:900;color:var(--orange);display:block;line-height:1}
+.roi-result p{font-size:0.82rem;color:rgba(255,255,255,0.58);margin-top:0.5rem}
+.roi-mini-grid{margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.roi-mini{background:rgba(255,255,255,0.07);border-radius:var(--r-md);padding:0.85rem;text-align:center}
+.roi-mini .rmv{font-size:1.15rem;font-weight:800;color:var(--orange)}
+.roi-mini .rml{font-size:0.72rem;color:rgba(255,255,255,0.45);margin-top:0.2rem}
+
+/* ═══════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════ */
+#testimonials{background:var(--navy-deep);padding:6.5rem 0}
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.test-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-lg);padding:1.75rem;transition:var(--t)}
+.test-card:hover{background:rgba(255,255,255,0.11);border-color:var(--orange)}
+.stars{color:var(--orange);letter-spacing:3px;font-size:1rem;margin-bottom:0.85rem;direction:ltr;text-align:right}
+.quote{font-size:0.9rem;line-height:1.75;color:rgba(255,255,255,0.78);margin-bottom:1.25rem;font-style:italic;text-align:right}
+.t-author{display:flex;align-items:center;gap:0.75rem;flex-direction:row-reverse}
+.t-av{width:42px;height:42px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;color:var(--white);flex-shrink:0}
+.t-name{font-size:0.88rem;font-weight:700;color:var(--white);text-align:right}
+.t-role{font-size:0.75rem;color:rgba(255,255,255,0.48);text-align:right}
+
+/* ═══════════════════════════════════════
+   COMPARISON TABLE
+═══════════════════════════════════════ */
+#comparison{background:var(--cream)}
+.table-wrap{overflow-x:auto;border-radius:var(--r-lg);box-shadow:var(--shadow-sm);border:1px solid var(--gray-light)}
+.comp-table{width:100%;border-collapse:collapse;font-size:0.85rem}
+.comp-table th{background:var(--navy-deep);color:var(--white);padding:0.9rem 1rem;text-align:right;font-weight:700;font-size:0.82rem;white-space:nowrap}
+.comp-table th:first-child{border-radius:0 var(--r-lg) 0 0}
+.comp-table th:last-child{border-radius:var(--r-lg) 0 0 0}
+.comp-table td{padding:0.8rem 1rem;border-bottom:1px solid var(--gray-light);text-align:right;color:var(--body)}
+.comp-table tr.trevo-row td{background:rgba(245,166,35,0.07);font-weight:700;color:var(--navy)}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-table tr:hover td{background:var(--warm-gray)}
+.comp-table tr.trevo-row:hover td{background:rgba(245,166,35,0.12)}
+.yes{color:#16a34a;font-weight:700}
+.no{color:#dc2626;font-weight:700}
+.partial{color:#d97706;font-weight:700}
+
+/* ═══════════════════════════════════════
+   MARKET OPPORTUNITY
+═══════════════════════════════════════ */
+#market{background:var(--navy-deep);color:var(--white);position:relative;overflow:hidden;padding:7rem 0}
+#market::before{content:'';position:absolute;top:0;left:0;right:0;height:100px;background:var(--cream);clip-path:polygon(0 0,100% 0,100% 30%,0 100%)}
+#market::after{content:'';position:absolute;bottom:0;left:0;right:0;height:90px;background:var(--white);clip-path:polygon(0 70%,100% 0,100% 100%,0 100%)}
+.market-inner{padding:4rem 0;position:relative;z-index:1}
+.funnel-row{display:flex;flex-direction:column;gap:4px;margin:2.5rem 0}
+.funnel-tier{border-radius:var(--r-md);display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2rem;transition:var(--t);flex-direction:row-reverse}
+.funnel-tier:hover{transform:scaleX(1.02)}
+.funnel-tier.tam{width:100%;background:rgba(245,166,35,0.18);border:1px solid rgba(245,166,35,0.4)}
+.funnel-tier.sam{width:70%;margin-right:auto;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.18)}
+.funnel-tier.som{width:44%;margin-right:auto;background:rgba(245,166,35,0.13);border:1px solid rgba(245,166,35,0.35)}
+.fl h4{font-size:0.9rem;font-weight:700;color:var(--white);text-align:right}
+.fl p{font-size:0.75rem;color:rgba(255,255,255,0.58);text-align:right}
+.fv{text-align:left}
+.fv .fvn{font-size:1.55rem;font-weight:900;color:var(--orange)}
+.fv .fvs{font-size:0.72rem;color:rgba(255,255,255,0.45);margin-top:2px}
+.sectors-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
+.sector-tile{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:var(--r-md);padding:1.25rem;transition:var(--t);text-align:right}
+.sector-tile:hover{background:rgba(255,255,255,0.12);border-color:var(--orange)}
+.sector-tile .sv{font-size:1.35rem;font-weight:900;color:var(--orange);margin-bottom:0.3rem}
+.sector-tile h4{font-size:0.82rem;font-weight:700;color:var(--white);margin-bottom:0.3rem}
+.sector-tile p{font-size:0.72rem;color:rgba(255,255,255,0.48);line-height:1.45}
+
+/* ═══════════════════════════════════════
+   CTA SECTION
+═══════════════════════════════════════ */
+#cta{background:var(--orange);padding:5.5rem 0;position:relative;overflow:hidden;text-align:center}
+#cta::before{content:'';position:absolute;top:-80px;left:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.1)}
+#cta::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(0,0,0,0.05)}
+#cta h2{color:var(--white);margin-bottom:1rem;font-size:clamp(2rem,4vw,3rem)}
+#cta p{color:rgba(255,255,255,0.88);font-size:1.08rem;max-width:560px;margin:0 auto 2rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-white{background:var(--white);color:var(--orange);font-weight:800}
+.btn-white:hover{background:var(--orange-pale);transform:translateY(-2px)}
+
+/* ═══════════════════════════════════════
+   CONTACT SECTION
+═══════════════════════════════════════ */
+#contact{background:var(--cream)}
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-info h3{color:var(--navy);margin-bottom:1rem}
+.contact-info p{color:var(--gray-mid);font-size:0.92rem;line-height:1.7;margin-bottom:1.5rem}
+.channels{display:flex;flex-direction:column;gap:0.75rem}
+.channel{display:flex;align-items:center;gap:0.8rem;padding:0.95rem 1.15rem;background:var(--white);border-radius:var(--r-md);font-size:0.85rem;font-weight:600;color:var(--navy);transition:var(--t);border:1.5px solid transparent;flex-direction:row-reverse}
+.channel:hover{border-color:var(--orange);box-shadow:var(--shadow-sm)}
+.ch-ic{width:38px;height:38px;border-radius:9px;background:rgba(26,58,108,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ch-ic svg{width:18px;height:18px;color:var(--navy)}
+.contact-form-wrap{background:var(--white);border-radius:var(--r-lg);padding:2rem;box-shadow:var(--shadow-sm)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{margin-bottom:1.2rem}
+.flabel{display:block;font-size:0.82rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem}
+.finput,.fselect,.ftextarea{width:100%;border:1.5px solid var(--gray-light);border-radius:var(--r-md);padding:0.72rem 1rem;font-size:0.9rem;font-family:var(--font);outline:none;transition:var(--t);background:var(--white);color:var(--body);direction:rtl}
+.finput:focus,.fselect:focus,.ftextarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(245,166,35,0.14)}
+.ftextarea{resize:vertical;min-height:120px}
+.fsubmit{width:100%;padding:0.95rem;background:var(--navy);color:var(--white);border-radius:var(--r-pill);font-weight:800;font-size:0.96rem;transition:var(--t);border:none;cursor:pointer;font-family:var(--font)}
+.fsubmit:hover{background:var(--navy-mid);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+#footer{background:var(--navy-deep);color:rgba(255,255,255,0.62);padding:4rem 0 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+.footer-brand p{font-size:0.85rem;line-height:1.75;margin:1rem 0 1.25rem;max-width:290px;color:rgba(255,255,255,0.55)}
+.footer-socials{display:flex;gap:0.6rem;flex-direction:row-reverse}
+.soc-btn{width:38px;height:38px;border-radius:9px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;transition:var(--t);border:1px solid rgba(255,255,255,0.1)}
+.soc-btn:hover{background:var(--orange);border-color:var(--orange)}
+.soc-btn svg{width:16px;height:16px;color:rgba(255,255,255,0.7)}
+.soc-btn:hover svg{color:white}
+.fcol h5{font-size:0.82rem;font-weight:700;color:var(--white);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1rem;text-align:right}
+.fcol ul{display:flex;flex-direction:column;gap:0.5rem;text-align:right}
+.fcol ul li a{font-size:0.85rem;color:rgba(255,255,255,0.52);transition:var(--t)}
+.fcol ul li a:hover{color:var(--orange)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.75rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;flex-direction:row-reverse}
+.footer-bottom p{font-size:0.8rem}
+.footer-legal{display:flex;gap:1.5rem;flex-direction:row-reverse}
+.footer-legal a{font-size:0.8rem;color:rgba(255,255,255,0.38);transition:var(--t)}
+.footer-legal a:hover{color:rgba(255,255,255,0.8)}
+
+/* ═══════════════════════════════════════
+   SCROLL TOP + COOKIE
+═══════════════════════════════════════ */
+#scroll-top{position:fixed;bottom:2rem;left:2rem;width:46px;height:46px;border-radius:50%;background:var(--orange);color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 5px 18px rgba(245,166,35,0.38);opacity:0;transform:translateY(16px);transition:var(--t);z-index:900;border:none}
+#scroll-top.visible{opacity:1;transform:translateY(0)}
+#scroll-top:hover{background:var(--orange-dk);transform:translateY(-3px)}
+#cookie-bar{position:fixed;bottom:0;right:0;left:0;background:var(--navy-deep);color:var(--white);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;z-index:9999;box-shadow:0 -4px 28px rgba(0,0,0,0.28);transform:translateY(100%);transition:transform 0.5s ease;flex-direction:row-reverse}
+#cookie-bar.show{transform:translateY(0)}
+#cookie-bar p{font-size:0.82rem;color:rgba(255,255,255,0.72);flex:1;text-align:right}
+.cb-btns{display:flex;gap:0.5rem;flex-shrink:0;flex-direction:row-reverse}
+.cb-accept{background:var(--orange);color:var(--white);padding:0.5rem 1.25rem;border-radius:var(--r-pill);font-size:0.82rem;font-weight:700;cursor:pointer;border:none;font-family:var(--font)}
+.cb-decline{background:transparent;color:rgba(255,255,255,0.58);padding:0.5rem 1rem;border-radius:var(--r-pill);font-size:0.82rem;cursor:pointer;border:1px solid rgba(255,255,255,0.2);font-family:var(--font)}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+@media(max-width:1024px){
+  .features-grid{grid-template-columns:repeat(2,1fr)}
+  .pricing-grid{grid-template-columns:repeat(2,1fr)}
+  .sectors-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .section{padding:4.5rem 0}
+  .hero-content{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .hero-stats{grid-template-columns:repeat(3,1fr)}
+  .prob-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+  .steps-row{grid-template-columns:repeat(2,1fr)}
+  .steps-line{display:none}
+  .pricing-grid{grid-template-columns:1fr}
+  .price-card.popular{transform:none}
+  .roi-grid{grid-template-columns:1fr}
+  .test-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .funnel-tier.sam,.funnel-tier.som{width:100%}
+  .sectors-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  .nav-actions .btn{display:none}
+  .hamburger{display:flex}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .sectors-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- COOKIE -->
+<div id="cookie-bar">
+  <p>نستخدم ملفات تعريف الارتباط لتحسين تجربتك. باستمرار استخدامك لتريڤو، أنت توافق على سياسة الخصوصية. <a href="#" style="color:var(--orange)">اعرف المزيد</a></p>
+  <div class="cb-btns">
+    <button class="cb-decline" onclick="dismissCookie()">رفض</button>
+    <button class="cb-accept" onclick="acceptCookie()">قبول</button>
+  </div>
+</div>
+
+<!-- SCROLL TOP -->
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="العودة للأعلى">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#hero" onclick="closeMobile()">الرئيسية</a>
+  <a href="#problem" onclick="closeMobile()">المشكلة</a>
+  <a href="#features" onclick="closeMobile()">المميزات</a>
+  <a href="#pricing" onclick="closeMobile()">الأسعار</a>
+  <a href="#market" onclick="closeMobile()">السوق</a>
+  <a href="#testimonials" onclick="closeMobile()">آراء العملاء</a>
+  <a href="#contact" onclick="closeMobile()">تواصل معنا</a>
+  <a href="trevo-website.html" onclick="closeMobile()" style="color:var(--orange)">الموقع الإنجليزي →</a>
+</div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <div class="logo-sq">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" width="22" height="22">
+            <path d="M5 4v16M5 4h11M5 12h8M16 8h4M17 12h3"/>
+          </svg>
+        </div>
+        تريڤو
+      </a>
+      <div class="nav-links">
+        <a href="#features">المميزات</a>
+        <a href="#pricing">الأسعار</a>
+        <a href="#market">السوق</a>
+        <a href="#testimonials">آراء العملاء</a>
+        <a href="#contact">تواصل معنا</a>
+        <a href="trevo-blog.html">المدونة</a>
+        <a href="trevo-investor.html">المستثمرون</a>
+      </div>
+      <div class="nav-actions">
+        <a href="trevo-website.html" class="lang-pill">English</a>
+        <a href="#contact" class="btn btn-primary" style="padding:0.5rem 1.25rem;font-size:0.85rem">احجز عرضاً</a>
+        <button class="hamburger" onclick="openMobile()" aria-label="قائمة">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-diagonal-bg"></div>
+  <div class="geo-circle hero-geo-1" style="position:absolute"></div>
+  <div class="geo-circle hero-geo-2" style="position:absolute"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <span class="eyebrow">منصة الذكاء الاصطناعي السياحية الأولى في MENA</span>
+        <h1>حوّل وكالتك بـ<span class="hl">الذكاء الاصطناعي</span> السياحي</h1>
+        <p>منصة تريڤو تجمع أتمتة التسويق والحجز الذكي والتحليلات الفورية — مصممة خصيصاً لوكالات السفر والفنادق ومشغّلي الجولات في مصر والسعودية ودول MENA. ابتداءً من 50 دولار شهرياً فقط.</p>
+        <div class="hero-btns">
+          <a href="#contact" class="btn btn-primary">احجز عرضاً مجانياً ←</a>
+          <a href="#features" class="btn btn-outline-white">استكشف المميزات</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-n">$950B</span>
+            <span class="stat-l">حجم السوق العالمي</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-n">6,350+</span>
+            <span class="stat-l">وكالة مستهدفة</span>
+          </div>
+          <div class="hero-stat">
+            <span class="stat-n">$50</span>
+            <span class="stat-l">يبدأ من شهرياً</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="float-badge fb1">🤖 محتوى بالذكاء الاصطناعي</div>
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div class="dash-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <div>
+              <div class="dash-title">لوحة تحكم التسويق</div>
+              <div class="dash-sub">وكالة مصرية — مباشر</div>
+            </div>
+          </div>
+          <div class="dash-row"><span>التفاعل على السوشيال ميديا</span><span>+34% هذا الشهر</span></div>
+          <div class="dash-row"><span>عملاء محتملون جدد</span><span>47 هذا الأسبوع</span></div>
+          <div class="dash-row"><span>الحجوزات</span><span>+22% مقارنة بالشهر الماضي</span></div>
+          <div class="dash-row"><span>محتوى نُشر (بالـ AI)</span><span>28 منشوراً</span></div>
+          <div class="mini-bar-wrap">
+            <div class="mini-bar-label"><span style="color:var(--orange);font-weight:700">87%</span><span>معدل الإنجاز هذا الشهر</span></div>
+            <div class="mini-bar"><div class="mini-bar-fill" style="--w:87%"></div></div>
+          </div>
+        </div>
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div class="dash-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <div>
+              <div class="dash-title">محتوى مُولَّد بالذكاء الاصطناعي</div>
+              <div class="dash-sub">باقة الأهرامات — 30 ثانية</div>
+            </div>
+          </div>
+          <div style="background:rgba(245,166,35,0.1);border-radius:8px;padding:0.8rem;font-size:0.78rem;color:rgba(255,255,255,0.75);line-height:1.65;text-align:right">✨ "استمتع بسحر مصر الخالد مع باقتنا الحصرية لمدة 7 أيام تشمل زيارة الأهرامات والإبحار في النيل..."</div>
+        </div>
+        <div class="float-badge fb2">🌍 عربي أولاً</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-diagonal-bottom"></div>
+</section>
+
+<!-- ═══ TRUST STRIP ═══ -->
+<div class="trust-strip">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="m-dot"></span><span>اتحاد السياحة المصري</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>هيئة السياحة السعودية</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>شريك UNWTO</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>StartupGate مصر</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>مسرّع QBIC</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>+1,400 وكالة في MENA</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>محتوى AI عربي وإنجليزي</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>منصة عربية أولاً</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>اتحاد السياحة المصري</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>هيئة السياحة السعودية</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>شريك UNWTO</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>StartupGate مصر</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>مسرّع QBIC</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>+1,400 وكالة في MENA</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>محتوى AI عربي وإنجليزي</span></div>
+    <div class="marquee-item"><span class="m-dot"></span><span>منصة عربية أولاً</span></div>
+  </div>
+</div>
+
+<!-- ═══ PROBLEM / SOLUTION ═══ -->
+<section id="problem" class="section">
+  <div class="arabic-pattern" style="top:50%;right:-2%;transform:translateY(-50%)">مشكلة</div>
+  <div class="container">
+    <div class="prob-grid">
+      <div class="reveal-l">
+        <span class="eyebrow">المشكلة</span>
+        <div class="prob-eyebrow-block">
+          <h2>وكالات السياحة في MENA <span class="hl">تتأخر عن الركب</span></h2>
+          <p>أكثر من 6,350 وكالة سفر وفنادق ومشغّلي جولات في مصر والسعودية يعملون بأدوات يدوية ومجزأة — بينما المنافسون العالميون يرقمنون بسرعة.</p>
+        </div>
+        <div class="prob-list" style="margin-top:1.75rem">
+          <div class="prob-item">
+            <div class="prob-num">١</div>
+            <div>
+              <h4>لا استراتيجية تسويق رقمي</h4>
+              <p>68% من وكالات MENA تدير وسائل التواصل الاجتماعي يدوياً — بلا جدول محتوى ولا ذكاء اصطناعي ولا اتساق.</p>
+            </div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-num">٢</div>
+            <div>
+              <h4>أدوات غير مصممة للسياحة</h4>
+              <p>تكلف منصات SaaS العالمية (HubSpot, Salesforce) 800–5000 دولار شهرياً — باهظة الثمن وبلا واجهة عربية.</p>
+            </div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-num">٣</div>
+            <div>
+              <h4>المستقلون غير موثوقين</h4>
+              <p>تتقاضى الوكالات المحلية 500–2000 دولار شهرياً لعمل يدوي غير قابل للتوسع وبلا بيانات أو تحليلات.</p>
+            </div>
+          </div>
+          <div class="prob-item">
+            <div class="prob-num">٤</div>
+            <div>
+              <h4>لا تقنية للحجوزات</h4>
+              <p>معظم الوكالات تستخدم واتساب وجداول البيانات — صفر أتمتة وصفر رؤى لأداء الأعمال.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-r">
+        <div class="sol-card">
+          <span class="eyebrow">الحل</span>
+          <h3 style="color:var(--white);margin-bottom:0.5rem">تريڤو: منصة واحدة. كل ما تحتاجه.</h3>
+          <p style="color:rgba(255,255,255,0.62);font-size:0.88rem;margin-bottom:1.25rem">مدعوم بالذكاء الاصطناعي، عربي أولاً، وبأسعار مناسبة لـ SMEs في MENA — ابتداءً من 50 دولار شهرياً.</p>
+          <div class="sol-pillars">
+            <div class="sol-pillar">
+              <div class="pillar-num">١</div>
+              <div class="pillar-text">
+                <h4>أتمتة التسويق بالذكاء الاصطناعي</h4>
+                <p>تقاويم المحتوى والحملات والـ SEO — تُولَّد في ثوانٍ باللغتين.</p>
+              </div>
+            </div>
+            <div class="sol-pillar">
+              <div class="pillar-num">٢</div>
+              <div class="pillar-text">
+                <h4>الحجز الذكي وإدارة العملاء</h4>
+                <p>إدارة الحجوزات المركزية وتتبع العملاء وتحليلات الأداء في لوحة واحدة.</p>
+              </div>
+            </div>
+            <div class="sol-pillar">
+              <div class="pillar-num">٣</div>
+              <div class="pillar-text">
+                <h4>منصة السفر B2C</h4>
+                <p>مسارات ذكية ومعاينات AR/VR وخرائط مباشرة وسوق إلكتروني للمسافرين.</p>
+              </div>
+            </div>
+            <div class="sol-pillar">
+              <div class="pillar-num">٤</div>
+              <div class="pillar-text">
+                <h4>البيانات والتحليلات</h4>
+                <p>لوحات أداء فورية ورؤى بالذكاء الاصطناعي وتتبع تحويلات الحجز.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section id="features" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">مميزات المنصة</span>
+      <h2>كل ما تحتاجه الشركات السياحية <span class="hl">للنمو</span></h2>
+      <p>منصة واحدة تجمع B2B SaaS وأدوات السفر B2C والسوق الإلكتروني والتقنية الغامرة — مبنية لأسرع أسواق السياحة نمواً في MENA.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card reveal" style="transition-delay:0.05s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>مولّد المحتوى بالذكاء الاصطناعي</h3>
+        <p>أنشئ محتوى سياحياً لشهر كامل — منشورات اجتماعية وحملات وبريد إلكتروني — في دقائق. عربي وإنجليزي، نبرة سياحية متخصصة.</p>
+        <div class="feat-badge"><span class="badge-pill badge-orange">الميزة الأساسية</span></div>
+      </div>
+      <div class="feat-card featured reveal" style="transition-delay:0.1s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3>لوحة تحكم التسويق والتحليلات</h3>
+        <p>تتبع أداء الحملات وتحويلات الحجز والتفاعل الاجتماعي والعائد — كل ذلك في الوقت الفعلي مع توصيات بالذكاء الاصطناعي.</p>
+        <div class="feat-badge"><span class="badge-pill badge-orange">الأكثر طلباً</span></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.15s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3>الحجز الذكي وإدارة علاقات العملاء</h3>
+        <p>أدر جميع حجوزات العملاء والاستفسارات والمتابعات من مكان واحد. تعيين تلقائي للباقات وتتبع الإيرادات.</p>
+        <div class="feat-badge"><span class="badge-pill badge-navy">B2B SaaS</span></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.2s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
+        <h3>معاينات الوجهات بـ AR/VR</h3>
+        <p>دع المسافرين يستكشفون الوجهات افتراضياً قبل الحجز — معاينات ثلاثية الأبعاد للمتاحف والمواقع الأثرية والفنادق.</p>
+        <div class="feat-badge"><span class="badge-pill badge-green">المرحلة الثانية</span></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.25s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>سوق السياحة الإلكتروني</h3>
+        <p>ربط المسافرين بالتجارب المحلية والمرشدين والفنادق والجولات. منصة قائمة على العمولة لمشغّلي الجولات وشركات DMC.</p>
+        <div class="feat-badge"><span class="badge-pill badge-green">المرحلة الثالثة</span></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.3s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+        <h3>المحفظة المالية للسفر</h3>
+        <p>محفظة متعددة العملات ومدفوعات عبر الحدود وـBNPL لباقات السفر وتأمين السفر المدمج للمستخدمين B2C.</p>
+        <div class="feat-badge"><span class="badge-pill badge-green">المرحلة الرابعة</span></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.35s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>تتبع الرحلة المباشر</h3>
+        <p>تتبع الخرائط في الوقت الفعلي لكل رحلة ومسارات قابلة للمشاركة وأدلة سفر غير متصلة بالإنترنت لتطبيق السفر الذكي.</p>
+        <div class="feat-badge"><span class="badge-pill badge-navy">تطبيق B2C</span></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.4s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>مركز صناع المحتوى والمؤثرين</h3>
+        <p>منصة لصناع محتوى السفر — نشر وتحقيق أرباح من المحتوى السياحي مع الرعايات والروابط التابعة.</p>
+        <div class="feat-badge"><span class="badge-pill badge-orange">المرحلة الثالثة</span></div>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:0.45s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>واجهة برمجية للبيانات السياحية</h3>
+        <p>منح الحكومات والمطارات وسلاسل الفنادق رخصة الذكاء السياحي لتريڤو — تدفقات الزوار التنبؤية وإشارات الطلب.</p>
+        <div class="feat-badge"><span class="badge-pill badge-green">المرحلة الخامسة</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section id="how" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">كيف تعمل</span>
+      <h2>ابدأ في <span class="hl">4 خطوات بسيطة</span></h2>
+      <p>من التسجيل إلى أول حملة مولّدة بالذكاء الاصطناعي في أقل من 30 دقيقة.</p>
+    </div>
+    <div class="steps-wrap">
+      <div class="steps-line"></div>
+      <div class="steps-row">
+        <div class="step-block reveal" style="transition-delay:0.05s">
+          <div class="step-icon-wrap">
+            <div class="step-num">١</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 3a4 4 0 100 8 4 4 0 000-8z"/></svg>
+          </div>
+          <h4>إعداد ملفك الشخصي</h4>
+          <p>أضف تفاصيل وكالتك والوجهات والباقات والأسواق المستهدفة. يستغرق 10 دقائق فقط.</p>
+        </div>
+        <div class="step-block reveal" style="transition-delay:0.1s">
+          <div class="step-icon-wrap">
+            <div class="step-num">٢</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h4>توليد المحتوى بالذكاء الاصطناعي</h4>
+          <p>يُنشئ ذكاء تريڤو محتوى شهر كامل من منشورات اجتماعية ومقالات SEO باللغتين العربية والإنجليزية.</p>
+        </div>
+        <div class="step-block reveal" style="transition-delay:0.15s">
+          <div class="step-icon-wrap">
+            <div class="step-num">٣</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h4>إطلاق وتتبع</h4>
+          <p>انشر المحتوى وأدر الحجوزات وراقب لوحة التحليلات تمتلئ ببيانات فورية عن العملاء المحتملين.</p>
+        </div>
+        <div class="step-block reveal" style="transition-delay:0.2s">
+          <div class="step-icon-wrap">
+            <div class="step-num">٤</div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 6l-9.5 9.5-5-5L1 18M16 6h7v7"/></svg>
+          </div>
+          <h4>تطور وانمو</h4>
+          <p>كلما تعلّم تريڤو جمهورك، تحسنت التوصيات. افتح السوق الإلكتروني وـAR/VR وـFinTech مع نمو عملك.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section id="pricing" class="section" style="background:var(--cream)">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">أسعار بسيطة</span>
+      <h2>ابدأ بـ <span class="hl">50 دولار شهرياً</span> وانمو معنا</h2>
+      <p>بلا رسوم إعداد لأول 10 عملاء تجريبيين. إلغاء في أي وقت. الخطط السنوية توفر شهرين.</p>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="price-card">
+        <div class="price-tier">المبتدئ</div>
+        <div class="price-amount"><span class="cur">$</span><span class="num">50</span><span class="per">/شهرياً</span></div>
+        <div class="price-desc">مثالي للوكالات الصغيرة والمشغّلين المنفردين الذين بدأوا رحلتهم الرقمية.</div>
+        <div class="price-feats">
+          <div class="price-feat"><span class="chk">✓</span>تقويم محتوى AI شهري</div>
+          <div class="price-feat"><span class="chk">✓</span>مسودتا حملة/شهر</div>
+          <div class="price-feat"><span class="chk">✓</span>تقرير الأداء</div>
+          <div class="price-feat"><span class="chk">✓</span>محتوى عربي وإنجليزي</div>
+          <div class="price-feat"><span class="chk">✓</span>دعم عبر البريد الإلكتروني</div>
+        </div>
+        <a href="#contact" class="btn btn-outline" style="width:100%;justify-content:center">ابدأ الآن</a>
+      </div>
+      <div class="price-card popular">
+        <div class="price-tier">النمو</div>
+        <div class="price-amount"><span class="cur">$</span><span class="num">100</span><span class="per">/شهرياً</span></div>
+        <div class="price-desc">للوكالات المتوسطة والفنادق التي تسعى لتوسيع حضورها الرقمي وزيادة الحجوزات.</div>
+        <div class="price-feats">
+          <div class="price-feat"><span class="chk">✓</span>جميع مميزات المبتدئ</div>
+          <div class="price-feat"><span class="chk">✓</span>إدارة وسائل التواصل الاجتماعي</div>
+          <div class="price-feat"><span class="chk">✓</span>سكريبت فيديو/شهر</div>
+          <div class="price-feat"><span class="chk">✓</span>تدقيق SEO وتوصيات</div>
+          <div class="price-feat"><span class="chk">✓</span>الوصول لـ CRM الحجوزات</div>
+          <div class="price-feat"><span class="chk">✓</span>دعم ذو أولوية</div>
+        </div>
+        <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center">ابدأ الآن</a>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">الاحترافي</div>
+        <div class="price-amount"><span class="cur">$</span><span class="num">200</span><span class="per">/شهرياً</span></div>
+        <div class="price-desc">للوكالات الكبيرة وشركات DMC والفنادق التي تحتاج أتمتة كاملة ودعماً استراتيجياً.</div>
+        <div class="price-feats">
+          <div class="price-feat"><span class="chk">✓</span>جميع مميزات النمو</div>
+          <div class="price-feat"><span class="chk">✓</span>دعم تكامل الحجوزات</div>
+          <div class="price-feat"><span class="chk">✓</span>مكالمة استراتيجية شهرية</div>
+          <div class="price-feat"><span class="chk">✓</span>لوحة تحليلات متكاملة</div>
+          <div class="price-feat"><span class="chk">✓</span>إدراج في سوق B2C</div>
+          <div class="price-feat"><span class="chk">✓</span>مدير حساب مخصص</div>
+        </div>
+        <a href="#contact" class="btn btn-navy" style="width:100%;justify-content:center">ابدأ الآن</a>
+      </div>
+      <div class="price-card dark">
+        <div class="price-tier">المؤسسات</div>
+        <div class="price-amount"><span class="num" style="font-size:1.8rem">مخصص</span></div>
+        <div class="price-desc">لسلاسل الفنادق والهيئات السياحية والخطوط الجوية والجهات الحكومية.</div>
+        <div class="price-feats">
+          <div class="price-feat"><span class="chk">✓</span>خيار العلامة التجارية الخاصة</div>
+          <div class="price-feat"><span class="chk">✓</span>تدريب AI مخصص</div>
+          <div class="price-feat"><span class="chk">✓</span>الوصول للـ API والتكاملات</div>
+          <div class="price-feat"><span class="chk">✓</span>تطبيق على الموقع</div>
+          <div class="price-feat"><span class="chk">✓</span>SLA والامتثال</div>
+        </div>
+        <a href="#contact" class="btn btn-primary" style="width:100%;justify-content:center">تواصل مع المبيعات</a>
+      </div>
+    </div>
+
+    <!-- ROI Calculator -->
+    <div class="roi-wrap reveal" style="margin-top:3rem">
+      <div class="roi-grid">
+        <div>
+          <h3 style="color:var(--white);margin-bottom:0.5rem">احسب عائد استثمارك</h3>
+          <p style="color:rgba(255,255,255,0.58);font-size:0.85rem;margin-bottom:1.5rem">اكتشف كم من الوقت والمال يوفّر تريڤو لوكالتك كل شهر.</p>
+          <div class="roi-inputs">
+            <div>
+              <div class="roi-lbl"><span class="roi-val-span" id="hoursVal">10 ساعات</span><span>ساعات الموظفين في التسويق/أسبوعياً</span></div>
+              <input type="range" class="roi-slider" min="2" max="40" value="10" id="hoursSlider" oninput="calcROI()">
+            </div>
+            <div>
+              <div class="roi-lbl"><span class="roi-val-span" id="spendVal">$800</span><span>إنفاق التسويق الشهري</span></div>
+              <input type="range" class="roi-slider" min="100" max="3000" step="50" value="800" id="spendSlider" oninput="calcROI()">
+            </div>
+            <div>
+              <div class="roi-lbl"><span class="roi-val-span" id="bookingsVal">50 حجزاً</span><span>هدف الحجوزات الشهري</span></div>
+              <input type="range" class="roi-slider" min="10" max="500" step="10" value="50" id="bookingsSlider" oninput="calcROI()">
+            </div>
+          </div>
+        </div>
+        <div class="roi-result">
+          <span style="font-size:0.78rem;color:rgba(255,255,255,0.48);text-transform:uppercase;letter-spacing:0.1em;display:block;margin-bottom:0.5rem">التوفير الشهري التقديري</span>
+          <span class="roi-big" id="roiSavings">$700</span>
+          <p>مقارنةً بتوظيف وكالة محلية</p>
+          <div class="roi-mini-grid">
+            <div class="roi-mini"><div class="rmv" id="roiHours">75%</div><div class="rml">وقت موفَّر</div></div>
+            <div class="roi-mini"><div class="rmv" id="roiBookings">+18%</div><div class="rml">زيادة الحجوزات</div></div>
+          </div>
+          <a href="#contact" class="btn btn-primary" style="margin-top:1.5rem;width:100%;justify-content:center">ابدأ التوفير الآن</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MARKET OPPORTUNITY ═══ -->
+<section id="market">
+  <div class="container">
+    <div class="market-inner">
+      <div class="section-header reveal" style="color:var(--white)">
+        <span class="eyebrow">فرصة السوق</span>
+        <h2 style="color:var(--white)">فرصة عالمية بـ <span style="color:var(--orange)">950 مليار دولار</span></h2>
+        <p style="color:rgba(255,255,255,0.62)">تستهدف تريڤو سبع صناعات متقاطعة تُحرّك اقتصاد التجارب العالمي — بدءاً من MENA والتوسع عالمياً.</p>
+      </div>
+      <div class="funnel-row reveal">
+        <div class="funnel-tier tam">
+          <div class="fl"><h4>السوق الإجمالي القابل للعنونة (TAM)</h4><p>تقاطع السياحة العالمية والتقنية عبر 7 قطاعات</p></div>
+          <div class="fv"><div class="fvn">$950B</div><div class="fvs">السقف العالمي</div></div>
+        </div>
+        <div class="funnel-tier sam">
+          <div class="fl"><h4>السوق الخدمي المتاح (SAM)</h4><p>20–30 دولة، مشغلو سياحة جاهزون رقمياً، 5–7 سنوات</p></div>
+          <div class="fv"><div class="fvn">$95–120B</div><div class="fvs">10–12% من TAM</div></div>
+        </div>
+        <div class="funnel-tier som">
+          <div class="fl"><h4>السوق القابل للحصول عليه (SOM) — 3–5 سنوات</h4><p>مصر + السعودية ← التوسع في MENA</p></div>
+          <div class="fv"><div class="fvn">$2–3.5B</div><div class="fvs">2–3% من SAM</div></div>
+        </div>
+      </div>
+      <div class="sectors-grid reveal">
+        <div class="sector-tile"><div class="sv">$500B</div><h4>السياحة والسفر العالمي</h4><p>WTTC: 955 مليار دولار إجمالي إيرادات 2025. 1.52 مليار سائح.</p></div>
+        <div class="sector-tile"><div class="sv">$125B</div><h4>التجارة الإلكترونية السياحية</h4><p>سوق التجارب والمرشدين والفنادق والبائعين المحليين.</p></div>
+        <div class="sector-tile"><div class="sv">$125B</div><h4>التكنولوجيا المالية للسفر</h4><p>المحفظة الإلكترونية وـBNPL وصرف العملات ومدفوعات عبر الحدود.</p></div>
+        <div class="sector-tile"><div class="sv">$75B</div><h4>اقتصاد صناع المحتوى</h4><p>منصة المحتوى السياحي وتحقيق أرباح المؤثرين وـSEO.</p></div>
+        <div class="sector-tile"><div class="sv">$60B</div><h4>الواقع الافتراضي والمعزز</h4><p>AR في السفر: من 20 مليار إلى 211 مليار دولار بحلول 2031 (نمو 37.5%).</p></div>
+        <div class="sector-tile"><div class="sv">$35B</div><h4>السياحة الصحية والعلاجية</h4><p>السياحة الطبية وباقات العافية وتنبيهات الأوبئة والصحة النفسية.</p></div>
+        <div class="sector-tile"><div class="sv">$30B</div><h4>البيانات السياحية وـ APIs</h4><p>ترخيص الذكاء السياحي للحكومات والمطارات وسلاسل الفنادق.</p></div>
+        <div class="sector-tile" style="background:rgba(245,166,35,0.18);border-color:var(--orange)">
+          <div class="sv" style="font-size:1.8rem">$950B</div>
+          <h4>إجمالي السوق العالمي</h4>
+          <p>رؤية تريڤو طويلة الأمد: نظام التشغيل السياحي العالمي.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMPARISON TABLE ═══ -->
+<section id="comparison" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">الميزة التنافسية</span>
+      <h2>تريڤو تفوز في <span class="hl">ربع السوق غير المتنازع عليه</span></h2>
+      <p>لا يوجد حل قائم يجمع الذكاء الاصطناعي الخاص بالسياحة وتجربة المستخدم العربية وأسعار المنشآت الصغيرة في منصة واحدة لـ MENA.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>الحل</th>
+            <th>AI السياحي</th>
+            <th>واجهة عربية</th>
+            <th>CRM + حجوزات</th>
+            <th>AR/VR</th>
+            <th>منصة B2C</th>
+            <th>أسعار MENA</th>
+            <th>الفئة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="trevo-row">
+            <td>⭐ تريڤو</td>
+            <td class="yes">✓ نعم</td>
+            <td class="yes">✓ نعم</td>
+            <td class="yes">✓ نعم</td>
+            <td class="yes">✓ قريباً</td>
+            <td class="yes">✓ نعم</td>
+            <td class="yes">✓ $50–200</td>
+            <td><span class="badge-pill badge-orange" style="font-size:0.68rem">B2B+B2C</span></td>
+          </tr>
+          <tr>
+            <td>HubSpot / Mailchimp</td>
+            <td class="no">✗ لا</td>
+            <td class="partial">~ محدود</td>
+            <td class="partial">~ جزئي</td>
+            <td class="no">✗ لا</td>
+            <td class="no">✗ لا</td>
+            <td class="no">✗ $800+/شهر</td>
+            <td><span class="badge-pill badge-navy" style="font-size:0.68rem">B2B عام</span></td>
+          </tr>
+          <tr>
+            <td>TrekkSoft / Peek Pro</td>
+            <td class="no">✗ لا</td>
+            <td class="no">✗ لا</td>
+            <td class="yes">✓ نعم</td>
+            <td class="no">✗ لا</td>
+            <td class="partial">~ محدود</td>
+            <td class="partial">~ $200+/شهر</td>
+            <td><span class="badge-pill badge-navy" style="font-size:0.68rem">أوروبا/US</span></td>
+          </tr>
+          <tr>
+            <td>Amadeus / Sabre</td>
+            <td class="partial">~ جزئي</td>
+            <td class="partial">~ محدود</td>
+            <td class="yes">✓ نعم</td>
+            <td class="no">✗ لا</td>
+            <td class="no">✗ لا</td>
+            <td class="no">✗ $50K+/سنة</td>
+            <td><span class="badge-pill badge-navy" style="font-size:0.68rem">مؤسسات</span></td>
+          </tr>
+          <tr>
+            <td>وكالات رقمية محلية</td>
+            <td class="no">✗ لا</td>
+            <td class="yes">✓ نعم</td>
+            <td class="no">✗ لا</td>
+            <td class="no">✗ لا</td>
+            <td class="no">✗ لا</td>
+            <td class="partial">~ $500–2K/شهر</td>
+            <td><span class="badge-pill badge-navy" style="font-size:0.68rem">خدمة يدوية</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow" style="color:var(--orange)">ما يقوله الناس</span>
+      <h2 style="color:var(--white)">تعليقات مبكرة من <span style="color:var(--orange)">قادة السياحة</span></h2>
+      <p style="color:rgba(255,255,255,0.6)">ردود فعل مشغّلي السياحة الذين شاهدوا منصة تريڤو على أرض الواقع.</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal" style="transition-delay:0.05s">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"أخيراً أداة تفهم التسويق السياحي العربي. HubSpot كانت باهظة الثمن وغير مصممة لنا. تريڤو هو بالضبط ما احتجناه — محتوى AI بالعربية في ثوانٍ."</p>
+        <div class="t-author">
+          <div class="t-av">م.ك</div>
+          <div><div class="t-name">محمد كمال</div><div class="t-role">مالك وكالة سفر، القاهرة</div></div>
+        </div>
+      </div>
+      <div class="test-card reveal" style="transition-delay:0.1s">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"العرض التجريبي أبهرني. نحن نقضي أكثر من 20 ساعة أسبوعياً على محتوى السوشيال ميديا. إذا استطاع تريڤو تخفيض ذلك إلى ساعتين، فالعائد فوري."</p>
+        <div class="t-author">
+          <div class="t-av">ف.أ</div>
+          <div><div class="t-name">فاطمة أحمد</div><div class="t-role">مديرة التسويق، فندق بوتيك، الغردقة</div></div>
+        </div>
+      </div>
+      <div class="test-card reveal" style="transition-delay:0.15s">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"كنا نبحث عن حل AI لباقات العمرة لموسمين. فهم المنصة للمحتوى الديني السياحي مذهل. هذا مختلف تماماً عن أي شيء رأيناه من قبل."</p>
+        <div class="t-author">
+          <div class="t-av">خ.ر</div>
+          <div><div class="t-name">خالد الرشيد</div><div class="t-role">مشغّل سياحة دينية، الرياض</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section id="cta">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow" style="color:rgba(255,255,255,0.75)">هل أنت مستعد لتحويل وكالتك؟</span>
+      <h2>انضم إلى برنامج تريڤو <span style="color:var(--navy)">التجريبي التأسيسي</span></h2>
+      <p>أول 10 عملاء يحصلون على سعر تجريبي مثبّت لمدة 12 شهراً. لا مخاطرة — إلغاء في أي وقت.</p>
+      <div class="cta-btns">
+        <a href="#contact" class="btn btn-navy">احجز عرضك المجاني ←</a>
+        <a href="mailto:hello@trevo.io" class="btn btn-outline-white" style="border-color:rgba(26,58,108,0.4);color:var(--navy)">راسلنا مباشرةً</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">تواصل معنا</span>
+      <h2>احجز <span class="hl">عرضاً مجانياً</span></h2>
+      <p>30 دقيقة. شاهد كيف يعمل تريڤو لعملك بالضبط. بلا أي التزام.</p>
+    </div>
+    <div class="contact-wrap">
+      <div class="reveal-l">
+        <h3 style="color:var(--navy);margin-bottom:1rem">تواصل معنا مباشرةً</h3>
+        <p style="color:var(--gray-mid);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem">نرد خلال 4 ساعات عمل. واتساب هو قناتنا الأسرع للاستفسارات من مصر والسعودية ودول الخليج.</p>
+        <div class="channels">
+          <a href="https://wa.me/201000000000" class="channel">
+            <div class="ch-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+            واتساب — الأسرع — مصر والسعودية
+          </a>
+          <a href="mailto:hello@trevo.io" class="channel">
+            <div class="ch-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            hello@trevo.io — البريد الإلكتروني
+          </a>
+          <a href="https://linkedin.com" class="channel">
+            <div class="ch-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></div>
+            لينكد إن — تريڤو الرسمي
+          </a>
+          <div class="channel" style="cursor:default">
+            <div class="ch-ic"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            القاهرة، مصر &amp; الرياض، المملكة العربية السعودية
+          </div>
+        </div>
+      </div>
+      <div class="reveal-r">
+        <div class="contact-form-wrap">
+          <div class="form-row">
+            <div class="fg">
+              <label class="flabel">الاسم الأول</label>
+              <input class="finput" type="text" placeholder="محمد">
+            </div>
+            <div class="fg">
+              <label class="flabel">اسم العائلة</label>
+              <input class="finput" type="text" placeholder="حسن">
+            </div>
+          </div>
+          <div class="fg">
+            <label class="flabel">البريد الإلكتروني</label>
+            <input class="finput" type="email" placeholder="your@agency.com">
+          </div>
+          <div class="fg">
+            <label class="flabel">واتساب / الهاتف</label>
+            <input class="finput" type="tel" placeholder="+20 100 000 0000">
+          </div>
+          <div class="fg">
+            <label class="flabel">نوع العمل</label>
+            <select class="fselect">
+              <option value="">اختر نوع عملك</option>
+              <option>وكالة سفر</option>
+              <option>فندق / منتجع</option>
+              <option>شركة إدارة وجهات (DMC)</option>
+              <option>مشغّل سياحة دينية (حج/عمرة)</option>
+              <option>مشغّل جولات سياحية</option>
+              <option>هيئة سياحية / جهة حكومية</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="flabel">رسالة (اختيارية)</label>
+            <textarea class="ftextarea" placeholder="أخبرنا عن تحديات التسويق الرئيسية لديك..."></textarea>
+          </div>
+          <button class="fsubmit" onclick="submitForm(event)">احجز عرضي المجاني ←</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo" style="display:inline-flex;margin-bottom:0.5rem">
+          <div class="logo-sq"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" width="20" height="20"><path d="M5 4v16M5 4h11M5 12h8M16 8h4M17 12h3"/></svg></div>
+          تريڤو
+        </a>
+        <p>منصة السياحة الذكية الشاملة المدعومة بالذكاء الاصطناعي لـ MENA والعالم. مبنية لتمكين وكالات السفر والفنادق والشركات السياحية بتقنية ذكية.</p>
+        <div class="footer-socials">
+          <a class="soc-btn" href="#" aria-label="لينكد إن"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg></a>
+          <a class="soc-btn" href="#" aria-label="تويتر"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg></a>
+          <a class="soc-btn" href="#" aria-label="إنستغرام"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a class="soc-btn" href="https://wa.me/201000000000" aria-label="واتساب"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" width="16" height="16"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+        </div>
+      </div>
+      <div class="fcol">
+        <h5>المنتج</h5>
+        <ul>
+          <li><a href="#features">المميزات</a></li>
+          <li><a href="#pricing">الأسعار</a></li>
+          <li><a href="#how">كيف تعمل</a></li>
+          <li><a href="#comparison">مقارنة المنافسين</a></li>
+          <li><a href="trevo-website.html#ai-demo">عرض AI</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h5>الشركة</h5>
+        <ul>
+          <li><a href="trevo-website.html#team">من نحن</a></li>
+          <li><a href="#market">حجم السوق</a></li>
+          <li><a href="#contact">تواصل معنا</a></li>
+          <li><a href="trevo-investor.html">المستثمرون</a></li>
+          <li><a href="#">مجموعة الصحافة</a></li>
+        </ul>
+      </div>
+      <div class="fcol">
+        <h5>الموارد</h5>
+        <ul>
+          <li><a href="trevo-blog.html">المدونة</a></li>
+          <li><a href="trevo-blog.html">دراسات الحالة</a></li>
+          <li><a href="trevo-blog.html">نموذج خطاب النية</a></li>
+          <li><a href="trevo-website.html">الموقع الإنجليزي</a></li>
+          <li><a href="#">برنامج الشراكة</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 تريڤو للتكنولوجيا السياحية. جميع الحقوق محفوظة. مصر والمملكة العربية السعودية.</p>
+      <div class="footer-legal">
+        <a href="#">سياسة الخصوصية</a>
+        <a href="#">شروط الخدمة</a>
+        <a href="#">ملفات تعريف الارتباط</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── NAV SCROLL ───
+const nb=document.getElementById('navbar');
+window.addEventListener('scroll',()=>{
+  nb.classList.toggle('scrolled',window.scrollY>60);
+  document.getElementById('scroll-top').classList.toggle('visible',window.scrollY>400);
+});
+
+// ─── MOBILE MENU ───
+function openMobile(){document.getElementById('mobileMenu').classList.add('open');document.body.style.overflow='hidden'}
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open');document.body.style.overflow=''}
+
+// ─── SCROLL REVEAL ───
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>obs.observe(el));
+
+// ─── ROI CALCULATOR ───
+function calcROI(){
+  const hours=parseInt(document.getElementById('hoursSlider').value);
+  const spend=parseInt(document.getElementById('spendSlider').value);
+  const bookings=parseInt(document.getElementById('bookingsSlider').value);
+  document.getElementById('hoursVal').textContent=hours+' ساعة';
+  document.getElementById('spendVal').textContent='$'+spend;
+  document.getElementById('bookingsVal').textContent=bookings+' حجزاً';
+  const savings=Math.max(0,spend-100);
+  const timeSaved=Math.round(hours*0.75);
+  const bookingUp=Math.round(bookings*0.18);
+  document.getElementById('roiSavings').textContent='$'+savings.toLocaleString();
+  document.getElementById('roiHours').textContent=timeSaved+' س';
+  document.getElementById('roiBookings').textContent='+'+bookingUp;
+}
+calcROI();
+
+// ─── FORM SUBMIT ───
+function submitForm(e){
+  e.preventDefault();
+  const btn=e.target;
+  btn.textContent='✓ جاري الإرسال...';
+  setTimeout(()=>{
+    btn.textContent='✓ تم الإرسال! سنتواصل معك خلال 4 ساعات.';
+    btn.style.background='#22c55e';
+    setTimeout(()=>{btn.textContent='احجز عرضي المجاني ←';btn.style.background='';},4000);
+  },1200);
+}
+
+// ─── COOKIE ───
+function acceptCookie(){localStorage.setItem('trevo-cookies','accepted');document.getElementById('cookie-bar').style.display='none'}
+function dismissCookie(){localStorage.setItem('trevo-cookies','declined');document.getElementById('cookie-bar').style.display='none'}
+window.addEventListener('load',()=>{
+  if(!localStorage.getItem('trevo-cookies')){
+    setTimeout(()=>document.getElementById('cookie-bar').classList.add('show'),2200);
+  }
+});
+
+// ─── HERO STATS COUNTER ───
+function animateStats(){
+  document.querySelectorAll('.stat-n').forEach(el=>{
+    const txt=el.textContent;
+    const num=parseFloat(txt.replace(/[^0-9.]/g,''));
+    if(!num)return;
+    const pre=txt.match(/^[^0-9]*/)[0]||'';
+    const suf=txt.match(/[^0-9.B%]*$/)[0]||'';
+    let cur=0;const step=num/50;
+    const iv=setInterval(()=>{
+      cur+=step;
+      if(cur>=num){cur=num;clearInterval(iv)}
+      el.textContent=pre+(num<10?cur.toFixed(1):Math.round(cur))+(txt.includes('B')?'B':suf);
+    },30);
+  });
+}
+const heroO=new IntersectionObserver(e=>{e.forEach(i=>{if(i.isIntersecting){animateStats();heroO.disconnect()}})},{threshold:0.5});
+const hs=document.querySelector('.hero-stats');
+if(hs)heroO.observe(hs);
+
+// ─── SET LANG FLAG IN STORAGE ───
+localStorage.setItem('trevo-lang','ar');
+</script>
+</body>
+</html>
