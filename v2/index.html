@@ -505,16 +505,26 @@ p{line-height:1.7}
 <!-- ─── MOBILE NAV ─── -->
 <div class="mobile-nav" id="mobileNav">
   <button class="mobile-close" onclick="closeMobile()">✕</button>
-  <a href="#hero" onclick="closeMobile()" data-t="nav_features" style="color:var(--white)">Home</a>
-  <a href="#features" onclick="closeMobile()">Features</a>
-  <a href="#market" onclick="closeMobile()">Market</a>
-  <a href="#pricing" onclick="closeMobile()">Pricing</a>
-  <a href="#roadmap" onclick="closeMobile()">Roadmap</a>
-  <a href="#team" onclick="closeMobile()">About</a>
-  <a href="#contact" onclick="closeMobile()">Contact</a>
-  <button onclick="toggleLang()" style="background:var(--orange);color:white;padding:0.8rem 1.5rem;border-radius:var(--r-full);font-weight:700;margin-top:1rem">عربي / English</button>
+  
+  <!-- 1. تم تصحيح رابط Home (حذفنا data-t القديمة لأنها كانت ستظهره بكلمة "المميزات") -->
+  <a href="#hero" onclick="closeMobile()" style="color:var(--white)">Home</a>
+  
+  <!-- 2. إضافة data-t لكل الروابط لضمان تحولها للعربية عند ضغط الزر -->
+  <a href="#features" onclick="closeMobile()" data-t="nav_features">Features</a>
+  <a href="#market" onclick="closeMobile()" data-t="nav_market">Market</a>
+  <a href="#pricing" onclick="closeMobile()" data-t="nav_pricing">Pricing</a>
+  <a href="#roadmap" onclick="closeMobile()" data-t="nav_roadmap">Roadmap</a>
+  <a href="#team" onclick="closeMobile()" data-t="nav_about">About</a>
+  <a href="#contact" onclick="closeMobile()" data-t="nav_contact">Contact</a>
+  
+  <!-- 3. روابط الصفحات الخارجية والداشبورد -->
+  <a href="trevo-blog.html" onclick="closeMobile()" data-t="nav_blog">Blog</a>
+  <a href="trevo-investor.html" onclick="closeMobile()" data-t="nav_investors">Investors</a>
+  <a href="dashboard.html" onclick="closeMobile()" data-t="nav_dashboard" style="color:var(--orange); font-weight:700">Dashboard</a>
+  
+  <!-- زر تبديل اللغة -->
+  <button onclick="toggleLang()" data-t="nav_lang" style="background:var(--orange);color:white;padding:0.8rem 1.5rem;border-radius:var(--r-full);font-weight:700;margin-top:1rem">عربي / English</button>
 </div>
-
 <!-- ═══════════════════════════════════════════
      NAVIGATION
 ═══════════════════════════════════════════ -->
